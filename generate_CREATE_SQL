@@ -1,0 +1,88 @@
+#!/bin/sh
+#
+# generate_CREATE_SQL: a utility to help install the shop website
+# 
+# Copyright (C) 2017-2018 James S. Crook
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+if [ $# -ne 1 ]; then
+    echo "usage: $0 your_db_name"
+    echo "e.g.,  $0 shop"
+    exit 1
+fi
+
+DB_NAME=$1
+
+cat << EOF
+
+### Create the database
+CREATE DATABASE ${DB_NAME} CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin;
+
+### Create the 5 required database tables
+CREATE TABLE ${DB_NAME}.user (
+    username		CHAR(64) NOT NULL,
+    password		CHAR(64) NOT NULL,
+    displayupdates	CHAR(4),
+    sortorder		CHAR(4),
+    PRIMARY KEY (username)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+
+CREATE TABLE ${DB_NAME}.unit (
+    unitid		INT NOT NULL AUTO_INCREMENT,
+    unitname		CHAR(12) NOT NULL,
+    PRIMARY KEY (unitid),
+    UNIQUE KEY unitidx (unitname)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+
+CREATE TABLE ${DB_NAME}.category (
+    categoryid		INT NOT NULL AUTO_INCREMENT,
+    categoryname	CHAR(64) NOT NULL,
+    PRIMARY KEY (categoryid),
+    UNIQUE KEY categoryidx (categoryname)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+
+CREATE TABLE ${DB_NAME}.item (
+    itemid		INT NOT NULL AUTO_INCREMENT,
+    itemname		CHAR(30)  NOT NULL,
+    unitid		INT,
+    categoryid		INT,
+    notes		CHAR(255),
+    quantity 		INT NOT NULL,
+    addusername		CHAR(64),
+    addtime		DATETIME,
+    changeusername 	CHAR(64),
+    changetime		DATETIME,
+    PRIMARY KEY (itemid),
+    UNIQUE KEY descunitidx (itemname, unitid),
+    FOREIGN KEY(unitid) references unit(unitid),
+    FOREIGN KEY(categoryid) references category(categoryid)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+
+CREATE TABLE ${DB_NAME}.history (
+    time		DATETIME NOT NULL,
+    username		CHAR(64) NOT NULL,
+    itemname		CHAR(30) NOT NULL,
+    unitname		CHAR(12) NOT NULL,
+    oldquantity		INT,
+    newquantity		INT,
+    PRIMARY KEY (time, username, itemname, unitname)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+
+EOF
+
+cat << EOF | php
+### Create the shop user 'admin' with password of 'password' (no quotes)
+<?php
+    echo "INSERT INTO ${DB_NAME}.user (username, password) VALUES ('admin', '" .
+    password_hash("password", PASSWORD_DEFAULT) . "');\n";
+?>
+EOF

@@ -1,0 +1,121 @@
+Thu Feb  1 07:10:18 AEDT 2018
+
+Note: The term MySQL in this document also means mariadb.
+
+1. Install and configure the required file packages. Things you will need:
+    - a working web server
+    - a working database server. MySQL has been assumed.
+    See below for the PHP and mariadb packages that have been tested.
+
+    Recommended, but optional - redirect http traffic to https:
+    - a valid SSL certificate for your website
+
+2. Decide these:
+    - the name of your database (the examples use 'shop')
+    - the MySQL username this application will use (the examples use 'shop_username')
+    - the MySQL username's password (the examples use 'shop_password')
+
+3. Configure the database as the root database user.
+
+    3a. Connect to MySQL as root:
+    $ mysql -u root -p		# you must already know your MySQL root password
+
+    MariaDB [(none)]> GRANT ALL PRIVILEGES ON *.* TO 'shop_username'@'localhost' IDENTIFIED BY 'shop_password';
+    MariaDB [(none)]> exit
+
+4. Connect to MySQL as shop_username and configure the database:
+
+    $ mysql -u shop_username -pshop_password
+
+    4a. Create a MySQL database.
+
+    4b. Create the 5 required database tables.
+
+    4c. Create the 'admin' user with a temporary password of 'password'
+
+    The bash (shell) script generate_CREATE_SQL can (optionally) be used
+    to generate the required SQL commands for steps 4a, 4b and 4c. Run it
+    as follows:
+
+    ./generate_CREATE_SQL your_db_name
+
+    The output goes to stdout (terminal screen), so copy and paste these
+    SQL statements to another window running the MySQL CLI.
+
+5. Copy the shop directory tree into your web server's document root:
+    These are the files:
+	shop
+	shop/admin.php
+	shop/change_item.php
+	shop/first_char.php
+	shop/history.php
+	shop/index.php
+	shop/items_by_category.php
+	shop/login.php
+	shop/logout.php
+	shop/menus.css
+	shop/profile.php
+	shop/shop.css
+	shop/classes
+	shop/classes/Autoloader.php
+	shop/classes/Category.php
+	shop/classes/ConfirmChange.php
+	shop/classes/History.php
+	shop/classes/Item.php
+	shop/classes/Menu.php
+	shop/classes/Unit.php
+	shop/classes/User.php
+
+    Modifiy the DB connection file shop_db_conn.php to have correct contents:
+	- $dbHost = "localhost";		Change your DB server only if it runs on a different server
+	- $dbUser = "your_db_username";		Change as required
+	- $dbPassword = "your_db_password";	Change as required
+	- $dbName = "your_db_name";		Change as required
+    And copy the modified file onle level above your web server's document root
+
+    Note: if you choose a name other than 'shop', then rename shop_db_conn.php accordingly:
+        For example:
+	$ mv shop Liszt
+	$ mv shop_db_conn.php Liszt_db_conn.php
+
+6. Point your web browser to the new web page and start using shop!:
+    http://localhost/shop
+
+    Creat a new user, login as that user and delete the admin user.
+    (Or at least change admin's password.)
+
+
+
+
+Appendix A: Some/all of these PHP (tested with 7.1) and MySQL (tested with 10.2)
+packages may be required:
+    php
+    php-fpm
+    php-cli
+    php-mysqlnd
+    php-json
+    php-pdo
+    php-pecl-xdebug
+    php-common
+    php-mbstring
+
+    mariadb-server
+    mariadb-gssapi-server
+    mariadb-server-utils
+    mariadb-config
+    mariadb-rocksdb-engine
+    mariadb-common
+    mariadb
+    mariadb-embedded
+    mariadb-tokudb-engine
+    mariadb-backup
+    mariadb-errmsg
+    mariadb-libs
+
+Appendix B: Redirect http traffic to https with a .htaccess file in your document root.
+Here's one that _may_ be suitable:
+    AddType text/html .html .shtml
+    AddHandler server-parsed .html .shtml
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

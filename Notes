@@ -1,0 +1,10 @@
+Mon Feb 12 11:37:45 AEDT 2018
+
+For  now,  DB  errors  are  displayed to the browser (not logged). It seems that
+logging errors is normally condidered best practice. However,  not  logging  the
+errors  is  based  on the assuption that some/many installations may not have an
+administrator to monitor logs. This will be reviewed if required.
+
+Session variable $_SESSION['previous_page'] is set with $_SERVER[REQUEST_URI] so
+it can be used to return to the previous page  because  $_SERVER['HTTP_REFERER']
+is reported to be unreliable in many cases.

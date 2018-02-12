@@ -1,0 +1,45 @@
+input[type=number] {
+	height: 32px; /* Can't go any smaller??? */
+	width: 50px;
+}
+
+article {
+	column-width: 300px;
+	-webkit-column-width: 300px;
+	-moz-column-width: 300px;
+}
+
+.bttn {
+	height: 30px;
+	width: 240px;
+	font-size: 20px;
+	border-radius: 16px;
+	margin: 5px 0px 5px 0px;
+	vertical-align: middle;
+}
+
+table, tr, th, td {
+	border: 1px solid black;
+}
+
+.table_error, .table_error tr, .table_error td {
+	border: 10px solid red;
+}
+
+.success_symbol {
+	color: green;
+}
+
+.failure_symbol {
+	color: red;
+}
+
+.section_separator {
+	border: 2px;
+	border-style: solid;
+	border-color: blue;
+	border-radius: 6px;
+	text-align: center;
+	margin: 2px 0px 2px 0px;
+	background-color: lightgrey;
+}

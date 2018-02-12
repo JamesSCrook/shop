@@ -1,0 +1,71 @@
+#!/bin/sh
+#
+# generate_SELECT+LOAD_SQL: a utility to help install the shop website
+# 
+# Copyright (C) 2017-2018 James S. Crook
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+if [ $# -ne 1 ]; then
+    echo "usage: $0 your_db_name"
+    echo "e.g.,  $0 shop"
+    exit 1
+fi
+
+DB_NAME=$1
+
+cat << EOF
+
+SELECT * FROM ${DB_NAME}.user INTO OUTFILE '/tmp/${DB_NAME}_user.csv'
+CHARACTER SET utf8mb4 FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+SELECT unitname FROM ${DB_NAME}.unit INTO OUTFILE '/tmp/${DB_NAME}_unit.csv'
+CHARACTER SET utf8mb4 FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+SELECT categoryname FROM ${DB_NAME}.category INTO OUTFILE '/tmp/${DB_NAME}_category.csv'
+CHARACTER SET utf8mb4 FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+SELECT itemname, unitid, categoryid, notes, quantity, addusername, addtime, changeusername, changetime
+FROM ${DB_NAME}.item INTO OUTFILE '/tmp/${DB_NAME}_item.csv'
+CHARACTER SET utf8mb4 FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+SELECT * FROM ${DB_NAME}.history INTO OUTFILE '/tmp/${DB_NAME}_history.csv'
+CHARACTER SET utf8mb4 FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+### Note: the above CSV output files may be created in directory similar to this (YMMV):
+### /tmp/systemd-private-03274de337a743fd9aeb9f71f866bb05-mariadb.service-kOXsUB/tmp
+
+
+
+### The commands below assume the CSV files to be loaded have been placed in /tmp:
+
+LOAD DATA LOCAL INFILE '/tmp/${DB_NAME}_user.csv' INTO TABLE ${DB_NAME}.user
+CHARACTER SET utf8mb4 FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n'
+(username, password, displayupdates, sortorder);
+
+LOAD DATA LOCAL INFILE '/tmp/${DB_NAME}_unit.csv' INTO TABLE ${DB_NAME}.unit
+CHARACTER SET utf8mb4 FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n'
+(unitname);
+
+LOAD DATA LOCAL INFILE '/tmp/${DB_NAME}_category.csv' INTO TABLE ${DB_NAME}.category
+CHARACTER SET utf8mb4 FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n'
+(categoryname);
+
+LOAD DATA LOCAL INFILE '/tmp/${DB_NAME}_item.csv' INTO TABLE ${DB_NAME}.item
+CHARACTER SET utf8mb4 FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n'
+(itemname, unitid, categoryid, notes, quantity, addusername, addtime, changeusername, changetime);
+
+LOAD DATA LOCAL INFILE '/tmp/${DB_NAME}_history.csv' INTO TABLE ${DB_NAME}.history
+CHARACTER SET utf8mb4 FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n'
+(time, username, itemname, unitname, oldquantity, newquantity);
+
+EOF

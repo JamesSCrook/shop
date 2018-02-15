@@ -41,11 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     Menu::displayMenus(TRUE);
     echo "<h3>All Items Beginning with '" . htmlspecialchars($_GET['first_char'], ENT_QUOTES) . "'</h3>\n";
     $item->displayLinks();
-    echo "<article>\n";
     echo "<form id=items_form method='POST'>\n";
+    echo "<div class='grid-container'>\n";
     $item->displayItems("AND SUBSTR(itemname,1,1)='" . htmlspecialchars($_GET['first_char'], ENT_QUOTES) . "'");
+    echo "</div>\n";
     echo "</form>\n";
-    echo "</article>\n";
 } else { /* POST - a button has been pressed */
     $item->updateItemQuantities();
     

@@ -112,14 +112,16 @@ class Item extends DBConnection
             $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, unitname, categoryname, notes, quantity FROM item INNER JOIN unit ON unit.unitid = item.unitid INNER JOIN category ON category.categoryid = item.categoryid " . $sqlPredicate . " ORDER BY itemname, unitname");
             $getItemsPrepStmt->execute();
             while ($itemRow = $getItemsPrepStmt->fetch()) {
+		echo "<div class='grid-item'>\n";
                 echo " <input type='number' name='i_" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' min='-9999' max='9999'";
                 echo " value='" . htmlspecialchars($itemRow['quantity'], ENT_QUOTES) . "'>";
                 echo "<a href='change_item.php?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'><abbr title='" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</abbr></a>";
                 if ($itemRow['notes'] != "") {
-                    echo "<abbr title='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>&rarr;" . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</abbr><br>\n";
+                    echo "<abbr title='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>&rarr;" . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</abbr>\n";
                 } else {
                     echo "&#x25CF;" . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "<br>\n";
                 }
+		echo "</div>\n";
             }
         } catch (PDOException $exception) {
             echo "ERROR(" . __FILE__ . "): Could not display any itmes<br>\n";

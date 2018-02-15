@@ -44,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     Menu::displayMenus(TRUE);
     echo "<h3>Shopping List</h3>\n";
     $item->displayLinks();
-    echo "<article>\n";
     echo "<form id=items_form method='POST'>\n";
     
     $category = new Category();
@@ -55,24 +54,31 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
         case "cq": // sort "by category, then by quantity"
             foreach ($activeCategories as $activeCategory) { // For each active category
                 echo "<div class='section_separator'>" . htmlspecialchars($activeCategory, ENT_QUOTES) . "</div>\n";
+		echo "<div class='grid-container'>\n";
                 $item->displayItems("AND category.categoryid=(select categoryid from category where categoryname='$activeCategory') AND quantity > 0");
                 $item->displayItems("AND category.categoryid=(select categoryid from category where categoryname='$activeCategory') AND quantity < 0");
+		echo "</div>\n";
             }
             echo "<div class='section_separator'>Zero Quantities</div>\n";
+	    echo "<div class='grid-container'>\n";
             $item->displayItems("AND quantity = 0");
+	    echo "</div>\n";
             break;
         case "a": // sort alphabetically
+	    echo "<div class='grid-container'>\n";
             $item->displayItems("");
+	    echo "</div>\n";
             break;
         default: // sort "by quantity" - the default
+	    echo "<div class='grid-container'>\n";
             $item->displayItems("AND quantity > 0");
             $item->displayItems("AND quantity < 0");
             $item->displayItems("AND quantity = 0");
+	    echo "</div>\n";
             break;
     }
     
     echo "</form>\n";
-    echo "</article>\n";
 } else { /* POST - a button has been pressed */
     if (isset($_POST['ack_changes_bttn'])) {
         header("Location: index.php");
@@ -94,4 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 </body>
 </html>
-<!-- shop - Copyright (C) 2017-2018 James S. Crook - GPL3+ -->
+<!--
+Version 0.1.0 - Fri Feb 16 10:34:09 AEDT 2018
+shop - Copyright (C) 2017-2018 James S. Crook - GPL3+
+-->

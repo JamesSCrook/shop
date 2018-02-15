@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     }
     echo "</select><p>\n";
     
-    echo "Display Updates<br>\n";
+    echo "Display Update Confirmations<br>\n";
     echo "<select name='displayUpdates'>\n";
     if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
         echo " <option value='Yes'>Yes</option>\n";

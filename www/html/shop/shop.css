@@ -1,12 +1,7 @@
 input[type=number] {
-	height: 32px; /* Can't go any smaller??? */
+	height: 20px; /* Can't go any smaller??? */
 	width: 50px;
-}
-
-article {
-	column-width: 300px;
-	-webkit-column-width: 300px;
-	-moz-column-width: 300px;
+	background: lightcyan;
 }
 
 .bttn {
@@ -18,8 +13,21 @@ article {
 	vertical-align: middle;
 }
 
+.grid-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.grid-item {
+	text-align: left;
+	border: 2px solid blue;
+	margin: 1px;
+	border-radius: 6px;
+	background: lightcyan;
+}
+
 table, tr, th, td {
-	border: 1px solid black;
+	border: 1px solid blue;
 }
 
 .table_error, .table_error tr, .table_error td {

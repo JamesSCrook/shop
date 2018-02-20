@@ -16,7 +16,7 @@ namespace JamesSCrook\Shop;
 class Autoloader
 {
 
-    static public function loader($className)
+    public static function loader($className)
     {
         $classNameComponents = explode('\\', $className);
         $fileName = "classes/" . end($classNameComponents) . ".php";

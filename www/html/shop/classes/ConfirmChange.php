@@ -12,7 +12,7 @@ namespace JamesSCrook\Shop;
 class ConfirmChange
 {
 
-    public function confirmSuccess($message)
+    public static function confirmSuccess($message)
     {
         echo "<span class=success_symbol>&#x2714; </span>";
         echo htmlspecialchars($message, ENT_QUOTES) . "<p>\n";

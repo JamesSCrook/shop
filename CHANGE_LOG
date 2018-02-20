@@ -1,2 +1,10 @@
 Mon Feb 12 11:37:04 AEDT 2018
     Initial version: 0.0.0
+
+Fri Feb 16 10:39:28 AEDT 2018
+    v0.1.0 - changed from <article> to grid layout. No IE support!
+
+Wed Feb 21 06:57:55 AEDT 2018
+    v0.1.1
+    Autoloader.php: changed "static public" to "public static"
+    ConfirmChange.php, confirmSuccess: changed "public" to "public static"

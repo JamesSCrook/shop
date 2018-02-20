@@ -101,6 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 </body>
 </html>
 <!--
-Version 0.1.0 - Fri Feb 16 10:34:09 AEDT 2018
+Version 0.1.1 - Wed Feb 21 06:57:55 AEDT 2018
 shop - Copyright (C) 2017-2018 James S. Crook - GPL3+
 -->

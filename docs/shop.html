@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+
+<link href="styles.css" rel="stylesheet">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>shop</title>
+</head>
+
+<body>
+
+
+
+<h2>shop - A Shopping List Website</h2>
+
+
+The shop website allows any number of people - <i>with web access</i> - to manage the same shopping list.
+<ul class="padbottom">
+    <li>
+	shop is a LAMP (Linux, Apache, MySQL and PHP) application,
+	<u>so it must be hosted on a web server</u>.
+    </li>
+    <li>
+	Download <a href="https://github.com/JamesSCrook/shop.git"><b>shop</b></a> from github.
+    </li>
+    <li>
+	Your data is stored on your web server, so no third party has access to it.
+	I.e., your data shouldn't be mined to sell you stuff you don't want.
+    </li>
+    <li>
+	shop is designed to be used on any size screens - including smartphones.
+    </li>
+    <li>Update your shopping list whenever the web is accessible, including while you shop.
+    </li>
+    <li>
+	See which items were added/removed from the list, how much/many, when, and by whom.
+    </li>
+    <li>
+	Define username(s), item descriptions, units, categories and (optionally) notes.
+    </li>
+    <li>
+	A modicum of database knowledge is required to implement this website.
+    </li>
+    <li>
+	Shell command line interface (CLI) access to your web server and the database
+	would be helpful.
+    </li>
+    <li>
+	Constructive feedback to improve the functionality, security or appearance of this
+	website is welcome. Web site aesthetics is not my forté, so if anyone is keen to make
+	shop look pretty, please let me know.
+    </li>
+</ul>
+
+<p>
+This website (the one you're reading now) has both wide and narrow screen shots.
+Rest assured, shop works very well on a smartphone!
+
+<p>
+Here are some screen shots that show how shop can be used.
+
+<hr>
+<h2>Login Page</h2>
+<img src="images/login.png">
+<br>
+The login page. Select anything but Logout to login.
+<p>
+
+<hr>
+<h2>Shopping List "Sorted by Quantity"</h2>
+<img src="images/index_q.png">
+<br>
+After logging in, the Items page is displayed. Scroll up/down through the entire shopping list.
+This image shows the default sort order, "by quantity" (q) [see <a href="#sortOrder">sort order</a>].
+<p>
+<b>Note: <font color="red">Negative quantity values are used for items that are required,
+but not urgently</font>; buy them on sale!</b>
+
+<hr>
+<h2>Shopping List "Sorted by Category, then Quantity"</h2>
+<img src="images/index_cq.png">
+<br>
+This is the Items page again, but this time it's sorted "by category, then quantity" (cq) [see <a href="#sortOrder">sort order</a>].
+<p>
+
+<hr>
+<h2>Beginning with '&lt;letter&gt;' Pages - Wide Screen</h2>
+<img src="images/first_char_wide.png">
+<br>
+It can be faster and/or easier to find items by using the "Beginning with '&lt;letter&gt;' pages"
+links at the top. These pages are always sorted alphabetically.
+<p>
+
+<hr>
+<h2>Beginning with '&lt;letter&gt;' Pages - Narrow Screen</h2>
+<img src="images/first_char_narrow.png">
+<br>
+A "Beginning with '&lt;letter&gt;' page" as it would appear on a small screen (e.g., a smartphone).
+<p>
+
+<hr>
+<h2>Admin Page (top part)</h2>
+<img src="images/admin_top.png">
+<br>
+The Admin page (top part shown) is where:
+<ul class="padbottom">
+    <li>
+	Items can be added
+    </li>
+    <li>
+	A link to the page where items' category assignments are most easily checked and managed
+    </li>
+    <li>
+	A link to the user profile management page
+    </li>
+    <li>
+	Units can be managed
+    </li>
+</ul>
+<p>
+
+<hr>
+<h2>Admin Page (bottom part)</h2>
+<img src="images/admin_bottom.png">
+<br>
+The Admin page (bottom part shown) is where:
+<ul class="padbottom">
+    <li>
+	Categories can be managed
+    </li>
+    <li>
+	Users can be managed
+    </li>
+</ul>
+<p>
+The expectation is that only the top part of the Admin page will be used often - to add
+new items. The functions below that should be rarely after initial configuration.
+
+<hr>
+<h2>Managing Your User Profile</h2>
+<img src="images/profile.png">
+<br>
+On this page:
+<ul class="padbottom">
+    <li>
+	A user can change their own password.
+    </li>
+    <li>
+	Select the Items page [<a href="#sortOrder">sort order</a>].
+    </li>
+    <li>
+	Toggle whether or not an update confirmation page like this one:
+	<br>
+	<img src="images/confirm.png">
+	<br>
+	appears after update(s) are made.
+    </li>
+</ul>
+<p>
+
+<hr>
+<h2>Display the Quantity Changes History</h2>
+<img src="images/history.png">
+<br>
+The History page shows the most recent item quantity changes. The intent is to record
+when items were required (and how many) and when they were purchased (and how many).
+<p>
+
+<hr>
+<h2>Displaying Category or Notes by Hovering</h2>
+
+<b>Note: Hovering cannot normally be made to work on touch screen devices.</b>
+<p>
+
+<img src="images/hover_itemname.png">
+<br>
+Hovering over the item's description will display that item's category.
+<p>
+
+<img src="images/hover_unit.png">
+<br>
+Items with (text) notes are displayed with a small right arrow (&rarr;) between the
+description and the unit.
+Hovering over the item's unit will display that item's notes.
+Items without notes have a black circle (&#x25CF;) separating their description and unit.
+
+<hr>
+<h2>Changing an Item</h2>
+
+<img src="images/change_item.png">
+<br>
+Clicking on an item (when it's a hyperlink) displays the "Change an Item" page where one
+may change any aspect of it: description, unit, category or (optional) notes.
+<p>
+(The screen has to be <i>very</i> narrow to display the hamburger menu!)
+
+<hr>
+<a name="sortOrder"></a>
+<h2>Sort Order</h2>
+<b>Note: <i>"sorting by quantity"</i> is always done based on <i>the <u>sign</u> of the quantity</i></b>
+(positive, zero or negative). That is, for purposes of "sorting by quantity", 5 and 55 are the same
+- because they are both positive.
+<p>
+There are three ways to sort the Items page:
+<ol class="padbottom">
+    <li>"By quantity" (q) - the default sort order:
+	<ul type="a">
+	    <li>items with positive quantities (if any)<sup>[1]</sup></li>
+	    <li>items with negative quantities (if any)<sup>[1]</sup></li>
+	    <li>items with zero quantities (if any)<sup>[1]</sup></li>
+	</ul>
+    </li>
+    <li>"By category then by quantity" (cq):
+	<ul type="a">
+	    <li>Each category in turn (in alphabetical order) with at least one non-zero quantity (if any)
+		<ul type="i">
+		    <li>Items with positive quantities (if any)<sup>[1]</sup></li>
+		    <li>Items with negative quantities (if any)<sup>[1]</sup></li>
+		</ul>
+	    </li>
+	    <li>By items with zero quantities (if any)<sup>[1]</sup>
+	    </li>
+	</ul>
+    </li>
+    <li>Alphabetically (a)<sup>[1]</sup>
+    </li>
+</ol>
+[1] Then, alphabetically by description, then alphabetically by unit.
+
+<hr>
+<h2>Technical Details</h2>
+<ol class="padbottom">
+    <li>
+	shop is written entirely in PHP using OOP, PDO and uses a responsive design.
+    </li>
+    <li>
+	Web server(s) other than Apache and/or database(s) other than MySQL could presumably
+	be used. (But that would run foul of the LAMP acronym!)
+    </li>
+    <li>
+	These things have been done with the aim of making the shop website more secure:
+	<ul class="padbottom" type='a'>
+	    <li>All database queries (CRUD) use prepared statements (SQL injection).</li>
+	    <li>Ubiquitous use of htmlspecialchars (XSS)</li>
+	    <li>The database access details are stored outside the web server document root.</li>
+	</ul>
+	But, in any case, there should be no sensitive information in this database. The worst
+	case is someone finds out how many carrots you buy.
+    </li>
+    <li>
+	Two trivial helper shell scripts have been provided to generate the MySQL statements:
+	<ol class="padbottom" type='a'>
+	    <li>
+		generate_CREATE_SQL: generates CREATE TABLE MySQL statements for the 5 shop
+		database tables.
+	    </li>
+	    <li>
+		generate_SELECT+LOAD_SQL: generates MySQL statements to extract the data from the
+		5 shop database tables and the statements to load the data.
+	    </li>
+	</ol>
+    </li>
+    <li>
+	shop has been tested with PHP 7.1.
+    </li>
+    <li>
+	The relatively new CSS grid layout feature has been used so the alphabetical sorting is
+	more usable. This may not work on older browsers. If it becomes an issue, allowing the
+	option of displaying items in the order that &lt;article&gt; ... &lt;/article&gt; orders
+	them could be used (as was the case in v0.0.0).
+    </li>
+</ol>
+
+<hr>
+<h2>Notes</h2>
+<ol class="padbottom">
+    <li>
+	The "new" <a href="https://en.wikipedia.org/wiki/CSS_grid_layout">CSS Grid Layout</a>
+	module is used to display items in a more usable and natural order. Internet Explorer
+	(IE) does not support the latest version of Grid Layout (which is still a
+	"W3C Candidate Recommendation"). So, IE does not render the shop web site properly.
+	It would be possible to implement a different solution, but as IE seems to be a dying
+	browser, the decision - for now - is to use a different browser. Only IE is known to
+	have this limitation.
+    </li>
+    <li>
+	The first character of item descriptions are forced to be upper case.
+    </li>
+    <li>
+	The update button on the menu bar only appears on screens where it would be useful.
+    </li>
+    <li>
+	Possible features to add:
+    </li>
+	<ul>
+	    <li>
+		A new shopping_list key field to allow management of multiple separate lists.
+		E.g., grocery, hardware, personal vs work, etc.
+	    </li>
+	    <li>
+		A client key field to allow multiple different people's lists to exist in the same
+		database tables. Sort of a &micro;bureau. But that's a 3rd party, right?!? This is
+		for your non-technical friends who can't run their own LAMP site.
+	    </li>
+	    <li>
+		a barcode scanner feature to add new items. But, where does this data come from?
+	    </li>
+	</ul>
+    </li>
+    <li>
+	Every attempt has been made to adopt "best practices" - which presupposes there is some
+	sort of consensus on a particular topic - which is often not the case! Please let me know if
+	I have fallen short of "best practice" in some egregious manner, and I'll try to sort it.
+    </li>
+</ol>
+
+</body>
+</html>

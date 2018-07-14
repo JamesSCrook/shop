@@ -1,7 +1,7 @@
 <?php
 namespace JamesSCrook\Shop;
 
-use \PDOException;
+use PDOException;
 
 /*
  * shop - Copyright (C) 2017-2018 James S. Crook
@@ -78,7 +78,7 @@ class Item extends DBConnection
             echo "because it already exists.\n";
         } else {
             try {
-                $addItemPrepStmt = $this->dbConn->prepare("INSERT INTO item (itemname, unitid, categoryid, notes, quantity, addusername, addtime) VALUES (:itemname, (SELECT unitid FROM unit WHERE unitname=:unitname), (SELECT categoryid FROM category WHERE categoryname=:categoryname), :notes, 0, :addusername, NOW())");
+                $addItemPrepStmt = $this->dbConn->prepare("INSERT INTO item (itemname, unitid, categoryid, notes, quantity, addusername, addtime, buycount) VALUES (:itemname, (SELECT unitid FROM unit WHERE unitname=:unitname), (SELECT categoryid FROM category WHERE categoryname=:categoryname), :notes, 0, :addusername, NOW(), 0)");
                 $addItemPrepStmt->execute(array(
                     'itemname' => $newItemName,
                     'unitname' => $newUnitName,
@@ -112,7 +112,7 @@ class Item extends DBConnection
             $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, unitname, categoryname, notes, quantity FROM item INNER JOIN unit ON unit.unitid = item.unitid INNER JOIN category ON category.categoryid = item.categoryid " . $sqlPredicate . " ORDER BY itemname, unitname");
             $getItemsPrepStmt->execute();
             while ($itemRow = $getItemsPrepStmt->fetch()) {
-		echo "<div class='grid-item'>\n";
+                echo "<div class='grid-item'>\n";
                 echo " <input type='number' name='i_" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' min='-9999' max='9999'";
                 echo " value='" . htmlspecialchars($itemRow['quantity'], ENT_QUOTES) . "'>";
                 echo "<a href='change_item.php?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'><abbr title='" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</abbr></a>";
@@ -121,7 +121,7 @@ class Item extends DBConnection
                 } else {
                     echo "&#x25CF;" . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "<br>\n";
                 }
-		echo "</div>\n";
+                echo "</div>\n";
             }
         } catch (PDOException $exception) {
             echo "ERROR(" . __FILE__ . "): Could not display any itmes<br>\n";
@@ -136,6 +136,8 @@ class Item extends DBConnection
         echo "<tr><td>Added</td><td>" . $itemRow['addtime'] . "</td></tr>\n";
         echo "<tr><td>Last changed by</td><td>" . $itemRow['changeusername'] . "</td></tr>\n";
         echo "<tr><td>Last changed</td><td>" . $itemRow['changetime'] . "</td></tr>\n";
+        echo "<tr><td>Times bought</td><td>" . $itemRow['buycount'] . "</td></tr>\n";
+        echo "<tr><td>Last time bought</td><td>" . $itemRow['lastbuytime'] . "</td></tr>\n";
         echo "</table>\n";
     }
 
@@ -147,7 +149,6 @@ class Item extends DBConnection
     {
         try {
             $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, item.unitid, unitname, quantity FROM item INNER JOIN unit ON item.unitid = unit.unitid ORDER BY itemname, unitname");
-            $updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity WHERE itemid=:itemid");
             $updateHistoryPrepStmt = $this->dbConn->prepare("INSERT INTO history (time, username, itemname, unitname, oldquantity, newquantity)
 		VALUES(NOW(), :username, :itemname, (SELECT unitname FROM unit WHERE unitid=:unitid), :oldquantity, :newquantity)");
             $getItemsPrepStmt->execute();
@@ -162,10 +163,17 @@ class Item extends DBConnection
                         $_POST[$itemKey] = 0;
                     }
                     echo "<tr><td>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "&#x25CF;" . $itemRow['unitname'] . "</td><td>" . htmlspecialchars($itemRow['quantity'], ENT_QUOTES) . "&rarr;" . htmlspecialchars($_POST[$itemKey], ENT_QUOTES) . "</td></tr>\n";
+                    
+                    if (abs($_POST[$itemKey]) < abs($itemRow['quantity'])) {
+                        $updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity, buycount=buycount+1, lastbuytime=NOW() WHERE itemid=:itemid");
+                    } else {
+                        $updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity WHERE itemid=:itemid");
+                    }
                     $updateItemPrepStmt->execute(array(
                         'quantity' => $_POST[$itemKey],
                         'itemid' => $itemRow['itemid']
                     ));
+                    
                     $updateHistoryPrepStmt->execute(array(
                         'username' => $_SESSION['username'],
                         'itemname' => $itemRow['itemname'],
@@ -178,23 +186,6 @@ class Item extends DBConnection
             echo "</table><p>\n";
         } catch (PDOException $exception) {
             echo "ERROR(" . __FILE__ . "): Could not update any itmes<br>\n";
-        }
-    }
-
-    public function displayItemsByCategory()
-    {
-        $_SESSION['previous_page'] = $_SERVER['REQUEST_URI'];
-        try {
-            $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, unitname, categoryname FROM item INNER JOIN unit ON item.unitid = unit.unitid INNER JOIN category ON item.categoryid = category.categoryid ORDER BY categoryname, itemname, unitname");
-            $getItemsPrepStmt->execute();
-            echo "<table>\n";
-            echo "<tr><th>Category</th><th>Item</th></tr>";
-            while ($itemRow = $getItemsPrepStmt->fetch()) {
-                echo "<tr><td>" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "</td><td>" . "<a href='change_item.php?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</a>&#x25CF;" . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</td></tr>\n";
-            }
-            echo "</table>\n";
-        } catch (PDOException $exception) {
-            echo "ERROR(" . __FILE__ . "): Could not display any itmes by category<br>\n";
         }
     }
 

@@ -1,7 +1,7 @@
 <?php
 namespace JamesSCrook\Shop;
 
-use \PDOException;
+use PDOException;
 
 /*
  * shop - Copyright (C) 2017-2018 James S. Crook

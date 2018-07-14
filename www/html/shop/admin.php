@@ -56,11 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "<button class='bttn' style=background-color:forestgreen; name='add_item_bttn'>&#x271A; Add Item</button><br>\n";
     echo "<button class='bttn' style=background-color:aqua; name='back_to_items_bttn'>&#x25C0; Back to Items</button><br>\n";
     
-    echo "<h3><div class='section_separator'>Manage Items' Category Assignments</div></h3>\n";
-    echo "<a href='items_by_category.php'>Manage Items' Category Assignments</a>\n";
-    
-    echo "<h3><div class='section_separator'>Edit User Profile</div></h3>\n";
-    echo "<a href='profile.php'>Edit User Profile</a>\n";
+    echo "<h3><div class='section_separator'>Miscellaneous</div></h3>\n";
+    echo "<a href='profile.php'>Edit User Profile</a><p>\n";
+    echo "<a href='items_by_category.php'>Manage Items' Category Assignments</a><p>\n";
+    echo "<a href='buy_time_details.php'>Display Items' Buy Time Details</a><p>\n";
     
     echo "<h3><div class='section_separator'>Manage Units</div></h3>\n";
     echo "Unit (add or rename as this)<br><input type='text' name='add_rename_unit' placeholder='1-12*' pattern='.{1,12}'><br>\n";
@@ -167,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
         header('Location: admin.php');
         exit();
     } else {
-        echo "SNARK!<br>";
+        echo "Unexpected error in " . $_SERVER["PHP_SELF"] . "<br>";
     }
 }
 ?>

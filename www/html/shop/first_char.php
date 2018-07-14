@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
         header("Location: first_char.php?first_char=" . htmlspecialchars($_GET['first_char'], ENT_QUOTES));
         exit();
     } else {
-        echo "SNARK!<br>\n";
+        echo "Unexpected error in " . $_SERVER["PHP_SELF"] . "<br>";
     }
 }
 ?>

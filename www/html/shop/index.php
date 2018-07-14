@@ -54,27 +54,27 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
         case "cq": // sort "by category, then by quantity"
             foreach ($activeCategories as $activeCategory) { // For each active category
                 echo "<div class='section_separator'>" . htmlspecialchars($activeCategory, ENT_QUOTES) . "</div>\n";
-		echo "<div class='grid-container'>\n";
+                echo "<div class='grid-container'>\n";
                 $item->displayItems("AND category.categoryid=(select categoryid from category where categoryname='$activeCategory') AND quantity > 0");
                 $item->displayItems("AND category.categoryid=(select categoryid from category where categoryname='$activeCategory') AND quantity < 0");
-		echo "</div>\n";
+                echo "</div>\n";
             }
             echo "<div class='section_separator'>Zero Quantities</div>\n";
-	    echo "<div class='grid-container'>\n";
+            echo "<div class='grid-container'>\n";
             $item->displayItems("AND quantity = 0");
-	    echo "</div>\n";
+            echo "</div>\n";
             break;
         case "a": // sort alphabetically
-	    echo "<div class='grid-container'>\n";
+            echo "<div class='grid-container'>\n";
             $item->displayItems("");
-	    echo "</div>\n";
+            echo "</div>\n";
             break;
         default: // sort "by quantity" - the default
-	    echo "<div class='grid-container'>\n";
+            echo "<div class='grid-container'>\n";
             $item->displayItems("AND quantity > 0");
             $item->displayItems("AND quantity < 0");
             $item->displayItems("AND quantity = 0");
-	    echo "</div>\n";
+            echo "</div>\n";
             break;
     }
     
@@ -101,6 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 </body>
 </html>
 <!--
-Version 0.1.1 - Wed Feb 21 06:57:55 AEDT 2018
+Version 1.0.0 - Sat Jul 14 11:28:29 AEST 2018
 shop - Copyright (C) 2017-2018 James S. Crook - GPL3+
 -->

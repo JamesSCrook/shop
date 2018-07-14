@@ -42,6 +42,12 @@ $item = new Item();
 $unit = new Unit();
 $category = new Category();
 
+if (isset($_SESSION['previous_page'])) {
+    $previousPage = "Location: " . $_SESSION['previous_page'];
+} else {
+    $previousPage = "Location: index.php"; // This should never happen!
+}
+
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     
     $itemRow = $item->getItemRow($_GET['itemid']);
@@ -66,14 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
         
         $_SESSION['itemid'] = $itemRow['itemid'];
     } else {
-        echo "SNARK!<br>";
+        header($previousPage);
+        exit();
     }
 } else { /* POST - a button has been pressed */
-    if (isset($_SESSION['previous_page'])) {
-        $previousPage = "Location: " . $_SESSION['previous_page'];
-    } else {
-        $previousPage = "Location: index.php"; // This should never happen!
-    }
     if (isset($_POST['change_item_bttn'])) {
         if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
             if ($item->updateItem(mb_strtoupper(mb_substr($_POST['itemname'], 0, 1)) . mb_substr($_POST['itemname'], 1), $_POST['unitname'], $_POST['categoryname'], $_POST['notes'], $_SESSION['username'], $_SESSION['itemid'])) {
@@ -91,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
         header($previousPage);
         exit();
     } else {
-        echo "SNARK!<br>";
+        echo "Unexpected error in " . $_SERVER["PHP_SELF"] . "<br>";
     }
 }
 ?>

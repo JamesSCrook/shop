@@ -1,6 +1,6 @@
 # shop
 
-Please refer to the github-pages link: [https://jamesscrook.github.io/shop](https://jamesscrook.github.io/shop)
+Please refer to the github-pages link: [https://yosj.com.au/staff/websites/shop/shop.html](https://yosj.com.au/staff/websites/shop/shop.html)
 
 But, very briefly, shop is a LAMP website that implements a shopping list.
 

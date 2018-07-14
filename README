@@ -46,7 +46,7 @@ Note: The term MySQL in this document also means mariadb.
     These are the files:
 	shop
 	shop/admin.php
-	shop/change_item.php
+	shop/buy_time_details.php
 	shop/first_char.php
 	shop/history.php
 	shop/index.php
@@ -56,11 +56,13 @@ Note: The term MySQL in this document also means mariadb.
 	shop/menus.css
 	shop/profile.php
 	shop/shop.css
+	shop/change_item.php
 	shop/classes
 	shop/classes/Autoloader.php
 	shop/classes/Category.php
 	shop/classes/ConfirmChange.php
 	shop/classes/History.php
+	shop/classes/ItemList.php
 	shop/classes/Item.php
 	shop/classes/Menu.php
 	shop/classes/Unit.php

@@ -1,4 +1,5 @@
 <?php
+
 namespace JamesSCrook\Shop;
 
 /*
@@ -33,74 +34,73 @@ require_once "classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 if (! isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit();
+	header("Location: login.php");
+	exit();
 }
 
 $user = new User();
 $item = new Item();
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    Menu::displayMenus(TRUE);
-    echo "<h3>Shopping List</h3>\n";
-    $item->displayLinks();
-    echo "<form id=items_form method='POST'>\n";
-    
-    $category = new Category();
-    $activeCategories = $category->getActiveCategories();
-    
-    $sortOrder = $user->getSortOrder($_SESSION['username']);
-    switch ($sortOrder) {
-        case "cq": // sort "by category, then by quantity"
-            foreach ($activeCategories as $activeCategory) { // For each active category
-                echo "<div class='section_separator'>" . htmlspecialchars($activeCategory, ENT_QUOTES) . "</div>\n";
-                echo "<div class='grid-container'>\n";
-                $item->displayItems("AND category.categoryid=(select categoryid from category where categoryname='$activeCategory') AND quantity > 0");
-                $item->displayItems("AND category.categoryid=(select categoryid from category where categoryname='$activeCategory') AND quantity < 0");
-                echo "</div>\n";
-            }
-            echo "<div class='section_separator'>Zero Quantities</div>\n";
-            echo "<div class='grid-container'>\n";
-            $item->displayItems("AND quantity = 0");
-            echo "</div>\n";
-            break;
-        case "a": // sort alphabetically
-            echo "<div class='grid-container'>\n";
-            $item->displayItems("");
-            echo "</div>\n";
-            break;
-        default: // sort "by quantity" - the default
-            echo "<div class='grid-container'>\n";
-            $item->displayItems("AND quantity > 0");
-            $item->displayItems("AND quantity < 0");
-            $item->displayItems("AND quantity = 0");
-            echo "</div>\n";
-            break;
-    }
-    
-    echo "</form>\n";
+	Menu::displayMenus(TRUE);
+	echo "<h3>Shopping List</h3>" . PHP_EOL;
+	$item->displayLinks();
+	echo "<form id=items_form method='POST'>" . PHP_EOL;
+	
+	$category = new Category();
+	$activeCategories = $category->getActiveCategories();
+	
+	$sortOrder = $user->getSortOrder($_SESSION['username']);
+	switch ($sortOrder) {
+		case "cq": // sort "by category, then by quantity"
+			foreach ($activeCategories as $activeCategory) { // For each active category
+				echo "<div class='section_separator'>" . htmlspecialchars($activeCategory, ENT_QUOTES) . "</div>" . PHP_EOL;
+				echo "<div class='grid-container'>" . PHP_EOL;
+				$item->displayItems("AND category.categoryid=(select categoryid from category where categoryname='$activeCategory') AND quantity > 0");
+				$item->displayItems("AND category.categoryid=(select categoryid from category where categoryname='$activeCategory') AND quantity < 0");
+				echo "</div>" . PHP_EOL;
+			}
+			echo "<div class='section_separator'>Zero Quantities</div>" . PHP_EOL;
+			echo "<div class='grid-container'>" . PHP_EOL;
+			$item->displayItems("AND quantity = 0");
+			echo "</div>" . PHP_EOL;
+			break;
+		case "a": // sort alphabetically
+			echo "<div class='grid-container'>" . PHP_EOL;
+			$item->displayItems("");
+			echo "</div>" . PHP_EOL;
+			break;
+		default: // sort "by quantity" - the default
+			echo "<div class='grid-container'>" . PHP_EOL;
+			$item->displayItems("AND quantity > 0");
+			$item->displayItems("AND quantity < 0");
+			$item->displayItems("AND quantity = 0");
+			echo "</div>" . PHP_EOL;
+			break;
+	}
+	
+	echo "</form>" . PHP_EOL;
 } else { /* POST - a button has been pressed */
-    if (isset($_POST['ack_changes_bttn'])) {
-        header("Location: index.php");
-        exit();
-    } else {
-        $item->updateItemQuantities();
-        if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
-            header("Location: index.php");
-            exit();
-        } else {
-            Menu::displayMenus(FALSE);
-            echo "<form id=ack_changes method='POST'>\n";
-            echo " <button class='bttn' style=background-color:aqua; name='ack_changes_bttn'>&#x25C0; Back to Items</button>\n";
-            echo "</form>\n";
-        }
-    }
+	if (isset($_POST['ack_changes_bttn'])) {
+		header("Location: index.php");
+		exit();
+	} else {
+		$item->updateItemQuantities($_POST);
+		if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
+			header("Location: index.php");
+			exit();
+		} else {
+			Menu::displayMenus(FALSE);
+			echo "<form id=ack_changes method='POST'>" . PHP_EOL;
+			echo " <button class='bttn' style=background-color:aqua; name='ack_changes_bttn'>&#x25C0; Back to Items</button>" . PHP_EOL;
+			echo "</form>" . PHP_EOL;
+		}
+	}
 }
 ?>
 
 </body>
 </html>
 <!--
-Version 1.0.0 - Sat Jul 14 11:28:29 AEST 2018
 shop - Copyright (C) 2017-2018 James S. Crook - GPL3+
 -->

@@ -1,5 +1,18 @@
+Mon Sep 24 11:59:51 AEST 2018
+	Version: 1.2.0
+	Modified the code format stye: tabs 8 -> 4, other whitespace, braces, etc.
+	Changed \n to PHP_EOL for newlines
+	Quantities changed from integer to floating point
+	Added a quantity field when adding an new item
+	Display more information if an exception occurs
+	Trim leading & trailing whitespace from usernames, categories, units and items
+	Replace non-leading whitespace(s) with a single space for usernames, categories, units and items
+	Make quantity fields slightly wider (because they're now floating point)
+	Rationalize (*) vs (required)/(optional)
+	Extend the history kept from 31 to 180 days
+
 Sat Jul 14 13:36:33 AEST 2018
-    v1.0.0
+    Version: 1.0.0
     Added 2 new fields to item table: buycount & lastbuytime.
     Last buy details are recorded each time the quantity is set closer to 0.
     Admin page has Misc section for: user prof, manage items & (new) buy time.
@@ -14,12 +27,12 @@ Sat Jul 14 13:36:33 AEST 2018
     identical websites, so I've removed the github pages one.
 
 Wed Feb 21 06:57:55 AEDT 2018
-    v0.1.1
+    Version: 0.1.1
     Autoloader.php: changed "static public" to "public static"
     ConfirmChange.php, confirmSuccess: changed "public" to "public static"
 
 Fri Feb 16 10:39:28 AEDT 2018
-    v0.1.0 - changed from <article> to grid layout. No IE support!
+    Version: 0.1.0 - changed from <article> to grid layout. No IE support!
 
 Mon Feb 12 11:37:04 AEDT 2018
-    Initial version: 0.0.0
+    Version: 0.0.0

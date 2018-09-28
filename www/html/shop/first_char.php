@@ -1,4 +1,5 @@
 <?php
+
 namespace JamesSCrook\Shop;
 
 /*
@@ -31,41 +32,41 @@ require_once "classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 if (! isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit();
+	header("Location: login.php");
+	exit();
 }
 
 $item = new Item();
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    Menu::displayMenus(TRUE);
-    echo "<h3>All Items Beginning with '" . htmlspecialchars($_GET['first_char'], ENT_QUOTES) . "'</h3>\n";
-    $item->displayLinks();
-    echo "<form id=items_form method='POST'>\n";
-    echo "<div class='grid-container'>\n";
-    $item->displayItems("AND SUBSTR(itemname,1,1)='" . htmlspecialchars($_GET['first_char'], ENT_QUOTES) . "'");
-    echo "</div>\n";
-    echo "</form>\n";
+	Menu::displayMenus(TRUE);
+	echo "<h3>All Items Beginning with '" . htmlspecialchars($_GET['first_char'], ENT_QUOTES) . "'</h3>" . PHP_EOL;
+	$item->displayLinks();
+	echo "<form id=items_form method='POST'>" . PHP_EOL;
+	echo "<div class='grid-container'>" . PHP_EOL;
+	$item->displayItems("AND SUBSTR(itemname,1,1)='" . htmlspecialchars($_GET['first_char'], ENT_QUOTES) . "'");
+	echo "</div>" . PHP_EOL;
+	echo "</form>" . PHP_EOL;
 } else { /* POST - a button has been pressed */
-    $item->updateItemQuantities();
-    
-    if (isset($_POST['update_items_bttn'])) {
-        $user = new User();
-        if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
-            header("Location: first_char.php?first_char=" . htmlspecialchars($_GET['first_char'], ENT_QUOTES));
-            exit();
-        } else {
-            Menu::displayMenus(FALSE);
-            echo "<form id=ack_changes method='POST'>\n";
-            echo " <button class='bttn' style=background-color:aqua; name='ack_changes_bttn'>&#x25C0; Back</button>\n";
-            echo "</form>\n";
-        }
-    } else if (isset($_POST['ack_changes_bttn'])) {
-        header("Location: first_char.php?first_char=" . htmlspecialchars($_GET['first_char'], ENT_QUOTES));
-        exit();
-    } else {
-        echo "Unexpected error in " . $_SERVER["PHP_SELF"] . "<br>";
-    }
+	$item->updateItemQuantities($_POST);
+	
+	if (isset($_POST['update_items_bttn'])) {
+		$user = new User();
+		if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
+			header("Location: first_char.php?first_char=" . htmlspecialchars($_GET['first_char'], ENT_QUOTES));
+			exit();
+		} else {
+			Menu::displayMenus(FALSE);
+			echo "<form id=ack_changes method='POST'>" . PHP_EOL;
+			echo " <button class='bttn' style=background-color:aqua; name='ack_changes_bttn'>&#x25C0; Back</button>" . PHP_EOL;
+			echo "</form>" . PHP_EOL;
+		}
+	} else if (isset($_POST['ack_changes_bttn'])) {
+		header("Location: first_char.php?first_char=" . htmlspecialchars($_GET['first_char'], ENT_QUOTES));
+		exit();
+	} else {
+		echo "Unexpected error in " . $_SERVER["PHP_SELF"] . "<br>";
+	}
 }
 ?>
 

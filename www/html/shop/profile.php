@@ -1,4 +1,5 @@
 <?php
+
 namespace JamesSCrook\Shop;
 
 /*
@@ -31,65 +32,65 @@ require_once "classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 if (! isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit();
+	header("Location: login.php");
+	exit();
 }
 
-echo "<h3>Edit Profile: " . htmlspecialchars($_SESSION['username'], ENT_QUOTES) . "</h3>\n";
+echo "<h3>Edit Profile: " . htmlspecialchars($_SESSION['username'], ENT_QUOTES) . "</h3>" . PHP_EOL;
 
 Menu::displayMenus(FALSE);
 $user = new User();
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    
-    echo "<form id=profile_form method='POST'>\n";
-    echo "New password<br><input type='password' name='newPassword1' size='20' pattern='.{6,}' placeholder='min 6 chars'><br>\n";
-    echo "Repeat password<br><input type='password' name='newPassword2' size='20' pattern='.{6,}'><p>\n";
-    
-    $sortOrder = $user->getSortOrder($_SESSION['username']);
-    echo "Sort Order<br>\n";
-    echo "<select name='sortOrder'>\n";
-    if ($sortOrder == "cq") {
-        echo " <option value='q'>Quantity</option>\n";
-        echo " <option value='cq' selected>Category, quantity</option>\n";
-        echo " <option value='a'>Alphabetical</option>\n";
-    } else if ($sortOrder == "a") {
-        echo " <option value='q'>Quantity</option>\n";
-        echo " <option value='cq'>Category, quantity</option>\n";
-        echo " <option value='a' selected>Alphabetical</option>\n";
-    } else {
-        echo " <option value='q' selected>Quantity</option>\n";
-        echo " <option value='cq'>Category, quantity</option>\n";
-        echo " <option value='a'>Alphabetical</option>\n";
-    }
-    echo "</select><p>\n";
-    
-    echo "Display Update Confirmations<br>\n";
-    echo "<select name='displayUpdates'>\n";
-    if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
-        echo " <option value='Yes'>Yes</option>\n";
-        echo " <option value='No' selected>No</option>\n";
-    } else {
-        echo " <option value='Yes' selected>Yes</option>\n";
-        echo " <option value='No'>No</option>\n";
-    }
-    echo "</select><p>\n";
-    echo " <button class='bttn' style=background-color:lightgreen; name='updateprofile'>&#x270E; Update Profile</button><p>\n";
-    echo "</form>\n";
+
+	echo "<form id=profile_form method='POST'>" . PHP_EOL;
+	echo "New password<br><input type='password' name='newPassword1' size='20' pattern='.{6,}' placeholder='min 6 chars'><br>" . PHP_EOL;
+	echo "Repeat password<br><input type='password' name='newPassword2' size='20' pattern='.{6,}'><p>" . PHP_EOL;
+
+	$sortOrder = $user->getSortOrder($_SESSION['username']);
+	echo "Sort Order<br>" . PHP_EOL;
+	echo "<select name='sortOrder'>" . PHP_EOL;
+	if ($sortOrder == "cq") {
+		echo " <option value='q'>Quantity</option>" . PHP_EOL;
+		echo " <option value='cq' selected>Category, quantity</option>" . PHP_EOL;
+		echo " <option value='a'>Alphabetical</option>" . PHP_EOL;
+	} else if ($sortOrder == "a") {
+		echo " <option value='q'>Quantity</option>" . PHP_EOL;
+		echo " <option value='cq'>Category, quantity</option>" . PHP_EOL;
+		echo " <option value='a' selected>Alphabetical</option>" . PHP_EOL;
+	} else {
+		echo " <option value='q' selected>Quantity</option>" . PHP_EOL;
+		echo " <option value='cq'>Category, quantity</option>" . PHP_EOL;
+		echo " <option value='a'>Alphabetical</option>" . PHP_EOL;
+	}
+	echo "</select><p>" . PHP_EOL;
+
+	echo "Display Update Confirmations<br>" . PHP_EOL;
+	echo "<select name='displayUpdates'>" . PHP_EOL;
+	if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
+		echo " <option value='Yes'>Yes</option>" . PHP_EOL;
+		echo " <option value='No' selected>No</option>" . PHP_EOL;
+	} else {
+		echo " <option value='Yes' selected>Yes</option>" . PHP_EOL;
+		echo " <option value='No'>No</option>" . PHP_EOL;
+	}
+	echo "</select><p>" . PHP_EOL;
+	echo " <button class='bttn' style=background-color:lightgreen; name='updateprofile'>&#x270E; Update Profile</button><p>" . PHP_EOL;
+	echo "</form>" . PHP_EOL;
 } else { /* POST - a button has been pressed */
-    if (isset($_POST['updateprofile'])) {
-        if ($_POST['newPassword1'] != "") {
-            $user->setPassword($_SESSION['username'], $_POST['newPassword1'], $_POST['newPassword2']);
-        }
-        
-        if ($_POST['sortOrder'] != "" && $_POST['sortOrder'] != $user->getSortOrder($_SESSION['username'])) {
-            $user->setSortOrder($_SESSION['username'], $_POST['sortOrder']);
-        }
-        
-        if ($_POST['displayUpdates'] != "" && $_POST['displayUpdates'] != $user->getDisplayUpdates($_SESSION['username'])) {
-            $user->setDisplayUpdates($_SESSION['username'], $_POST['displayUpdates']);
-        }
-    }
+	if (isset($_POST['updateprofile'])) {
+		if ($_POST['newPassword1'] != "") {
+			$user->setPassword($_SESSION['username'], $_POST['newPassword1'], $_POST['newPassword2']);
+		}
+
+		if ($_POST['sortOrder'] != "" && $_POST['sortOrder'] != $user->getSortOrder($_SESSION['username'])) {
+			$user->setSortOrder($_SESSION['username'], $_POST['sortOrder']);
+		}
+
+		if ($_POST['displayUpdates'] != "" && $_POST['displayUpdates'] != $user->getDisplayUpdates($_SESSION['username'])) {
+			$user->setDisplayUpdates($_SESSION['username'], $_POST['displayUpdates']);
+		}
+	}
 }
 ?>
 

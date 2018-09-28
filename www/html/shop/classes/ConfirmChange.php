@@ -1,4 +1,5 @@
 <?php
+
 namespace JamesSCrook\Shop;
 
 /*
@@ -9,16 +10,14 @@ namespace JamesSCrook\Shop;
  * by the Free Software Foundation, either version 3 of the License, or (at your option) any
  * later version (see <http://www.gnu.org/licenses/>).
  */
-class ConfirmChange
-{
+class ConfirmChange {
 
-    public static function confirmSuccess($message)
-    {
-        echo "<span class=success_symbol>&#x2714; </span>";
-        echo htmlspecialchars($message, ENT_QUOTES) . "<p>\n";
-        echo "<form id=ack_manage method='POST'>\n";
-        echo "<button class='bttn' style=background-color:aqua; name='ack_manage_bttn'>&#x25C0; Back to Admin</button>\n";
-        echo "</form>\n";
-    }
+	public static function confirmSuccess($message) {
+		echo "<span class=success_symbol>&#x2714; </span>";
+		echo htmlspecialchars($message, ENT_QUOTES) . "<p>" . PHP_EOL;
+		echo "<form id=ack_manage method='POST'>" . PHP_EOL;
+		echo "<button class='bttn' style=background-color:aqua; name='ack_manage_bttn'>&#x25C0; Back to Admin</button>" . PHP_EOL;
+		echo "</form>" . PHP_EOL;
+	}
 }
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 namespace JamesSCrook\Shop;
 
 /*
@@ -31,12 +32,12 @@ spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 Menu::displayMenus(FALSE);
 
 if (isset($_SESSION['username'])) {
-    echo "See you next time...";
-    setcookie(session_name(), '', 100);
-    session_unset();
-    session_destroy();
+	echo "See you next time...";
+	setcookie(session_name(), '', 100);
+	session_unset();
+	session_destroy();
 } else {
-    echo "You weren't logged in, bye!";
+	echo "You weren't logged in, bye!";
 }
 ?>
 

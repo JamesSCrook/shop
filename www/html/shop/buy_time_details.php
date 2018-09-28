@@ -1,4 +1,5 @@
 <?php
+
 namespace JamesSCrook\Shop;
 
 /*
@@ -30,19 +31,19 @@ require_once "classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 if (! isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit();
+	header("Location: login.php");
+	exit();
 }
 
 Menu::displayMenus(FALSE);
 
-echo "<h3>Buy Time Details</h3>\n";
+echo "<h3>Buy Time Details</h3>" . PHP_EOL;
 
 $itemList = new ItemList();
 if (isset($_GET['sortby'])) {
-    $itemList->displayBuyTimeDetails($_GET['sortby']);
+	$itemList->displayBuyTimeDetails($_GET['sortby']);
 } else {
-    $itemList->displayBuyTimeDetails("last_buy_time_asc");
+	$itemList->displayBuyTimeDetails("last_buy_time_asc");
 }
 
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 namespace JamesSCrook\Shop;
 
 /*
@@ -9,47 +10,48 @@ namespace JamesSCrook\Shop;
  * by the Free Software Foundation, either version 3 of the License, or (at your option) any
  * later version (see <http://www.gnu.org/licenses/>).
  */
-class Menu
-{
+class Menu {
 
-    /*
-     * Multiple heredocs just looked to horrible, so, multi-line echo it is...
-     */
-    public static function displayMenus($itemPageFlag)
-    {
-        echo "
-	    <link href='menus.css' rel='stylesheet'>
+	/*
+	 * Multiple heredocs just looked to horrible, so, multi-line echo it is...
+	 */
+	public static function displayMenus($itemPageFlag) {
+		echo "
+			<link href='menus.css' rel='stylesheet'>
 
-	    <nav class='nav-bar'>
-	    <label for='toggle' class='nav-bar__label'><div class='menu__icon'>
-	      </div><div class='menu__icon'></div><div class='menu__icon'></div>
-	    </label>
-	    <input type='checkbox' id='toggle' class='nav-bar__toggle'>
-	    <ul class='nav-bar__list'>
-	      <li class='nav-bar__list-item'>
-		  <a href='index.php' class='nav-bar__link'>Items</a>
-	      </li>
-	      <li class='nav-bar__list-item'>
-		  <a href='admin.php' class='nav-bar__link'>Admin</a>
-	      </li>
-	      <li class='nav-bar__list-item'>
-		  <a href='history.php' class='nav-bar__link'>History</a>
-	      </li>
-	      <li class='nav-bar__list-item'>
-		  <a href='logout.php' class='nav-bar__link'>Logout</a>
-	      </li>
-	  ";
-        if ($itemPageFlag) {
-            echo "
-	      <li class='nav-bar__list-item'>
-		<button class='nav-bar__bttn-item' form='items_form' name='update_items_bttn'>Update</button>
-	      </li>
-	  ";
-        }
-        echo "
-	    </ul>
-	</nav>
-	";
-    }
+			<nav class='nav-bar'>
+			<label for='toggle' class='nav-bar__label'><div class='menu__icon'>
+			  </div><div class='menu__icon'></div><div class='menu__icon'></div>
+			</label>
+			<input type='checkbox' id='toggle' class='nav-bar__toggle'>
+			<ul class='nav-bar__list'>
+			  <li class='nav-bar__list-item'>
+				  <a href='index.php' class='nav-bar__link'>Items</a>
+			  </li>
+			  <li class='nav-bar__list-item'>
+				  <a href='admin.php' class='nav-bar__link'>Admin</a>
+			  </li>
+			  <li class='nav-bar__list-item'>
+				  <a href='history.php' class='nav-bar__link'>History</a>
+			  </li>
+			  <li class='nav-bar__list-item'>
+				  <a href='logout.php' class='nav-bar__link'>Logout</a>
+			  </li>
+		  ";
+		if ($itemPageFlag) {
+			echo "
+			  <li class='nav-bar__list-item'>
+				<button class='nav-bar__bttn-item' form='items_form' name='update_items_bttn'>Update</button>
+			  </li>
+		  ";
+		}
+		echo "
+			</ul>
+		</nav>
+		";
+	}
 }
 ?>
+<!--
+Version 1.2.0 - Mon Sep 24 11:59:51 AEST 2018
+-->

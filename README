@@ -44,41 +44,44 @@ Note: The term MySQL in this document also means mariadb.
 
 5. Copy the shop directory tree into your web server's document root:
     These are the files:
-	shop
-	shop/admin.php
-	shop/buy_time_details.php
-	shop/first_char.php
-	shop/history.php
-	shop/index.php
-	shop/items_by_category.php
-	shop/login.php
-	shop/logout.php
-	shop/menus.css
-	shop/profile.php
-	shop/shop.css
-	shop/change_item.php
-	shop/classes
-	shop/classes/Autoloader.php
-	shop/classes/Category.php
-	shop/classes/ConfirmChange.php
-	shop/classes/History.php
-	shop/classes/ItemList.php
-	shop/classes/Item.php
-	shop/classes/Menu.php
-	shop/classes/Unit.php
-	shop/classes/User.php
+		www
+		www/html
+		www/html/shop
+		www/html/shop/admin.php
+		www/html/shop/buy_time_details.php
+		www/html/shop/change_item.php
+		www/html/shop/classes
+		www/html/shop/classes/Autoloader.php
+		www/html/shop/classes/Category.php
+		www/html/shop/classes/ConfirmChange.php
+		www/html/shop/classes/History.php
+		www/html/shop/classes/ItemList.php
+		www/html/shop/classes/Item.php
+		www/html/shop/classes/Menu.php
+		www/html/shop/classes/Unit.php
+		www/html/shop/classes/User.php
+		www/html/shop/first_char.php
+		www/html/shop/history.php
+		www/html/shop/index.php
+		www/html/shop/items_by_category.php
+		www/html/shop/login.php
+		www/html/shop/logout.php
+		www/html/shop/menus.css
+		www/html/shop/profile.php
+		www/html/shop/shop.css
+		www/shop_db_conn.php
 
     Modifiy the DB connection file shop_db_conn.php to have correct contents:
-	- $dbHost = "localhost";		Change your DB server only if it runs on a different server
-	- $dbUser = "your_db_username";		Change as required
-	- $dbPassword = "your_db_password";	Change as required
-	- $dbName = "your_db_name";		Change as required
+		- $dbHost = "localhost";		Change your DB server only if it runs on a different server
+		- $dbUser = "your_db_username";		Change as required
+		- $dbPassword = "your_db_password";	Change as required
+		- $dbName = "your_db_name";		Change as required
     And copy the modified file onle level above your web server's document root
 
     Note: if you choose a name other than 'shop', then rename shop_db_conn.php accordingly:
-        For example:
-	$ mv shop Liszt
-	$ mv shop_db_conn.php Liszt_db_conn.php
+		For example:
+		$ mv shop Liszt
+		$ mv shop_db_conn.php Liszt_db_conn.php
 
 6. Point your web browser to the new web page and start using shop!:
     http://localhost/shop

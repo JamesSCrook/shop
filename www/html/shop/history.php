@@ -1,4 +1,5 @@
 <?php
+
 namespace JamesSCrook\Shop;
 
 /*
@@ -30,13 +31,13 @@ require_once "classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 if (! isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit();
+	header("Location: login.php");
+	exit();
 }
 
 Menu::displayMenus(FALSE);
 
-echo "<h3>History</h3>\n";
+echo "<h3>History</h3>" . PHP_EOL;
 $history = new History();
 $history->displayHistory();
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 namespace JamesSCrook\Shop;
 
 /*
@@ -32,13 +33,13 @@ require_once "classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 if (! isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit();
+	header("Location: login.php");
+	exit();
 }
 
 Menu::displayMenus(FALSE);
 
-echo "<h3>Items by Category</h3>\n";
+echo "<h3>Items by Category</h3>" . PHP_EOL;
 $itemList = new ItemList();
 $itemList->displayItemsByCategory();
 ?>

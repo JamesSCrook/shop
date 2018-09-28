@@ -1,4 +1,5 @@
 <?php
+
 namespace JamesSCrook\Shop;
 
 /*
@@ -13,20 +14,18 @@ namespace JamesSCrook\Shop;
 /*
  * Set up to auto-load classes iff they are required.
  */
-class Autoloader
-{
+class Autoloader {
 
-    public static function loader($className)
-    {
-        $classNameComponents = explode('\\', $className);
-        $fileName = "classes/" . end($classNameComponents) . ".php";
-        
-        if (file_exists($fileName)) {
-            require_once $fileName;
-            if (class_exists($className)) {
-                return TRUE;
-            }
-        }
-        return FALSE;
-    }
+	public static function loader($className) {
+		$classNameComponents = explode('\\', $className);
+		$fileName = "classes/" . end($classNameComponents) . ".php";
+
+		if (file_exists($fileName)) {
+			require_once $fileName;
+			if (class_exists($className)) {
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
 }

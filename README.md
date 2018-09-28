@@ -18,7 +18,7 @@ Technologies:
  1. Linux
  2. Apache
  3. MySQL
- 4. PHP 7.1
+ 4. PHP 7
  5. OOP
  6. HTML5 (including the new "grid layout" - which IE cannot handle!)
 

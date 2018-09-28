@@ -1,4 +1,5 @@
 <?php
+
 namespace JamesSCrook\Shop;
 
 /*
@@ -34,24 +35,24 @@ spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 Menu::displayMenus(FALSE);
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    echo "<form id=login_form method='POST'>\n";
-    echo "  Username <input type='text' name='username' size='20'><p>\n";
-    echo "  Password <input type='password' name='password' size='20'><p>\n";
-    echo "  <input type='submit' value='Login' name='login'>\n";
-    echo "</form>\n";
+	echo "<form id=login_form method='POST'>" . PHP_EOL;
+	echo "  Username <input type='text' name='username' size='20'><p>" . PHP_EOL;
+	echo "  Password <input type='password' name='password' size='20'><p>" . PHP_EOL;
+	echo "  <input type='submit' value='Login' name='login'>" . PHP_EOL;
+	echo "</form>" . PHP_EOL;
 } else {
-    $user = new User();
-    if ($user->isUserValid($_POST['username'], $_POST['password'])) {
-        /* Trim the history every time any user logs in successfully */
-        $history = new History();
-        $history->trimHistory();
-        $_SESSION['username'] = $_POST['username'];
-        header("Location: index.php");
-        exit();
-    } else {
-        echo "Login unsuccessful - Please try again.<br>\n";
-        unset($_SESSION['username']);
-    }
+	$user = new User();
+	if ($user->isUserValid($_POST['username'], $_POST['password'])) {
+		/* Trim the history every time any user logs in successfully */
+		$history = new History();
+		$history->trimHistory();
+		$_SESSION['username'] = $_POST['username'];
+		header("Location: index.php");
+		exit();
+	} else {
+		echo "Login unsuccessful - Please try again.<br>" . PHP_EOL;
+		unset($_SESSION['username']);
+	}
 }
 ?>
 

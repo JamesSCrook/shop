@@ -1,12 +1,13 @@
 # shop
 
-Please refer to the github-pages link: [https://yosj.com.au/staff/websites/shop/shop.html](https://yosj.com.au/staff/websites/shop/shop.html)
+See
+[https://yosj.com.au/staff/websites/shop/shop.html](https://yosj.com.au/staff/websites/shop/shop.html)
+for details.
 
-But, very briefly, shop is a LAMP website that implements a shopping list.
+But, very briefly, shop is a LAMP website that implements a shared shopping list for N users.
 
 There are, of course, many mofo apps that do this. But by implementing an application on your own
-web/db server, only you have access to your data. (Privacy is important to me - even if it's how many
-carrots I bought.)
+web/db server, only you have access to your data.
 
 Full disclosure: I wrote this to learn OOP PHP for a Cassandra website I'm working on now.
 

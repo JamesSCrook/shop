@@ -1,38 +1,42 @@
-Mon Sep 24 11:59:51 AEST 2018
-	Version: 1.2.0
-	Modified the code format stye: tabs 8 -> 4, other whitespace, braces, etc.
-	Changed \n to PHP_EOL for newlines
-	Quantities changed from integer to floating point
-	Added a quantity field when adding an new item
-	Display more information if an exception occurs
-	Trim leading & trailing whitespace from usernames, categories, units and items
-	Replace non-leading whitespace(s) with a single space for usernames, categories, units and items
-	Make quantity fields slightly wider (because they're now floating point)
-	Rationalize (*) vs (required)/(optional)
-	Extend the history kept from 31 to 180 days
+Sat Oct 13 10:35:34 AEDT 2018
+    v1.2.1
+	Added checks for item(s) that use a unit or category before either can be
+	deleted - eliminated unfriendly DB referential integrity violation errors.
+
+	A bit of whitespace reformatting.
+
+Sat Sep 29 09:07:52 2018 +1000
+    v1.2.0
+	Convert item quantities from integer to floating point values. HTML
+	forms allow 0, 1 or 2 decimal places.
+
+Fri Jul 20 12:18:20 AEST 2018
+    v1.0.1
+    Changed all \n end of lines to PHP_EOL and oved the version info from
+    index.php to Menu.php (so displays on every page).
 
 Sat Jul 14 13:36:33 AEST 2018
-	Version: 1.0.0
-	Added 2 new fields to item table: buycount & lastbuytime.
-	Last buy details are recorded each time the quantity is set closer to 0.
-	Admin page has Misc section for: user prof, manage items & (new) buy time.
-	change_item item not found (browswer back after a del) goes to prev. page.
-	New class ItemList (displayItemsByCategory moved here from Item).
+    v1.0.0
+    Added 2 new fields to item table: buycount & lastbuytime.
+    Last buy details are recorded each time the quantity is set closer to 0.
+    Admin page has Misc section for: user prof, manage items & (new) buy time.
+    change_item item not found (browswer back after a del) goes to prev. page.
+    New class ItemList (displayItemsByCategory moved here from Item).
 
-	Also, deleted the docs directory tree (github pages). A while back, some
-	folks posted that the kool kids preferred the main web site for a github
-	repo should also be on github (e.g., pages). So I did that. Now that M$
-	has bought github, I suspect I'll be moving my code anyway. So it's all
-	irrelevant now in any case. It was extra effort maintaining 2 _nearly_
-	identical websites, so I've removed the github pages one.
+    Also, deleted the docs directory tree (github pages). A while back, some
+    folks posted that the kool kids preferred the main web site for a github
+    repo should also be on github (e.g., pages). So I did that. Now that M$
+    has bought github, I suspect I'll be moving my code anyway. So it's all
+    irrelevant now in any case. It was extra effort maintaining 2 _nearly_
+    identical websites, so I've removed the github pages one.
 
 Wed Feb 21 06:57:55 AEDT 2018
-	Version: 0.1.1
-	Autoloader.php: changed "static public" to "public static"
-	ConfirmChange.php, confirmSuccess: changed "public" to "public static"
+    v0.1.1
+    Autoloader.php: changed "static public" to "public static"
+    ConfirmChange.php, confirmSuccess: changed "public" to "public static"
 
 Fri Feb 16 10:39:28 AEDT 2018
-	Version: 0.1.0 - changed from <article> to grid layout. No IE support!
+    v0.1.0 - changed from <article> to grid layout. No IE support!
 
 Mon Feb 12 11:37:04 AEDT 2018
-	Version: 0.0.0
+    Initial version: 0.0.0

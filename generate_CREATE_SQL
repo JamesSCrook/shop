@@ -37,7 +37,7 @@ CREATE TABLE ${DB_NAME}.user (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
 CREATE TABLE ${DB_NAME}.unit (
-    unitid			INT NOT NULL AUTO_INCREMENT,
+    unitid		INT NOT NULL AUTO_INCREMENT,
     unitname		CHAR(12) NOT NULL,
     PRIMARY KEY (unitid),
     UNIQUE KEY unitidx (unitname)
@@ -51,14 +51,14 @@ CREATE TABLE ${DB_NAME}.category (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
 CREATE TABLE ${DB_NAME}.item (
-    itemid			INT NOT NULL AUTO_INCREMENT,
+    itemid		INT NOT NULL AUTO_INCREMENT,
     itemname		CHAR(30)  NOT NULL,
-    unitid			INT,
+    unitid		INT,
     categoryid		INT,
-    notes			CHAR(255),
+    notes		CHAR(255),
     quantity 		FLOAT NOT NULL,
     addusername		CHAR(64),
-    addtime			DATETIME,
+    addtime		DATETIME,
     changeusername 	CHAR(64),
     changetime		DATETIME,
     buycount		INT NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE ${DB_NAME}.item (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
 CREATE TABLE ${DB_NAME}.history (
-    time			DATETIME NOT NULL,
+    time		DATETIME NOT NULL,
     username		CHAR(64) NOT NULL,
     itemname		CHAR(30) NOT NULL,
     unitname		CHAR(12) NOT NULL,

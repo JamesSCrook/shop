@@ -33,7 +33,7 @@ require_once dirname(dirname(dirname(__FILE__))) . dirname($_SERVER["PHP_SELF"])
 require_once "classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
-if (! isset($_SESSION['username'])) {
+if (!isset($_SESSION['username'])) {
 	header("Location: login.php");
 	exit();
 }
@@ -46,10 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "<h3>Shopping List</h3>" . PHP_EOL;
 	$item->displayLinks();
 	echo "<form id=items_form method='POST'>" . PHP_EOL;
-	
+
 	$category = new Category();
 	$activeCategories = $category->getActiveCategories();
-	
+
 	$sortOrder = $user->getSortOrder($_SESSION['username']);
 	switch ($sortOrder) {
 		case "cq": // sort "by category, then by quantity"
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 			echo "</div>" . PHP_EOL;
 			break;
 	}
-	
+
 	echo "</form>" . PHP_EOL;
 } else { /* POST - a button has been pressed */
 	if (isset($_POST['ack_changes_bttn'])) {

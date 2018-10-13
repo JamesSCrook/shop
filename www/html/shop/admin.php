@@ -31,7 +31,7 @@ require_once dirname(dirname(dirname(__FILE__))) . dirname($_SERVER["PHP_SELF"])
 require_once "classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
-if (! isset($_SESSION['username'])) {
+if (!isset($_SESSION['username'])) {
 	header("Location: login.php");
 	exit();
 }
@@ -43,9 +43,9 @@ $user = new User();
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "<h3><div class='section_separator'>Add a New Item</div></h3>" . PHP_EOL;
-	
+
 	echo "<form method='POST'>" . PHP_EOL;
-	
+
 	echo "Description (required)<br><input type='text' name='itemname' placeholder='1UC+0-29*' pattern='.{1,30}'><p>" . PHP_EOL;
 	echo "Unit (required)<br><select name='unitname'><option></option>" . PHP_EOL;
 	$unit->displayUnitDropDownList(NULL);
@@ -58,12 +58,12 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo " <input type='number' name='quantity' min='-9999' max='9999' step='0.01'><p>" . PHP_EOL;
 	echo "<button class='bttn' style=background-color:forestgreen; name='add_item_bttn'>&#x271A; Add Item</button><br>" . PHP_EOL;
 	echo "<button class='bttn' style=background-color:aqua; name='back_to_items_bttn'>&#x25C0; Back to Items</button><br>" . PHP_EOL;
-	
+
 	echo "<h3><div class='section_separator'>Miscellaneous</div></h3>" . PHP_EOL;
 	echo "<a href='profile.php'>Edit User Profile</a><p>" . PHP_EOL;
 	echo "<a href='items_by_category.php'>Manage Items' Category Assignments</a><p>" . PHP_EOL;
 	echo "<a href='buy_time_details.php'>Display Items' Buy Time Details</a><p>" . PHP_EOL;
-	
+
 	echo "<h3><div class='section_separator'>Manage Units</div></h3>" . PHP_EOL;
 	echo "Unit (add or rename as this)<br><input type='text' name='add_rename_unit' placeholder='1-12*' pattern='.{1,12}'><br>" . PHP_EOL;
 	echo "<button class='bttn' style=background-color:forestgreen; name='add_unit_bttn'>&#x271A; Add Unit</button><p>" . PHP_EOL;
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "</select><br>" . PHP_EOL;
 	echo "<button class='bttn' style=background-color:lightgreen; name='rename_unit_bttn'>&#x270E; Rename Unit</button><p>" . PHP_EOL;
 	echo "<button class='bttn' style=background-color:salmon; name='delete_unit_bttn'>&#x1F5D1 Delete Unit</button>(!)" . PHP_EOL;
-	
+
 	echo "<h3><div class='section_separator'>Manage Categories</div></h3>" . PHP_EOL;
 	echo "Category (add or rename as this)<br><input type='text' name='add_rename_category' placeholder='1-64*' pattern='.{1,64}'><br>" . PHP_EOL;
 	echo "<button class='bttn' style=background-color:forestgreen; name='add_category_bttn'>&#x271A; Add Category</button><p>" . PHP_EOL;
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "</select><br>" . PHP_EOL;
 	echo "<button class='bttn' style=background-color:lightgreen; name='rename_category_bttn'>&#x270E; Rename Category</button><p>" . PHP_EOL;
 	echo "<button class='bttn' style=background-color:salmon; name='delete_category_bttn'>&#x1F5D1 Delete Category</button>(!)" . PHP_EOL;
-	
+
 	echo "<h3><div class='section_separator'>Manage Users</div></h3>" . PHP_EOL;
 	echo "New User<br><input type='text' name='add_username' pattern='.{1,}'><br>" . PHP_EOL;
 	echo "New password<br><input type='password' name='newpw1' size='20' pattern='.{6,}' placeholder='min 6 chars'><br>" . PHP_EOL;
@@ -92,10 +92,10 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	$user->displayUsernameDropDownList();
 	echo "</select><p>" . PHP_EOL;
 	echo "<button class='bttn' style=background-color:salmon; name='delete_user_bttn'>&#x1F5D1 Delete User</button>(!)" . PHP_EOL;
-	
+
 	echo "</form>" . PHP_EOL;
 } else { /* POST - a button has been pressed */
-	
+
 	if (isset($_POST['add_item_bttn'])) {
 		if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
 			$item = new Item();

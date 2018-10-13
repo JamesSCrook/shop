@@ -63,17 +63,40 @@ class Category extends DBConnection {
 		}
 	}
 
-	public function deleteCategory($deleteCategoryName) {
+	private function countItemsWithThisCategory($categoryName) {
 		try {
-			$deleteCategoryPrepStmt = $this->dbConn->prepare("DELETE FROM category WHERE categoryname = :categoryname");
-			$deleteCategoryPrepStmt->execute(array(
-				'categoryname' => $deleteCategoryName
+			$checkCategoryPrepStmt = $this->dbConn->prepare("select count(*) FROM category, item WHERE categoryname=:categoryname AND category.categoryid=item.categoryid");
+			$checkCategoryPrepStmt->execute(array(
+				'categoryname' => $categoryName
 			));
-			ConfirmChange::confirmSuccess("Category '$deleteCategoryName' successfully deleted");
+			if ($categoryRow = $checkCategoryPrepStmt->fetch()) {
+				return $categoryRow['count(*)'];
+			} else {
+				echo "Inconsistency with category '$categoryName'! Ack!<p>";
+			}
 		} catch(PDOException $exception) {
 			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
-			echo "Could not delete category '" . htmlspecialchars($deleteCategoryName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
 		}
+		exit();
+	}
+
+	public function deleteCategory($deleteCategoryName) {
+		$categoryCount = $this->countItemsWithThisCategory($deleteCategoryName);
+		if ($this->countItemsWithThisCategory($deleteCategoryName) == 0) {
+			try {
+				$deleteCategoryPrepStmt = $this->dbConn->prepare("DELETE FROM category WHERE categoryname = :categoryname");
+				$deleteCategoryPrepStmt->execute(array(
+					'categoryname' => $deleteCategoryName
+				));
+				ConfirmChange::confirmSuccess("Category '$deleteCategoryName' successfully deleted");
+				return;
+			} catch(PDOException $exception) {
+				echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
+			}
+		} else {
+			echo "There are $categoryCount item(s) that use this category.<p>";
+		}
+		echo "Could not delete category '" . htmlspecialchars($deleteCategoryName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
 	}
 
 	public function displayCategoryDropDownList($categoryId) {

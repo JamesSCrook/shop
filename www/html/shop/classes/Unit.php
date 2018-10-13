@@ -63,17 +63,40 @@ class Unit extends DBConnection {
 		}
 	}
 
-	public function deleteUnit($deleteUnitName) {
+	private function countItemsWithThisUnit($unitName) {
 		try {
-			$deleteUnitPrepStmt = $this->dbConn->prepare("DELETE FROM unit WHERE unitname = :unitname");
-			$deleteUnitPrepStmt->execute(array(
-				'unitname' => $deleteUnitName
+			$checkUnitPrepStmt = $this->dbConn->prepare("select count(*) FROM unit, item WHERE unitname=:unitname AND unit.unitid=item.unitid");
+			$checkUnitPrepStmt->execute(array(
+				'unitname' => $unitName
 			));
-			ConfirmChange::confirmSuccess("Unit '$deleteUnitName' successfully deleted");
+			if ($unitRow = $checkUnitPrepStmt->fetch()) {
+				return $unitRow['count(*)'];
+			} else {
+				echo "Inconsistency with unit '$unitName'! Ack!<p>";
+			}
 		} catch(PDOException $exception) {
 			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
-			echo "Could not delete unit '" . htmlspecialchars($deleteUnitName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
 		}
+		exit();
+	}
+
+	public function deleteUnit($deleteUnitName) {
+		$unitCount = $this->countItemsWithThisUnit($deleteUnitName);
+		if ($this->countItemsWithThisUnit($deleteUnitName) == 0) {
+			try {
+				$deleteUnitPrepStmt = $this->dbConn->prepare("DELETE FROM unit WHERE unitname = :unitname");
+				$deleteUnitPrepStmt->execute(array(
+					'unitname' => $deleteUnitName
+				));
+				ConfirmChange::confirmSuccess("Unit '$deleteUnitName' successfully deleted");
+				return;
+			} catch(PDOException $exception) {
+				echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
+			}
+		} else {
+			echo "There are $unitCount item(s) that use this unit.<p>";
+		}
+		echo "Could not delete unit '" . htmlspecialchars($deleteUnitName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
 	}
 
 	public function displayUnitDropDownList($unitId) {

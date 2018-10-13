@@ -33,7 +33,7 @@ require_once dirname(dirname(dirname(__FILE__))) . dirname($_SERVER["PHP_SELF"])
 require_once "classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
-if (! isset($_SESSION['username'])) {
+if (!isset($_SESSION['username'])) {
 	header("Location: login.php");
 	exit();
 }

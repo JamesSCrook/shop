@@ -31,7 +31,7 @@ require_once dirname(dirname(dirname(__FILE__))) . dirname($_SERVER["PHP_SELF"])
 require_once "classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
-if (! isset($_SESSION['username'])) {
+if (!isset($_SESSION['username'])) {
 	header("Location: login.php");
 	exit();
 }
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "</form>" . PHP_EOL;
 } else { /* POST - a button has been pressed */
 	$item->updateItemQuantities($_POST);
-	
+
 	if (isset($_POST['update_items_bttn'])) {
 		$user = new User();
 		if ($user->getDisplayUpdates($_SESSION['username']) == "No") {

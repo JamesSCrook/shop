@@ -81,15 +81,12 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 	echo "</form>" . PHP_EOL;
 } else { /* POST - a button has been pressed */
-	if (isset($_POST['ack_changes_bttn'])) {
+	$item->updateItemQuantities($_POST);
+	if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
 		header("Location: index.php");
 		exit();
 	} else {
-		$item->updateItemQuantities($_POST);
-		if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
-			header("Location: index.php");
-			exit();
-		}
+		Menu::displayMenus(FALSE);
 	}
 }
 ?>

@@ -1,3 +1,7 @@
+Thu Dec 27 08:52:52 AEDT 2018
+    v1.3.1
+    Menus were not displayed on quantity change confirmation. Doh!
+
 Thu Dec 27 08:01:54 AEDT 2018
     v1.3
 	Removed "Back" buttons from all pages that had them.

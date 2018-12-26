@@ -57,7 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "Quantity (optional)<br>" . PHP_EOL;
 	echo " <input type='number' name='quantity' min='-9999' max='9999' step='0.01'><p>" . PHP_EOL;
 	echo "<button class='bttn' style=background-color:forestgreen; name='add_item_bttn'>&#x271A; Add Item</button><br>" . PHP_EOL;
-	echo "<button class='bttn' style=background-color:aqua; name='back_to_items_bttn'>&#x25C0; Back to Items</button><br>" . PHP_EOL;
 
 	echo "<h3><div class='section_separator'>Miscellaneous</div></h3>" . PHP_EOL;
 	echo "<a href='profile.php'>Edit User Profile</a><p>" . PHP_EOL;
@@ -111,9 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 			echo "<span class=failure_symbol>&#x2718; </span>";
 			echo "Description, unit and category are required!<p>" . PHP_EOL;
 		}
-	} else if (isset($_POST['back_to_items_bttn'])) {
-		header("Location: index.php");
-		exit();
 	} else if (isset($_POST['ack_new_item_bttn'])) {
 		header("Location: admin.php");
 		exit();

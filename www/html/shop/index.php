@@ -89,11 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
 			header("Location: index.php");
 			exit();
-		} else {
-			Menu::displayMenus(FALSE);
-			echo "<form id=ack_changes method='POST'>" . PHP_EOL;
-			echo " <button class='bttn' style=background-color:aqua; name='ack_changes_bttn'>&#x25C0; Back to Items</button>" . PHP_EOL;
-			echo "</form>" . PHP_EOL;
 		}
 	}
 }

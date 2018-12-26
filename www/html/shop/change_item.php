@@ -65,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		echo "</select><p>" . PHP_EOL;
 		echo "Notes<br><input type='text' name='notes' value='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'><p>" . PHP_EOL;
 		echo "<button class='bttn' style=background-color:lightgreen; name='change_item_bttn'>&#x270E; Change Item</button><br>" . PHP_EOL;
-		echo "<button class='bttn' style=background-color:aqua; name='back_bttn'>&#x25C0; Back</button><p>" . PHP_EOL;
 		echo "<button class='bttn' style=background-color:salmon; name='delete_item_bttn'>&#x1F5D1; Delete Item</button>(!)" . PHP_EOL;
 		echo "</form>" . PHP_EOL;
 
@@ -90,9 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		}
 	} else if (isset($_POST['delete_item_bttn'])) {
 		$item->deleteItem($_SESSION['itemid']);
-		header($previousPage);
-		exit();
-	} else if (isset($_POST['back_bttn'])) {
 		header($previousPage);
 		exit();
 	} else {

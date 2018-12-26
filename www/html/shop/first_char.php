@@ -49,23 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "</form>" . PHP_EOL;
 } else { /* POST - a button has been pressed */
 	$item->updateItemQuantities($_POST);
-
 	if (isset($_POST['update_items_bttn'])) {
 		$user = new User();
 		if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
 			header("Location: first_char.php?first_char=" . htmlspecialchars($_GET['first_char'], ENT_QUOTES));
 			exit();
-		} else {
-			Menu::displayMenus(FALSE);
-			echo "<form id=ack_changes method='POST'>" . PHP_EOL;
-			echo " <button class='bttn' style=background-color:aqua; name='ack_changes_bttn'>&#x25C0; Back</button>" . PHP_EOL;
-			echo "</form>" . PHP_EOL;
 		}
-	} else if (isset($_POST['ack_changes_bttn'])) {
-		header("Location: first_char.php?first_char=" . htmlspecialchars($_GET['first_char'], ENT_QUOTES));
-		exit();
-	} else {
-		echo "Unexpected error in " . $_SERVER["PHP_SELF"] . "<br>";
 	}
 }
 ?>

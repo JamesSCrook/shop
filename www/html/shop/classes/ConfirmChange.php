@@ -15,9 +15,6 @@ class ConfirmChange {
 	public static function confirmSuccess($message) {
 		echo "<span class=success_symbol>&#x2714; </span>";
 		echo htmlspecialchars($message, ENT_QUOTES) . "<p>" . PHP_EOL;
-		echo "<form id=ack_manage method='POST'>" . PHP_EOL;
-		echo "<button class='bttn' style=background-color:aqua; name='ack_manage_bttn'>&#x25C0; Back to Admin</button>" . PHP_EOL;
-		echo "</form>" . PHP_EOL;
 	}
 }
 ?>

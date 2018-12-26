@@ -99,10 +99,6 @@ class Item extends DBConnection {
 				echo "<tr><td>Notes</td><td>" . htmlspecialchars($newNotes, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 				echo "<tr><td>Quantity</td><td>$quantity</td></tr>" . PHP_EOL;
 				echo "</table><p>" . PHP_EOL;
-
-				echo "<form id=ack_new_item method='POST'>" . PHP_EOL;
-				echo " <button class='bttn' style=background-color:aqua; name='ack_new_item_bttn'>&#x25C0; Back</button><br>" . PHP_EOL;
-				echo "</form>" . PHP_EOL;
 			} catch(PDOException $exception) {
 				echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 				echo "Could not add item:<br>'" . htmlspecialchars($newItemName, ENT_QUOTES) . "', '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "', '" . htmlspecialchars($newCategoryName, ENT_QUOTES) . "'.<p>" . PHP_EOL;

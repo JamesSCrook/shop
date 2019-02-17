@@ -34,9 +34,11 @@ spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 if (!isset($_SESSION['username'])) {
 	header("Location: login.php");
 	exit();
+} else {
+	$username = $_SESSION['username'];
 }
 
-echo "<h3>Edit Profile: " . htmlspecialchars($_SESSION['username'], ENT_QUOTES) . "</h3>" . PHP_EOL;
+echo "<h3>Edit Profile (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
 
 Menu::displayMenus(FALSE);
 $user = new User();
@@ -47,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "New password<br><input type='password' name='newPassword1' size='20' pattern='.{6,}' placeholder='min 6 chars'><br>" . PHP_EOL;
 	echo "Repeat password<br><input type='password' name='newPassword2' size='20' pattern='.{6,}'><p>" . PHP_EOL;
 
-	$sortOrder = $user->getSortOrder($_SESSION['username']);
+	$sortOrder = $user->getSortOrder($username);
 	echo "Sort Order<br>" . PHP_EOL;
 	echo "<select name='sortOrder'>" . PHP_EOL;
 	if ($sortOrder == "cq") {
@@ -67,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 	echo "Display Update Confirmations<br>" . PHP_EOL;
 	echo "<select name='displayUpdates'>" . PHP_EOL;
-	if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
+	if ($user->getDisplayUpdates($username) == "No") {
 		echo " <option value='Yes'>Yes</option>" . PHP_EOL;
 		echo " <option value='No' selected>No</option>" . PHP_EOL;
 	} else {
@@ -80,15 +82,15 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 } else { /* POST - a button has been pressed */
 	if (isset($_POST['updateprofile'])) {
 		if ($_POST['newPassword1'] != "") {
-			$user->setPassword($_SESSION['username'], $_POST['newPassword1'], $_POST['newPassword2']);
+			$user->setPassword($username, $_POST['newPassword1'], $_POST['newPassword2']);
 		}
 
-		if ($_POST['sortOrder'] != "" && $_POST['sortOrder'] != $user->getSortOrder($_SESSION['username'])) {
-			$user->setSortOrder($_SESSION['username'], $_POST['sortOrder']);
+		if ($_POST['sortOrder'] != "" && $_POST['sortOrder'] != $user->getSortOrder($username)) {
+			$user->setSortOrder($username, $_POST['sortOrder']);
 		}
 
-		if ($_POST['displayUpdates'] != "" && $_POST['displayUpdates'] != $user->getDisplayUpdates($_SESSION['username'])) {
-			$user->setDisplayUpdates($_SESSION['username'], $_POST['displayUpdates']);
+		if ($_POST['displayUpdates'] != "" && $_POST['displayUpdates'] != $user->getDisplayUpdates($username)) {
+			$user->setDisplayUpdates($username, $_POST['displayUpdates']);
 		}
 	}
 }

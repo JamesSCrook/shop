@@ -1,6 +1,8 @@
 body {
 	margin-top: 40px;
 	font-family: Arial, Helvetica, Sans-Serif;
+	margin: 0px 1px 0px 1px;
+	padding-top: 20px;
 }
 
 .menu__icon {

@@ -21,7 +21,6 @@ namespace JamesSCrook\Shop;
 </head>
 <body>
 
-	<h3>Change an Item</h3>
 
 <?php
 /*
@@ -36,9 +35,14 @@ spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 if (!isset($_SESSION['username'])) {
 	header("Location: login.php");
 	exit();
+} else {
+	$username = $_SESSION['username'];
 }
 
 Menu::displayMenus(FALSE);
+
+echo "<h3>Change an Item (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
+
 $item = new Item();
 $unit = new Unit();
 $category = new Category();
@@ -80,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
 			$itemName = preg_replace('/\s+/', ' ', trim($_POST['itemname']));
 			$notes = preg_replace('/\s+/', ' ', trim($_POST['notes']));
-			if ($item->updateItem(mb_strtoupper(mb_substr($itemName, 0, 1)) . mb_substr($itemName, 1), $_POST['unitname'], $_POST['categoryname'], $notes, $_SESSION['username'], $_SESSION['itemid'])) {
+			if ($item->updateItem(mb_strtoupper(mb_substr($itemName, 0, 1)) . mb_substr($itemName, 1), $_POST['unitname'], $_POST['categoryname'], $notes, $username, $_SESSION['itemid'])) {
 				header($previousPage);
 				exit();
 			}

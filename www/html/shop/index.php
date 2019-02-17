@@ -36,6 +36,8 @@ spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 if (!isset($_SESSION['username'])) {
 	header("Location: login.php");
 	exit();
+} else {
+	$username = $_SESSION['username'];
 }
 
 $user = new User();
@@ -43,14 +45,14 @@ $item = new Item();
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	Menu::displayMenus(TRUE);
-	echo "<h3>Shopping List</h3>" . PHP_EOL;
+	echo "<h3>Shopping List (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
 	$item->displayLinks();
 	echo "<form id=items_form method='POST'>" . PHP_EOL;
 
 	$category = new Category();
 	$activeCategories = $category->getActiveCategories();
 
-	$sortOrder = $user->getSortOrder($_SESSION['username']);
+	$sortOrder = $user->getSortOrder($username);
 	switch ($sortOrder) {
 		case "cq": // sort "by category, then by quantity"
 			foreach ($activeCategories as $activeCategory) { // For each active category

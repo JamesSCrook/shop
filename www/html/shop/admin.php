@@ -34,6 +34,8 @@ spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 if (!isset($_SESSION['username'])) {
 	header("Location: login.php");
 	exit();
+} else {
+	$username = $_SESSION['username'];
 }
 
 Menu::displayMenus(FALSE);
@@ -42,6 +44,7 @@ $category = new Category();
 $user = new User();
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+	echo "<h3>Administration (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
 	echo "<h3><div class='section_separator'>Add a New Item</div></h3>" . PHP_EOL;
 
 	echo "<form method='POST'>" . PHP_EOL;

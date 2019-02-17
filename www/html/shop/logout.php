@@ -32,12 +32,13 @@ spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 Menu::displayMenus(FALSE);
 
 if (isset($_SESSION['username'])) {
-	echo "See you next time...";
+	$username = $_SESSION['username'];
+	echo "<h3>See you next time ($username)...</h3>";
 	setcookie(session_name(), '', 100);
 	session_unset();
 	session_destroy();
 } else {
-	echo "You weren't logged in, bye!";
+	echo "<h3>You weren't logged in, bye!</h3>";
 }
 ?>
 

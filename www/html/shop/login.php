@@ -35,8 +35,14 @@ spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 Menu::displayMenus(FALSE);
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+
 	echo "<form id=login_form method='POST'>" . PHP_EOL;
-	echo "  Username <input type='text' name='username' size='20'><p>" . PHP_EOL;
+	if (isset($_GET['username'])) {
+		$username = $_GET['username'];
+	} else {
+		$username = "";
+	}
+	echo "  Username <input type='text' name='username' size='20' value=$username><p>" . PHP_EOL;
 	echo "  Password <input type='password' name='password' size='20'><p>" . PHP_EOL;
 	echo "  <input type='submit' value='Login' name='login'>" . PHP_EOL;
 	echo "</form>" . PHP_EOL;

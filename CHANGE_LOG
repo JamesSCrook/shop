@@ -1,3 +1,12 @@
+Sun Feb 17 12:28:14 AEDT 2019
+    v1.3.2
+	The logged in username is displayed at the top of screens "... (Tux)"
+
+	Added the feature where one can now call the login screen <login_URL> followed by
+	?username=<username> to pre-populate the username field on login.php
+
+	Adjusted the body margin and padding to use more of the available viewport.
+
 Thu Dec 27 08:52:52 AEDT 2018
     v1.3.1
     Menus were not displayed on quantity change confirmation. Doh!

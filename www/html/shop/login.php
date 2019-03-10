@@ -29,7 +29,7 @@ namespace JamesSCrook\Shop;
  */
 session_start();
 require_once dirname(dirname(dirname(__FILE__))) . dirname($_SERVER["PHP_SELF"]) . "_db_conn.php";
-require_once "classes/Autoloader.php";
+require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 Menu::displayMenus(FALSE);

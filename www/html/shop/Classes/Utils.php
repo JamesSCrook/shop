@@ -2,6 +2,8 @@
 
 namespace JamesSCrook\Shop;
 
+use PDOException;
+
 /*
  * shop - Copyright (C) 2017-2018 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
@@ -10,22 +12,14 @@ namespace JamesSCrook\Shop;
  * by the Free Software Foundation, either version 3 of the License, or (at your option) any
  * later version (see <http://www.gnu.org/licenses/>).
  */
+class Utils {
 
-/*
- * Set up to auto-load classes iff they are required.
- */
-class Autoloader {
+	public static function successSymbol() {
+		return "<br><font style='color: green;'>&#x2714;</font> ";		// tick
+	}
 
-	public static function loader($className) {
-		$classNameComponents = explode('\\', $className);
-		$fileName = "classes/" . end($classNameComponents) . ".php";
-
-		if (file_exists($fileName)) {
-			require_once $fileName;
-			if (class_exists($className)) {
-				return TRUE;
-			}
-		}
-		return FALSE;
+	public static function failureSymbol() {
+		return "<br><font style='color: red;'>&#x2718;</font> ";		// cross
 	}
 }
+?>

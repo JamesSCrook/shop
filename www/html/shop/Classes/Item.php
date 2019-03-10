@@ -69,8 +69,7 @@ class Item extends DBConnection {
 
 	public function addItem($newItemName, $newUnitName, $newCategoryName, $newNotes, $quantity, $newUserName) {
 		if ($this->getItemId($newItemName, $newUnitName) != NULL) {
-			echo "<span class=failure_symbol>&#x2718; </span>";
-			echo "Cannot add this item:<p>" . PHP_EOL;
+			echo Utils::failureSymbol() . "Cannot add this item:<p>" . PHP_EOL;
 			echo "<table class='table_error'>" . PHP_EOL;
 			echo "<tr><td>Description</td><td>" . htmlspecialchars($newItemName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 			echo "<tr><td>Unit</td><td>" . htmlspecialchars($newUnitName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
@@ -90,8 +89,7 @@ class Item extends DBConnection {
 
 				$this->updateNewItem($newItemName, $newUnitName, $newCategoryName, $quantity, $newUserName);
 
-				echo "<span class=success_symbol>&#x2714; </span>";
-				echo "New item added<p>" . PHP_EOL;
+				echo Utils::successSymbol() . "New item added<p>" . PHP_EOL;
 				echo "<table>" . PHP_EOL;
 				echo "<tr><td>Description</td><td>" . htmlspecialchars($newItemName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 				echo "<tr><td>Unit</td><td>" . htmlspecialchars($newUnitName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
@@ -114,14 +112,17 @@ class Item extends DBConnection {
 				'quantity' => $quantity,
 				'itemid' => $itemId
 			));
-			$updateHistoryPrepStmt = $this->dbConn->prepare("INSERT INTO history (time, username, itemname, unitname, oldquantity, newquantity)
-				VALUES(NOW(), :username, :itemname, :unitname, 0, :quantity)");
-			$updateHistoryPrepStmt->execute(array(
-				'username' => $userName,
-				'itemname' => $itemName,
-				'unitname' => $unitName,
-				'quantity' => $quantity
-			));
+
+			if ($quantity != 0) {	// Only update the history if the new item has been added with a non-zero quantity.
+				$updateHistoryPrepStmt = $this->dbConn->prepare("INSERT INTO history (time, username, itemname, unitname, oldquantity, newquantity)
+					VALUES(NOW(), :username, :itemname, :unitname, 0, :quantity)");
+				$updateHistoryPrepStmt->execute(array(
+					'username' => $userName,
+					'itemname' => $itemName,
+					'unitname' => $unitName,
+					'quantity' => $quantity
+				));
+			}
 		} catch(PDOException $exception) {
 			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 			echo "Could not update a new item:<br>'" . htmlspecialchars($itemName, ENT_QUOTES) . "', '" . htmlspecialchars($unitName, ENT_QUOTES) . "', '" . htmlspecialchars($categoryName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
@@ -135,7 +136,7 @@ class Item extends DBConnection {
 			$getItemsPrepStmt->execute();
 			while ($itemRow = $getItemsPrepStmt->fetch()) {
 				echo "<div class='grid-item'>" . PHP_EOL;
-				echo " <input type='number' name='i_" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' min='-9999' max='9999' step='0.01'";
+				echo " <input type='number' name='i_" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' min='-9999' max='9999' step='any'";
 				echo " value='" . htmlspecialchars($itemRow['quantity'], ENT_QUOTES) . "'>";
 				echo "<a href='change_item.php?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'><abbr title='" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</abbr></a>";
 				if ($itemRow['notes'] != "") {

@@ -1,3 +1,13 @@
+Sun Mar 10 13:01:38 AEDT 2019
+    v1.4.1
+	Replaced ConfirmSuccess class with Utils
+
+	All explicit tick/cross (success/failure) now use methods successSymbol & failureSymbol
+
+	Changed (quantity) step='0.01' to 'any'
+
+	Do not update history for new items created with zero quantity
+
 Sun Feb 17 12:28:14 AEDT 2019
     v1.3.2
 	The logged in username is displayed at the top of screens "... (Tux)"

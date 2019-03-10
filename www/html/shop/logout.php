@@ -26,7 +26,7 @@ namespace JamesSCrook\Shop;
  * Logout from shop.
  */
 session_start();
-require_once "classes/Autoloader.php";
+require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 Menu::displayMenus(FALSE);

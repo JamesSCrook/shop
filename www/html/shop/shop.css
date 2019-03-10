@@ -34,14 +34,6 @@ table, tr, th, td {
 	border: 10px solid red;
 }
 
-.success_symbol {
-	color: green;
-}
-
-.failure_symbol {
-	color: red;
-}
-
 .section_separator {
 	border: 2px;
 	border-style: solid;

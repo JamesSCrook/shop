@@ -73,8 +73,7 @@ class User extends DBConnection {
 				'sortorder' => $newSortOrder,
 				'username' => $userName
 			));
-			echo "<span class=success_symbol>&#x2714; </span>";
-			echo "Sort order changed successfully<br>" . PHP_EOL;
+			echo Utils::successSymbol() . "Sort order changed successfully<br>" . PHP_EOL;
 		} catch(PDOException $exception) {
 			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 			echo "Could not update sort order.<p>" . PHP_EOL;
@@ -88,8 +87,7 @@ class User extends DBConnection {
 				'displayUpdates' => $displayUpdates,
 				'username' => $userName
 			));
-			echo "<span class=success_symbol>&#x2714; </span>";
-			echo "Display updates changed successfully<br>" . PHP_EOL;
+			echo Utils::successSymbol() . "Display updates changed successfully<br>" . PHP_EOL;
 		} catch(PDOException $exception) {
 			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 			echo "Could not update display updates.<p>" . PHP_EOL;
@@ -105,15 +103,13 @@ class User extends DBConnection {
 					'username' => $userName,
 					'password' => $passwordHash
 				));
-				echo "<span class=success_symbol>&#x2714; </span>";
-				echo "Password changed successfully<br>" . PHP_EOL;
+				echo Utils::successSymbol() . "Password changed successfully<br>" . PHP_EOL;
 			} catch(PDOException $exception) {
 				echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 				echo "Could not update password.<p>" . PHP_EOL;
 			}
 		} else {
-			echo "<span class=failure_symbol>&#x2718; </span>";
-			echo "Passwords do not match, please try again<br>" . PHP_EOL;
+			echo Utils::failureSymbol() . "Passwords do not match, please try again<br>" . PHP_EOL;
 		}
 	}
 
@@ -147,8 +143,7 @@ class User extends DBConnection {
 
 	public function addUserName($newUserName, $newPassword) {
 		if ($this->userNameExists($newUserName)) {
-			echo "<span class=failure_symbol>&#x2718; </span>";
-			echo "Duplicate entry: '" . htmlspecialchars($newUserName, ENT_QUOTES) . "' - User NOT added!" . PHP_EOL;
+			echo Utils::failureSymbol() . "Duplicate entry: '" . htmlspecialchars($newUserName, ENT_QUOTES) . "' - User NOT added!" . PHP_EOL;
 		} else {
 			try {
 				$passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
@@ -157,7 +152,8 @@ class User extends DBConnection {
 					'username' => $newUserName,
 					'password' => $passwordHash
 				));
-				ConfirmChange::confirmSuccess("User '$newUserName' successfully added");
+				//ConfirmChange::confirmSuccess("User '$newUserName' successfully added");
+				echo Utils::successSymbol() . htmlspecialchars("User '$newUserName' successfully added", ENT_QUOTES) . "<p>" . PHP_EOL;
 			} catch(PDOException $exception) {
 				echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 				echo "Could not add user '" . htmlspecialchars($newUserName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
@@ -171,7 +167,8 @@ class User extends DBConnection {
 			$deleteUserNamePrepStmt->execute(array(
 				'username' => $deleteUserName
 			));
-			ConfirmChange::confirmSuccess("User '$deleteUserName' successfully deleted");
+			//ConfirmChange::confirmSuccess("User '$deleteUserName' successfully deleted");
+			echo Utils::successSymbol() . htmlspecialchars("User '$deleteUserName' successfully deleted", ENT_QUOTES) . "<p>" . PHP_EOL;
 		} catch(PDOException $exception) {
 			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 			echo "Could not delete username '" . htmlspecialchars($deleteUserName, ENT_QUOTES) . "'.<p>" . PHP_EOL;

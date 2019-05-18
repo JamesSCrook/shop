@@ -4,7 +4,7 @@
 	background: lightcyan;
 }
 
-.admin_select, .admin_input_text {
+.enter_select, .enter_input_text {
 	border: 1px solid blue;
 	border-radius: 4px;
 	margin: 2px;
@@ -13,7 +13,7 @@
 	width: 240px;
 }
 
-.admin_input_number {
+.enter_input_number {
 	border: 1px solid blue;
 	border-radius: 4px;
 	margin: 2px;

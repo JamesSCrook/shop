@@ -46,12 +46,12 @@ $user = new User();
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 	echo "<form id=profile_form method='POST'>" . PHP_EOL;
-	echo "New password<br><input type='password' name='newPassword1' size='20' pattern='.{6,}' placeholder='min 6 chars'><br>" . PHP_EOL;
-	echo "Repeat password<br><input type='password' name='newPassword2' size='20' pattern='.{6,}'><p>" . PHP_EOL;
+	echo "New password<br><input type='password' class='enter_input_text' name='newPassword1' size='20' pattern='.{6,}' placeholder='min 6 chars'><br>" . PHP_EOL;
+	echo "Repeat password<br><input type='password' class='enter_input_text' name='newPassword2' size='20' pattern='.{6,}'><p>" . PHP_EOL;
 
 	$sortOrder = $user->getSortOrder($username);
 	echo "Sort Order<br>" . PHP_EOL;
-	echo "<select name='sortOrder'>" . PHP_EOL;
+	echo "<select class='enter_select' name='sortOrder'>" . PHP_EOL;
 	if ($sortOrder == "cq") {
 		echo " <option value='q'>Quantity</option>" . PHP_EOL;
 		echo " <option value='cq' selected>Category, quantity</option>" . PHP_EOL;
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "</select><p>" . PHP_EOL;
 
 	echo "Display Update Confirmations<br>" . PHP_EOL;
-	echo "<select name='displayUpdates'>" . PHP_EOL;
+	echo "<select class='enter_select' name='displayUpdates'>" . PHP_EOL;
 	if ($user->getDisplayUpdates($username) == "No") {
 		echo " <option value='Yes'>Yes</option>" . PHP_EOL;
 		echo " <option value='No' selected>No</option>" . PHP_EOL;

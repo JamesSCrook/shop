@@ -49,49 +49,49 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 	echo "<form method='POST'>" . PHP_EOL;
 
-	echo "<input type='text' class='admin_input_text' name='itemname' placeholder='Description (required)' pattern='.{1,30}'>" . PHP_EOL;
-	echo "<select class='admin_select' name='unitname'><option value='' disabled selected>Unit (required)</option>" . PHP_EOL;
+	echo "<input type='text' class='enter_input_text' name='itemname' placeholder='Description (required)' pattern='.{1,30}'>";
+	echo "<select class='enter_select' name='unitname'><option value='' disabled selected>Unit (required)</option>";
 	$unit->displayUnitDropDownList(NULL);
-	echo "</select>" . PHP_EOL;
-	echo "<select class='admin_select' name='categoryname'><option value='' disabled selected>Category (required)</option>" . PHP_EOL;
+	echo "</select>";
+	echo "<select class='enter_select' name='categoryname'><option value='' disabled selected>Category (required)</option>";
 	$category->displayCategoryDropDownList(NULL);
-	echo "</select>" . PHP_EOL;
-	echo "<input type='text' class='admin_input_text' placeholder='Notes (optional)' name='notes'>" . PHP_EOL;
-	echo "<input type='number' class='admin_input_number' name='quantity' placeholder='Quanitity (optional)' min='-9999' max='9999' step='any'>" . PHP_EOL;
+	echo "</select>";
+	echo "<input type='text' class='enter_input_text' placeholder='Notes (optional)' name='notes'>";
+	echo "<input type='number' class='enter_input_number' name='quantity' placeholder='Quanitity (optional)' min='-9999' max='9999' step='any'>";
 	echo "<button class='bttn' style=background-color:forestgreen; name='add_item_bttn'>&#x271A; Add Item</button><br>" . PHP_EOL;
 
 	echo "<h3><div class='section_separator'>Miscellaneous</div></h3>" . PHP_EOL;
 	$dirName = dirname($_SERVER['PHP_SELF']);
-	echo "<input type='button' value='Edit User Profile' class='bttn' onclick=\"document.location.href='$dirName/profile.php';\">" . PHP_EOL;
-	echo "<input type='button' value='Manage Items' class='bttn' onclick=\"document.location.href='$dirName/items_by_category.php';\">" . PHP_EOL;
-	echo "<input type='button' value='Display Items' class='bttn' onclick=\"document.location.href='$dirName/buy_time_details.php';\">" . PHP_EOL;
+	echo "<input type='button' value='Edit User Profile' class='bttn' onclick=\"document.location.href='$dirName/profile.php';\">";
+	echo "<input type='button' value='Manage Items' class='bttn' onclick=\"document.location.href='$dirName/items_by_category.php';\">";
+	echo "<input type='button' value='Display Items' class='bttn' onclick=\"document.location.href='$dirName/buy_time_details.php';\">";
 
 	echo "<h3><div class='section_separator'>Manage Units</div></h3>" . PHP_EOL;
-	echo "<input type='text' class='admin_input_text' name='add_rename_unit' placeholder='Unit (add or rename unit as this)' pattern='.{1,12}'>" . PHP_EOL;
-	echo "<button class='bttn' style=background-color:forestgreen; name='add_unit_bttn'>&#x271A; Add Unit</button>" . PHP_EOL;
-	echo "<select class='admin_select' name='rename_delete_unit'><option value='' disabled selected>Unit to rename or delete</option>" . PHP_EOL;
+	echo "<input type='text' class='enter_input_text' name='add_rename_unit' placeholder='Unit (add or rename unit as this)' pattern='.{1,12}'>";
+	echo "<button class='bttn' style=background-color:forestgreen; name='add_unit_bttn'>&#x271A; Add Unit</button>";
+	echo "<select class='enter_select' name='rename_delete_unit'><option value='' disabled selected>Unit to rename or delete</option>";
 	$unit->displayUnitDropDownList(NULL);
-	echo "</select>" . PHP_EOL;
-	echo "<button class='bttn' style=background-color:lightblue; name='rename_unit_bttn'>&#x270E; Rename Unit</button>" . PHP_EOL;
+	echo "</select>";
+	echo "<button class='bttn' style=background-color:lightblue; name='rename_unit_bttn'>&#x270E; Rename Unit</button>";
 	echo "<button class='bttn' style=background-color:salmon; name='delete_unit_bttn'>&#x1F5D1 Delete Unit</button>" . PHP_EOL;
 
 	echo "<h3><div class='section_separator'>Manage Categories</div></h3>" . PHP_EOL;
-	echo "<input type='text' class='admin_input_text' name='add_rename_category' placeholder='Category (add or rename as this)' pattern='.{1,64}'>" . PHP_EOL;
-	echo "<button class='bttn' style=background-color:forestgreen; name='add_category_bttn'>&#x271A; Add Category</button>" . PHP_EOL;
-	echo "<select class='admin_select' name='rename_delete_category'><option value='' disabled selected>Category to rename or delete</option>" . PHP_EOL;
+	echo "<input type='text' class='enter_input_text' name='add_rename_category' placeholder='Category (add or rename as this)' pattern='.{1,64}'>";
+	echo "<button class='bttn' style=background-color:forestgreen; name='add_category_bttn'>&#x271A; Add Category</button>";
+	echo "<select class='enter_select' name='rename_delete_category'><option value='' disabled selected>Category to rename or delete</option>";
 	$category->displayCategoryDropDownList(NULL);
-	echo "</select>" . PHP_EOL;
-	echo "<button class='bttn' style=background-color:lightblue; name='rename_category_bttn'>&#x270E; Rename Category</button>" . PHP_EOL;
+	echo "</select>";
+	echo "<button class='bttn' style=background-color:lightblue; name='rename_category_bttn'>&#x270E; Rename Category</button>";
 	echo "<button class='bttn' style=background-color:salmon; name='delete_category_bttn'>&#x1F5D1 Delete Category</button>" . PHP_EOL;
 
 	echo "<h3><div class='section_separator'>Manage Users</div></h3>" . PHP_EOL;
-	echo "<input type='text' class='admin_input_text' name='add_username' placeholder='Username' pattern='.{1,}'>" . PHP_EOL;
-	echo "<input type='password' class='admin_input_text' name='newpw1' size='20' pattern='.{6,}' placeholder='password'>" . PHP_EOL;
-	echo "<input type='password' class='admin_input_text' name='newpw2' size='20' pattern='.{6,}' placeholder='repeat password'>" . PHP_EOL;
-	echo "<button class='bttn' style=background-color:forestgreen; name='add_user_bttn'>&#x271A; Add User</button>" . PHP_EOL;
-	echo "<select class='admin_select' name='delete_username'><option value='' disabled selected>User to delete</option>" . PHP_EOL;
+	echo "<input type='text' class='enter_input_text' name='add_username' placeholder='Username' pattern='.{1,}'>";
+	echo "<input type='password' class='enter_input_text' name='newpw1' size='20' pattern='.{6,}' placeholder='password'>";
+	echo "<input type='password' class='enter_input_text' name='newpw2' size='20' pattern='.{6,}' placeholder='repeat password'>";
+	echo "<button class='bttn' style=background-color:forestgreen; name='add_user_bttn'>&#x271A; Add User</button>";
+	echo "<select class='enter_select' name='delete_username'><option value='' disabled selected>User to delete</option>";
 	$user->displayUsernameDropDownList();
-	echo "</select>" . PHP_EOL;
+	echo "</select>";
 	echo "<button class='bttn' style=background-color:salmon; name='delete_user_bttn'>&#x1F5D1 Delete User</button>" . PHP_EOL;
 
 	echo "</form>" . PHP_EOL;

@@ -1,3 +1,11 @@
+Sun May 19 09:04:26 AEST 2019
+    v1.5.1
+	Updated the input (text fields & drop-downs) to look the same as the (recently modfied)
+	admin page on the change_item, login and profile pages.
+
+	Removed all the PHP_EOLs after elements (text fields & drop downs) when they are no
+	longer at the end of a line on the page.
+
 Sat May 18 19:55:19 AEST 2019
     v1.5.0
 	Changed admin page so:

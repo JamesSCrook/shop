@@ -58,18 +58,20 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	$itemRow = $item->getItemRow($_GET['itemid']);
 	if ($itemRow != NULL) {
 		echo "<form method='POST'>" . PHP_EOL;
-		echo "Description (required)<br><input type='text' name='itemname' placeholder='1UC+0-29*' pattern='.{1,30}' value='" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'><p>" . PHP_EOL;
 
-		echo "Unit (required)<br><select name='unitname'>" . PHP_EOL;
+		echo "Changing '" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'<p>" . PHP_EOL;
+
+		echo "<input type='text' class='enter_input_text' name='itemname' placeholder='Description (required)' pattern='.{1,30}' value='" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'>";
+		echo "<select class='enter_select' name='unitname'><option value='' disabled>Unit (required)</option>";
 		$unit->displayUnitDropDownList($itemRow['unitid']);
-		echo "</select><p>" . PHP_EOL;
-
-		echo "Category (required)<br><select name='categoryname'>" . PHP_EOL;
+		echo "</select>";
+		echo "<select class='enter_select' name='categoryname'><option value='' disabled>Category (required)</option>";
 		$category->displayCategoryDropDownList($itemRow['categoryid']);
-		echo "</select><p>" . PHP_EOL;
-		echo "Notes<br><input type='text' name='notes' value='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'><p>" . PHP_EOL;
-		echo "<button class='bttn' style=background-color:lightblue; name='change_item_bttn'>&#x270E; Change Item</button><br>" . PHP_EOL;
-		echo "<button class='bttn' style=background-color:salmon; name='delete_item_bttn'>&#x1F5D1; Delete Item</button>(!)" . PHP_EOL;
+		echo "</select>";
+		echo "<input type='text' class='enter_input_text' name='notes' placeholder='Notes (optional)' value='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>";
+		echo "<button class='bttn' style=background-color:lightblue; name='change_item_bttn'>&#x270E; Change Item</button>";
+		echo "<button class='bttn' style=background-color:salmon; name='delete_item_bttn'>&#x1F5D1; Delete Item</button>";
+
 		echo "</form>" . PHP_EOL;
 
 		$item->displayItemMetaData($itemRow);

@@ -5,7 +5,7 @@ namespace JamesSCrook\Shop;
 use PDOException;
 
 /*
- * shop - Copyright (C) 2017-2018 James S. Crook
+ * shop - Copyright (C) 2017-2019 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -41,7 +41,7 @@ class Unit extends DBConnection {
 				$addUnitPrepStmt->execute(array(
 					'unitname' => $newUnitName
 				));
-				//ConfirmChange::confirmSuccess("Unit '$newUnitName' successfully added");
+				// ConfirmChange::confirmSuccess("Unit '$newUnitName' successfully added");
 				echo Utils::successSymbol() . htmlspecialchars("Unit '$newUnitName' successfully added", ENT_QUOTES) . "<p>" . PHP_EOL;
 			} catch(PDOException $exception) {
 				echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
@@ -57,7 +57,7 @@ class Unit extends DBConnection {
 				'unitname' => $unitName,
 				'newunitname' => $newUnitName
 			));
-			//ConfirmChange::confirmSuccess("Unit '$unitName' successfully renamed to '$newUnitName'");
+			// ConfirmChange::confirmSuccess("Unit '$unitName' successfully renamed to '$newUnitName'");
 			echo Utils::successSymbol() . htmlspecialchars("Unit '$unitName' successfully renamed to '$newUnitName'", ENT_QUOTES) . "<p>" . PHP_EOL;
 		} catch(PDOException $exception) {
 			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
@@ -90,14 +90,14 @@ class Unit extends DBConnection {
 				$deleteUnitPrepStmt->execute(array(
 					'unitname' => $deleteUnitName
 				));
-				//ConfirmChange::confirmSuccess("Unit '$deleteUnitName' successfully deleted");
+				// ConfirmChange::confirmSuccess("Unit '$deleteUnitName' successfully deleted");
 				echo Utils::successSymbol() . htmlspecialchars("Unit '$deleteUnitName' successfully deleted", ENT_QUOTES) . "<p>" . PHP_EOL;
 				return;
 			} catch(PDOException $exception) {
 				echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 			}
 		} else {
-			echo "There are $unitCount item(s) that use this unit.<p>";
+			echo "<br>There are $unitCount item(s) that use this unit.<p>";
 		}
 		echo "Could not delete unit '" . htmlspecialchars($deleteUnitName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
 	}

@@ -14,8 +14,8 @@ use PDOException;
  * later version (see <http://www.gnu.org/licenses/>).
  */
 class DBConnection {
-	private static $dbName = "shop";
 	private static $dbHost = "localhost";
+	private static $dbName = "shop";
 	private static $dbUser = "shop_username";
 	private static $dbPassword = "shop_password";
 	protected $dbConn;

@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2018 James S. Crook
+ * shop - Copyright (C) 2017-2019 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		$category->displayCategoryDropDownList($itemRow['categoryid']);
 		echo "</select><p>" . PHP_EOL;
 		echo "Notes<br><input type='text' name='notes' value='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'><p>" . PHP_EOL;
-		echo "<button class='bttn' style=background-color:lightgreen; name='change_item_bttn'>&#x270E; Change Item</button><br>" . PHP_EOL;
+		echo "<button class='bttn' style=background-color:lightblue; name='change_item_bttn'>&#x270E; Change Item</button><br>" . PHP_EOL;
 		echo "<button class='bttn' style=background-color:salmon; name='delete_item_bttn'>&#x1F5D1; Delete Item</button>(!)" . PHP_EOL;
 		echo "</form>" . PHP_EOL;
 
@@ -103,4 +103,4 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 </body>
 </html>
-<!-- shop - Copyright (C) 2017-2018 James S. Crook - GPL3+ -->
+<!-- shop - Copyright (C) 2017-2019 James S. Crook - GPL3+ -->

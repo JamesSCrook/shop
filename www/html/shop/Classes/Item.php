@@ -5,7 +5,7 @@ namespace JamesSCrook\Shop;
 use PDOException;
 
 /*
- * shop - Copyright (C) 2017-2018 James S. Crook
+ * shop - Copyright (C) 2017-2019 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -113,7 +113,7 @@ class Item extends DBConnection {
 				'itemid' => $itemId
 			));
 
-			if ($quantity != 0) {	// Only update the history if the new item has been added with a non-zero quantity.
+			if ($quantity != 0) { // Only update the history if the new item has been added with a non-zero quantity.
 				$updateHistoryPrepStmt = $this->dbConn->prepare("INSERT INTO history (time, username, itemname, unitname, oldquantity, newquantity)
 					VALUES(NOW(), :username, :itemname, :unitname, 0, :quantity)");
 				$updateHistoryPrepStmt->execute(array(
@@ -136,7 +136,7 @@ class Item extends DBConnection {
 			$getItemsPrepStmt->execute();
 			while ($itemRow = $getItemsPrepStmt->fetch()) {
 				echo "<div class='grid-item'>" . PHP_EOL;
-				echo " <input type='number' name='i_" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' min='-9999' max='9999' step='any'";
+				echo " <input type='number' class='item_quantity' name='i_" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' min='-9999' max='9999' step='any'";
 				echo " value='" . htmlspecialchars($itemRow['quantity'], ENT_QUOTES) . "'>";
 				echo "<a href='change_item.php?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'><abbr title='" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</abbr></a>";
 				if ($itemRow['notes'] != "") {

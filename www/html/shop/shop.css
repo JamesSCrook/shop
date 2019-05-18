@@ -1,16 +1,34 @@
-input[type=number] {
-	height: 20px; /* Can't go any smaller??? */
+.item_quantity {
+	height: 20px;
 	width: 60px;
 	background: lightcyan;
 }
 
+.admin_select, .admin_input_text {
+	border: 1px solid blue;
+	border-radius: 4px;
+	margin: 2px;
+	padding: 0px;
+	height: 30px;
+	width: 240px;
+}
+
+.admin_input_number {
+	border: 1px solid blue;
+	border-radius: 4px;
+	margin: 2px;
+	height: 30px;
+	width: 240px;
+	background: lightcyan;
+}
+
 .bttn {
+	border: 1px solid blue;
+	margin: 2px;
 	height: 30px;
 	width: 240px;
 	font-size: 20px;
 	border-radius: 16px;
-	margin: 5px 0px 5px 0px;
-	vertical-align: middle;
 }
 
 .grid-container {

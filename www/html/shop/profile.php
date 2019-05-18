@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2018 James S. Crook
+ * shop - Copyright (C) 2017-2019 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		echo " <option value='No'>No</option>" . PHP_EOL;
 	}
 	echo "</select><p>" . PHP_EOL;
-	echo " <button class='bttn' style=background-color:lightgreen; name='updateprofile'>&#x270E; Update Profile</button><p>" . PHP_EOL;
+	echo " <button class='bttn' style=background-color:lightblue; name='updateprofile'>&#x270E; Update Profile</button><p>" . PHP_EOL;
 	echo "</form>" . PHP_EOL;
 } else { /* POST - a button has been pressed */
 	if (isset($_POST['updateprofile'])) {
@@ -98,4 +98,4 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 </body>
 </html>
-<!-- shop - Copyright (C) 2017-2018 James S. Crook - GPL3+ -->
+<!-- shop - Copyright (C) 2017-2019 James S. Crook - GPL3+ -->

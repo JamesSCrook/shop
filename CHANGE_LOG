@@ -1,3 +1,13 @@
+Sat May 18 19:55:19 AEST 2019
+    v1.5.0
+	Changed admin page so:
+	- it uses the available width of the page. Also replaced the labels with placeholders
+	  and (disabled) first items in the dropdown lists.
+	- Replaced the 3 links with buttons
+
+	Changed some button colors from lightgreen to lightblue (including the update button
+	on the menu bar)
+
 Sun Mar 10 13:01:38 AEDT 2019
     v1.4.1
 	Replaced ConfirmSuccess class with Utils

@@ -5,7 +5,7 @@ namespace JamesSCrook\Shop;
 use PDOException;
 
 /*
- * shop - Copyright (C) 2017-2018 James S. Crook
+ * shop - Copyright (C) 2017-2019 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -152,7 +152,7 @@ class User extends DBConnection {
 					'username' => $newUserName,
 					'password' => $passwordHash
 				));
-				//ConfirmChange::confirmSuccess("User '$newUserName' successfully added");
+				// ConfirmChange::confirmSuccess("User '$newUserName' successfully added");
 				echo Utils::successSymbol() . htmlspecialchars("User '$newUserName' successfully added", ENT_QUOTES) . "<p>" . PHP_EOL;
 			} catch(PDOException $exception) {
 				echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
@@ -167,7 +167,7 @@ class User extends DBConnection {
 			$deleteUserNamePrepStmt->execute(array(
 				'username' => $deleteUserName
 			));
-			//ConfirmChange::confirmSuccess("User '$deleteUserName' successfully deleted");
+			// ConfirmChange::confirmSuccess("User '$deleteUserName' successfully deleted");
 			echo Utils::successSymbol() . htmlspecialchars("User '$deleteUserName' successfully deleted", ENT_QUOTES) . "<p>" . PHP_EOL;
 		} catch(PDOException $exception) {
 			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;

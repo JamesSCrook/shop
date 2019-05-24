@@ -16,14 +16,14 @@ namespace JamesSCrook\Shop;
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shop: Buy Time Details</title>
+<title>Shop: Display Items Sorted</title>
 <link rel='stylesheet' media='screen' href='shop.css'>
 </head>
 <body>
 
 <?php
 /*
- *
+ * Display items sorted by any of the 4 columns - both ascending and descending.
  */
 session_start();
 require_once dirname(dirname(dirname(__FILE__))) . dirname($_SERVER["PHP_SELF"]) . "_db_conn.php";
@@ -39,13 +39,13 @@ if (!isset($_SESSION['username'])) {
 
 Menu::displayMenus(FALSE);
 
-echo "<h3>Buy Time Details (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
+echo "<h3>Display Items Sorted (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
 
 $itemList = new ItemList();
 if (isset($_GET['sortby'])) {
-	$itemList->displayBuyTimeDetails($_GET['sortby']);
+	$itemList->displayItemsSorted($_GET['sortby']);
 } else {
-	$itemList->displayBuyTimeDetails("last_buy_time_asc");
+	$itemList->displayItemsSorted("item_unit_asc");
 }
 
 ?>

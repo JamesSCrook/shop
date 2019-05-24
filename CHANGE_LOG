@@ -1,3 +1,16 @@
+Sat May 25 09:37:40 AEST 2019
+    v1.5.2
+	Reduced the size of the update button in the top nav bar
+
+	Styled the login button the same as all the other buttons
+
+	Renamed:
+	- buy_time_details to display_items_sorted
+	- items_by_category to display_item_details
+	- profile to user_profile
+
+	display_items_sorted now uses item_unit_asc as the default sort order
+
 Sun May 19 09:04:26 AEST 2019
     v1.5.1
 	Updated the input (text fields & drop-downs) to look the same as the (recently modfied)

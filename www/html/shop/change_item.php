@@ -21,7 +21,6 @@ namespace JamesSCrook\Shop;
 </head>
 <body>
 
-
 <?php
 /*
  * Change an item's details: itemname, unitname, categoryname and notes.

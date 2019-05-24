@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "  <input type='text' class='enter_input_text' name='username' size='20' value=$username><p>" . PHP_EOL;
 	echo "  Password<br>" . PHP_EOL;
 	echo "  <input type='password' class='enter_input_text' name='password' size='20'><p>" . PHP_EOL;
-	echo "  <input type='submit' value='Login' name='login'>" . PHP_EOL;
+	echo "  <button class='bttn' name='login'>Login</button><br>" . PHP_EOL;
 	echo "</form>" . PHP_EOL;
 } else {
 	$user = new User();

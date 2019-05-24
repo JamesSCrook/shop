@@ -16,7 +16,7 @@ namespace JamesSCrook\Shop;
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shop: User Profile</title>
+<title>Shop: Edit User Profile</title>
 <link rel='stylesheet' media='screen' href='shop.css'>
 </head>
 <body>
@@ -38,7 +38,7 @@ if (!isset($_SESSION['username'])) {
 	$username = $_SESSION['username'];
 }
 
-echo "<h3>Edit Profile (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
+echo "<h3>Edit User Profile (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
 
 Menu::displayMenus(FALSE);
 $user = new User();

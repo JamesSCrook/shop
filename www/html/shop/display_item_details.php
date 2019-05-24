@@ -16,7 +16,7 @@ namespace JamesSCrook\Shop;
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shop: Items by Categories</title>
+<title>Shop: Display Item Details</title>
 <link rel='stylesheet' media='screen' href='shop.css'>
 </head>
 <body>
@@ -41,7 +41,7 @@ if (!isset($_SESSION['username'])) {
 
 Menu::displayMenus(FALSE);
 
-echo "<h3>Items by Category (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
+echo "<h3>Display Item Details (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
 $itemList = new ItemList();
 $itemList->displayItemsByCategory();
 ?>

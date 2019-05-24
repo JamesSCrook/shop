@@ -35,9 +35,12 @@ class ItemList extends DBConnection {
 		}
 	}
 
-	public function displayBuyTimeDetails($sortby) {
+	public function displayItemsSorted($sortby) {
 		$_SESSION['previous_page'] = $_SERVER['REQUEST_URI'];
 		switch ($sortby) {
+			case "item_unit_desc":
+				$orderBySQLargs = "itemname DESC, unitname DESC";
+				break;
 			case "category_asc":
 				$orderBySQLargs = "categoryname ASC, itemname, unitname";
 				break;
@@ -56,9 +59,6 @@ class ItemList extends DBConnection {
 			case "last_buy_time_desc":
 				$orderBySQLargs = "lastbuytime DESC, itemname, unitname";
 				break;
-			case "item_unit_desc":
-				$orderBySQLargs = "itemname DESC, unitname DESC";
-				break;
 			default:
 				$orderBySQLargs = "itemname ASC, unitname ASC";
 				break; // also handles item_unit_asc
@@ -69,10 +69,10 @@ class ItemList extends DBConnection {
 
 			echo "<table>" . PHP_EOL;
 			echo "<tr>
-				<th><a href='buy_time_details.php?sortby=item_unit_asc'>&#x25b2;</a>Item&#x25CF;Unit<a href='buy_time_details.php?sortby=item_unit_desc'>&#x25bc</a></th>
-				<th><a href='buy_time_details.php?sortby=category_asc'>&#x25b2;</a>Category<a href='buy_time_details.php?sortby=category_desc'>&#x25bc</a></th>
-				<th><a href='buy_time_details.php?sortby=buy_count_asc'>&#x25b2;</a>Buy Count<a href='buy_time_details.php?sortby=buy_count_desc'>&#x25bc</a></th>
-				<th><a href='buy_time_details.php?sortby=last_buy_time_asc'>&#x25b2;</a>Last Buy Time<a href='buy_time_details.php?sortby=last_buy_time_desc'>&#x25bc</a></th>
+				<th><a href='display_items_sorted.php?sortby=item_unit_asc'>&#x25b2;</a>Item&#x25CF;Unit<a href='display_items_sorted.php?sortby=item_unit_desc'>&#x25bc</a></th>
+				<th><a href='display_items_sorted.php?sortby=category_asc'>&#x25b2;</a>Category<a href='display_items_sorted.php?sortby=category_desc'>&#x25bc</a></th>
+				<th><a href='display_items_sorted.php?sortby=buy_count_asc'>&#x25b2;</a>Buy Count<a href='display_items_sorted.php?sortby=buy_count_desc'>&#x25bc</a></th>
+				<th><a href='display_items_sorted.php?sortby=last_buy_time_asc'>&#x25b2;</a>Last Buy Time<a href='display_items_sorted.php?sortby=last_buy_time_desc'>&#x25bc</a></th>
 			</tr>";
 
 			while ($itemRow = $getItemsPrepStmt->fetch()) {

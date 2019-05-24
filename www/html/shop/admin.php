@@ -62,9 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 	echo "<h3><div class='section_separator'>Miscellaneous</div></h3>" . PHP_EOL;
 	$dirName = dirname($_SERVER['PHP_SELF']);
-	echo "<input type='button' value='Edit User Profile' class='bttn' onclick=\"document.location.href='$dirName/profile.php';\">";
-	echo "<input type='button' value='Manage Items' class='bttn' onclick=\"document.location.href='$dirName/items_by_category.php';\">";
-	echo "<input type='button' value='Display Items' class='bttn' onclick=\"document.location.href='$dirName/buy_time_details.php';\">";
+	echo "<input type='button' value='Edit User Profile' class='bttn' onclick=\"document.location.href='$dirName/user_profile.php';\">";
+	echo "<input type='button' value='Display Item Details' class='bttn' onclick=\"document.location.href='$dirName/display_item_details.php';\">";
+	echo "<input type='button' value='Display Items Sorted' class='bttn' onclick=\"document.location.href='$dirName/display_items_sorted.php';\">";
 
 	echo "<h3><div class='section_separator'>Manage Units</div></h3>" . PHP_EOL;
 	echo "<input type='text' class='enter_input_text' name='add_rename_unit' placeholder='Unit (add or rename unit as this)' pattern='.{1,12}'>";

@@ -3,6 +3,7 @@ body {
 	font-family: Arial, Helvetica, Sans-Serif;
 	margin: 0px 1px 0px 1px;
 	padding-top: 20px;
+	text-align: center;
 }
 
 .menu__icon {
@@ -28,11 +29,6 @@ body {
 	width: inherit;
 }
 
-/*
-.nav-bar__label::after,
-.nav-bar__sub-label::after {
-}
-*/
 .nav-bar__label, .nav-bar__sub-label {
 	cursor: pointer;
 }
@@ -43,6 +39,7 @@ body {
 	margin: 0;
 	padding: 0;
 	width: 100%;
+	text-align: center;
 }
 
 .nav-bar__list, [id^="toggle"] {

@@ -164,7 +164,7 @@ class Item extends DBConnection {
 		echo "</table>" . PHP_EOL;
 	}
 
-	/* This is called with $_POST from index.php and first_char.php, or ??? JC */
+	/* This is called with $_POST from index.php and first_char.php */
 	public function updateItemQuantities(&$itemIdTable) {
 		try {
 			$getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, item.unitid, unitname, quantity FROM item INNER JOIN unit ON item.unitid = unit.unitid ORDER BY itemname, unitname");
@@ -173,6 +173,7 @@ class Item extends DBConnection {
 			$getItemsPrepStmt->execute();
 
 			// Update details (the table below) is always sent to the browser, but the user will only see it if "display update notifications" is enabled.
+			Menu::displayMenus(FALSE);
 			echo "<h3>Quantities Just Updated</h3>" . PHP_EOL;
 			echo "<table>" . PHP_EOL;
 			echo "<tr><th>Item</th><th>Change</th></tr>" . PHP_EOL;

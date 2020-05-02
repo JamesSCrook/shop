@@ -5,7 +5,7 @@ namespace JamesSCrook\Shop;
 use PDOException;
 
 /*
- * shop - Copyright (C) 2017-2019 James S. Crook
+ * shop - Copyright (C) 2017-2020 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -179,30 +179,33 @@ class Item extends DBConnection {
 			echo "<tr><th>Item</th><th>Change</th></tr>" . PHP_EOL;
 			while ($itemRow = $getItemsPrepStmt->fetch()) {
 				$itemKey = "i_" . $itemRow['itemid'];
-				if (isset($itemIdTable[$itemKey]) && $itemRow['quantity'] != $itemIdTable[$itemKey]) {
-					if ($itemIdTable[$itemKey] == "") {
-						$itemIdTable[$itemKey] = 0;
+				if (isset($itemIdTable[$itemKey])) {	// If this item has been updated
+
+					if ($itemIdTable[$itemKey] == "") {	// Force blanking the field
+						$itemIdTable[$itemKey] = 0;		// to behave the same as explicitly setting it to 0
 					}
 
-					echo "<tr><td>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "&#x25CF;" . $itemRow['unitname'] . "</td><td>" . htmlspecialchars($itemRow['quantity'], ENT_QUOTES) . "&rarr;" . htmlspecialchars($itemIdTable[$itemKey], ENT_QUOTES) . "</td></tr>" . PHP_EOL;
+					if ($itemRow['quantity'] != $itemIdTable[$itemKey]) {	// If the quantity has changed, update the DB.
+						echo "<tr><td>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "&#x25CF;" . $itemRow['unitname'] . "</td><td>" . htmlspecialchars($itemRow['quantity'], ENT_QUOTES) . "&rarr;" . htmlspecialchars($itemIdTable[$itemKey], ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 
-					if (abs($itemIdTable[$itemKey]) < abs($itemRow['quantity'])) {
-						$updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity, buycount=buycount+1, lastbuytime=NOW() WHERE itemid=:itemid");
-					} else {
-						$updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity WHERE itemid=:itemid");
+						if (abs($itemIdTable[$itemKey]) < abs($itemRow['quantity'])) {
+							$updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity, buycount=buycount+1, lastbuytime=NOW() WHERE itemid=:itemid");
+						} else {
+							$updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity WHERE itemid=:itemid");
+						}
+						$updateItemPrepStmt->execute(array(
+							'quantity' => $itemIdTable[$itemKey],
+							'itemid' => $itemRow['itemid']
+						));
+
+						$updateHistoryPrepStmt->execute(array(
+							'username' => $_SESSION['username'],
+							'itemname' => $itemRow['itemname'],
+							'unitid' => $itemRow['unitid'],
+							'oldquantity' => $itemRow['quantity'],
+							'newquantity' => $itemIdTable[$itemKey]
+						));
 					}
-					$updateItemPrepStmt->execute(array(
-						'quantity' => $itemIdTable[$itemKey],
-						'itemid' => $itemRow['itemid']
-					));
-
-					$updateHistoryPrepStmt->execute(array(
-						'username' => $_SESSION['username'],
-						'itemname' => $itemRow['itemname'],
-						'unitid' => $itemRow['unitid'],
-						'oldquantity' => $itemRow['quantity'],
-						'newquantity' => $itemIdTable[$itemKey]
-					));
 				}
 			}
 			echo "</table><p>" . PHP_EOL;

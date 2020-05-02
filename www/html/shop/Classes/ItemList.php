@@ -5,7 +5,7 @@ namespace JamesSCrook\Shop;
 use PDOException;
 
 /*
- * shop - Copyright (C) 2017-2019 James S. Crook
+ * shop - Copyright (C) 2017-2020 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -68,12 +68,12 @@ class ItemList extends DBConnection {
 			$getItemsPrepStmt->execute();
 
 			echo "<table>" . PHP_EOL;
-			echo "<tr>
-				<th><a href='display_items_sorted.php?sortby=item_unit_asc'>&#x25b2;</a>Item&#x25CF;Unit<a href='display_items_sorted.php?sortby=item_unit_desc'>&#x25bc</a></th>
-				<th><a href='display_items_sorted.php?sortby=category_asc'>&#x25b2;</a>Category<a href='display_items_sorted.php?sortby=category_desc'>&#x25bc</a></th>
-				<th><a href='display_items_sorted.php?sortby=buy_count_asc'>&#x25b2;</a>Buy Count<a href='display_items_sorted.php?sortby=buy_count_desc'>&#x25bc</a></th>
-				<th><a href='display_items_sorted.php?sortby=last_buy_time_asc'>&#x25b2;</a>Last Buy Time<a href='display_items_sorted.php?sortby=last_buy_time_desc'>&#x25bc</a></th>
-			</tr>";
+			echo "<tr>" . PHP_EOL;
+			echo " <th><a href='display_items_sorted.php?sortby=item_unit_asc'>&#x25b2;</a>Item&#x25CF;Unit<a href='display_items_sorted.php?sortby=item_unit_desc'>&#x25bc;</a></th>" . PHP_EOL;
+			echo " <th><a href='display_items_sorted.php?sortby=category_asc'>&#x25b2;</a>Category<a href='display_items_sorted.php?sortby=category_desc'>&#x25bc;</a></th>" . PHP_EOL;
+			echo " <th><a href='display_items_sorted.php?sortby=buy_count_asc'>&#x25b2;</a>Buy Count<a href='display_items_sorted.php?sortby=buy_count_desc'>&#x25bc;</a></th>" . PHP_EOL;
+			echo " <th><a href='display_items_sorted.php?sortby=last_buy_time_asc'>&#x25b2;</a>Last Buy Time<a href='display_items_sorted.php?sortby=last_buy_time_desc'>&#x25bc;</a></th>" . PHP_EOL;
+			echo "</tr>" . PHP_EOL;
 
 			while ($itemRow = $getItemsPrepStmt->fetch()) {
 				echo "<tr><td>" . "<a href='change_item.php?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</a>&#x25CF;" . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['buycount'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['lastbuytime'], ENT_QUOTES) . "</td></tr>" . PHP_EOL;

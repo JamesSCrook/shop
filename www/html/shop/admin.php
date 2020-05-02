@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2019 James S. Crook
+ * shop - Copyright (C) 2017-2020 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	$unit->displayUnitDropDownList(NULL);
 	echo "</select>";
 	echo "<button class='bttn' style=background-color:lightblue; name='rename_unit_bttn'>&#x270E; Rename Unit</button>";
-	echo "<button class='bttn' style=background-color:salmon; name='delete_unit_bttn'>&#x1F5D1 Delete Unit</button>" . PHP_EOL;
+	echo "<button class='bttn' style=background-color:salmon; name='delete_unit_bttn'>&#x1F5D1; Delete Unit</button>" . PHP_EOL;
 
 	echo "<h3><div class='section_separator'>Manage Categories</div></h3>" . PHP_EOL;
 	echo "<input type='text' class='enter_input_text' name='add_rename_category' placeholder='Category (add or rename as this)' pattern='.{1,64}'>";
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	$category->displayCategoryDropDownList(NULL);
 	echo "</select>";
 	echo "<button class='bttn' style=background-color:lightblue; name='rename_category_bttn'>&#x270E; Rename Category</button>";
-	echo "<button class='bttn' style=background-color:salmon; name='delete_category_bttn'>&#x1F5D1 Delete Category</button>" . PHP_EOL;
+	echo "<button class='bttn' style=background-color:salmon; name='delete_category_bttn'>&#x1F5D1; Delete Category</button>" . PHP_EOL;
 
 	echo "<h3><div class='section_separator'>Manage Users</div></h3>" . PHP_EOL;
 	echo "<input type='text' class='enter_input_text' name='add_username' placeholder='Username' pattern='.{1,}'>";
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "<select class='enter_select' name='delete_username'><option value='' disabled selected>User to delete</option>";
 	$user->displayUsernameDropDownList();
 	echo "</select>";
-	echo "<button class='bttn' style=background-color:salmon; name='delete_user_bttn'>&#x1F5D1 Delete User</button>" . PHP_EOL;
+	echo "<button class='bttn' style=background-color:salmon; name='delete_user_bttn'>&#x1F5D1; Delete User</button>" . PHP_EOL;
 
 	echo "</form>" . PHP_EOL;
 } else { /* POST - a button has been pressed */
@@ -182,4 +182,3 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 </body>
 </html>
-<!-- shop - Copyright (C) 2017-2019 James S. Crook - GPL3+ -->

@@ -5,7 +5,7 @@ namespace JamesSCrook\Shop;
 use PDOException;
 
 /*
- * shop - Copyright (C) 2017-2019 James S. Crook
+ * shop - Copyright (C) 2017-2020 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -34,9 +34,9 @@ class History extends DBConnection {
 			$displayHistoryPrepStmt->execute();
 
 			echo "<table>" . PHP_EOL;
-			echo "<tr><th>Time</th><th>Who</th><th>Item</th><th>Change</th></tr>";
+			echo "<tr><th>Time</th><th>Who</th><th>Item</th><th>Change</th></tr>" . PHP_EOL;
 			while ($row = $displayHistoryPrepStmt->fetch()) {
-				echo "</tr><td>" . htmlspecialchars($row['time'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($row['username'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($row['itemname'], ENT_QUOTES) . "&#x25CF;" . $row['unitname'] . "</td><td>" . htmlspecialchars($row['oldQuantity'], ENT_QUOTES) . "&rarr;" . htmlspecialchars($row['newQuantity'], ENT_QUOTES) . "</td></tr>" . PHP_EOL;
+				echo "<tr><td>" . htmlspecialchars($row['time'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($row['username'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($row['itemname'], ENT_QUOTES) . "&#x25CF;" . $row['unitname'] . "</td><td>" . htmlspecialchars($row['oldQuantity'], ENT_QUOTES) . "&rarr;" . htmlspecialchars($row['newQuantity'], ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 			}
 			echo "</table>" . PHP_EOL;
 		} catch(PDOException $exception) {

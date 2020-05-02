@@ -1,3 +1,9 @@
+Sun May  3 08:46:58 AEST 2020
+    v1.5.5
+	Coded around an issue where different PHP 'versions' handled a quantity of "" vs 0 differently
+	Cleaned up the CSS for the hamburger menu - moved it to the left
+	A few other minor cosmetic tweaks
+
 Wed Jul  3 09:38:10 AEST 2019
     v1.5.4
 	Display header on quantity change confirmation page.

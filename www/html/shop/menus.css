@@ -1,6 +1,7 @@
+/* shop - Copyright (C) 2017-2020 James S. Crook */
+
 body {
 	margin-top: 40px;
-	font-family: Arial, Helvetica, Sans-Serif;
 	margin: 0px 1px 0px 1px;
 	padding-top: 20px;
 	text-align: center;
@@ -10,7 +11,7 @@ body {
 	width: 25px;
 	height: 2px;
 	background-color: white;
-	margin: 3px 85%;
+	margin: 3px 8px;
 }
 
 .nav-bar {
@@ -24,12 +25,10 @@ body {
 	color: white;
 	display: block;
 	padding: 5px 0px;
-	text-align: center;
-	text-transform: uppercase;
 	width: inherit;
 }
 
-.nav-bar__label, .nav-bar__sub-label {
+.nav-bar__label {
 	cursor: pointer;
 }
 
@@ -39,7 +38,7 @@ body {
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	text-align: center;
+	float: left;
 }
 
 .nav-bar__list, [id^="toggle"] {
@@ -51,16 +50,16 @@ body {
 }
 
 .nav-bar__bttn-item {
-	display: block;
 	color: black;
 	background: lightblue;
 }
 
 .nav-bar__list-item {
 	display: block;
+	text-align: left;
 }
 
-.nav-bar__link, .nav-bar__sub-label {
+.nav-bar__link {
 	color: white;
 	display: block;
 	padding: 5px 5px;
@@ -69,11 +68,11 @@ body {
 }
 
 .nav-bar__list-item .nav-bar__list-item .nav-bar__link,
-	.nav-bar__list-item .nav-bar__list-item .nav-bar__sub-label {
+	.nav-bar__list-item .nav-bar__list-item {
 	padding: 10px 10px 10px 30px;
 }
 
-.nav-bar__link:hover, .nav-bar__link:active, .nav-bar__sub-label:hover {
+.nav-bar__link:hover, .nav-bar__link:active {
 	background: #666;
 }
 
@@ -86,13 +85,12 @@ body {
 	}
 	.nav-bar>.nav-bar__list>.nav-bar__list-item {
 		display: inline-block;
-		position: relative;
 	}
 	.nav-bar__list-item .nav-bar__list {
 		position: absolute;
 	}
 	.nav-bar__list-item .nav-bar__list-item .nav-bar__link,
-		.nav-bar__list-item .nav-bar__list-item .nav-bar__sub-label {
+		.nav-bar__list-item .nav-bar__list-item {
 		padding: 10px 20px;
 	}
 }

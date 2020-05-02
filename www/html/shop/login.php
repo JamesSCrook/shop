@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2019 James S. Crook
+ * shop - Copyright (C) 2017-2020 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -35,15 +35,9 @@ spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 Menu::displayMenus(FALSE);
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-
 	echo "<form id=login_form method='POST'>" . PHP_EOL;
-	if (isset($_GET['username'])) {
-		$username = $_GET['username'];
-	} else {
-		$username = "";
-	}
 	echo "  Username<br>" . PHP_EOL;
-	echo "  <input type='text' class='enter_input_text' name='username' size='20' value=$username><p>" . PHP_EOL;
+	echo "  <input type='text' class='enter_input_text' name='username' size='20'><p>" . PHP_EOL;
 	echo "  Password<br>" . PHP_EOL;
 	echo "  <input type='password' class='enter_input_text' name='password' size='20'><p>" . PHP_EOL;
 	echo "  <button class='bttn' name='login'>Login</button><br>" . PHP_EOL;
@@ -66,4 +60,3 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 </body>
 </html>
-<!-- shop - Copyright (C) 2017-2019 James S. Crook - GPL3+ -->

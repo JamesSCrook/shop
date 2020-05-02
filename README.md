@@ -1,7 +1,7 @@
 # shop
 
 See
-[https://yosj.com.au/staff/websites/shop/shop.html](https://yosj.com.au/staff/websites/shop/shop.html)
+[https://yosj.com.au/staff/websites/shop/shop.php](https://yosj.com.au/staff/websites/shop/shop.php)
 for details.
 
 But, very briefly, shop is a LAMP website that implements a shared shopping list for N users.
@@ -26,3 +26,4 @@ Technologies:
 I'd also be interested in any constructive feedback about any egregious security issues. (Bearing in mind, there's no sensitive data.)
 
 I'm a "form follows function" guy, and I have no idea how to make a website look pretty. So if anyone is interested in beautification, welcome!
+

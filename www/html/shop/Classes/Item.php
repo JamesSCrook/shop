@@ -23,10 +23,12 @@ class Item extends DBConnection {
 			$firstCharSubstring = "SUBSTR(itemname,1,1)";
 			$getItemFirstCharsPrepStmt = $this->dbConn->prepare("SELECT DISTINCT $firstCharSubstring FROM item");
 			$getItemFirstCharsPrepStmt->execute();
+			echo "<div style='font-size:18px;'>" . PHP_EOL;
 			while ($itemRow = $getItemFirstCharsPrepStmt->fetch()) {
 				$first_char = $itemRow[$firstCharSubstring];
-				echo "<font size='5'><a href='first_char.php?first_char=" . htmlspecialchars($first_char, ENT_QUOTES) . "'>" . htmlspecialchars($first_char, ENT_QUOTES) . "</a>&nbsp;</font>" . PHP_EOL;
+				echo "<a href='first_char.php?first_char=" . htmlspecialchars($first_char, ENT_QUOTES) . "'>" . htmlspecialchars($first_char, ENT_QUOTES) . "</a>&nbsp;" . PHP_EOL;
 			}
+			echo "</div>" . PHP_EOL;
 		} catch(PDOException $exception) {
 			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 			echo "Could not display any item first characters.<p>" . PHP_EOL;
@@ -69,7 +71,7 @@ class Item extends DBConnection {
 
 	public function addItem($newItemName, $newUnitName, $newCategoryName, $newNotes, $quantity, $newUserName) {
 		if ($this->getItemId($newItemName, $newUnitName) != NULL) {
-			echo Utils::failureSymbol() . "Cannot add this item:<p>" . PHP_EOL;
+			echo "<br>" . Utils::failureSymbol() . "Cannot add this item:<p>" . PHP_EOL;
 			echo "<table class='table_error'>" . PHP_EOL;
 			echo "<tr><td>Description</td><td>" . htmlspecialchars($newItemName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 			echo "<tr><td>Unit</td><td>" . htmlspecialchars($newUnitName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
@@ -89,7 +91,7 @@ class Item extends DBConnection {
 
 				$this->updateNewItem($newItemName, $newUnitName, $newCategoryName, $quantity, $newUserName);
 
-				echo Utils::successSymbol() . "New item added<p>" . PHP_EOL;
+				echo "<br>" . Utils::successSymbol() . "New item added<p>" . PHP_EOL;
 				echo "<table>" . PHP_EOL;
 				echo "<tr><td>Description</td><td>" . htmlspecialchars($newItemName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 				echo "<tr><td>Unit</td><td>" . htmlspecialchars($newUnitName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
@@ -137,7 +139,7 @@ class Item extends DBConnection {
 			while ($itemRow = $getItemsPrepStmt->fetch()) {
 				echo "<div class='grid-item'>" . PHP_EOL;
 				echo " <input type='number' class='item_quantity' name='i_" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' min='-9999' max='9999' step='any'";
-				echo " value='" . htmlspecialchars($itemRow['quantity'], ENT_QUOTES) . "'>";
+				echo " value='" . ($itemRow['quantity'] != 0 ? htmlspecialchars($itemRow['quantity'], ENT_QUOTES) : "") . "'>";
 				echo "<a href='change_item.php?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'><abbr title='" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</abbr></a>";
 				if ($itemRow['notes'] != "") {
 					echo "<abbr title='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>&rarr;" . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</abbr>" . PHP_EOL;

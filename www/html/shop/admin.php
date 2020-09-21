@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 			$notes = preg_replace('/\s+/', ' ', trim($_POST['notes']));
 			$item->addItem(mb_strtoupper(mb_substr($itemName, 0, 1)) . mb_substr($itemName, 1), $_POST['unitname'], $_POST['categoryname'], $notes, $quantity, $_SESSION['username']);
 		} else {
-			echo Utils::failureSymbol() . "Description, unit and category are required!<p>" . PHP_EOL;
+			echo "<br>" . Utils::failureSymbol() . "Description, unit and category are required!<p>" . PHP_EOL;
 		}
 	} else if (isset($_POST['ack_new_item_bttn'])) {
 		header("Location: admin.php");
@@ -119,40 +119,40 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 			$unitName = preg_replace('/\s+/', ' ', trim($_POST['add_rename_unit']));
 			$unit->addUnit($unitName);
 		} else {
-			echo Utils::failureSymbol() . "Unit is required!<p>" . PHP_EOL;
+			echo "<br>" . Utils::failureSymbol() . "Unit is required!<p>" . PHP_EOL;
 		}
 	} else if (isset($_POST['rename_unit_bttn'])) {
 		if ($_POST['add_rename_unit'] != "" && $_POST['rename_delete_unit'] != "") {
 			$unitName = preg_replace('/\s+/', ' ', trim($_POST['add_rename_unit']));
 			$unit->renameUnit($_POST['rename_delete_unit'], $unitName);
 		} else {
-			echo Utils::failureSymbol() . "Both old and new unit names are required!<p>" . PHP_EOL;
+			echo "<br>" . Utils::failureSymbol() . "Both old and new unit names are required!<p>" . PHP_EOL;
 		}
 	} else if (isset($_POST['delete_unit_bttn'])) {
 		if ($_POST['rename_delete_unit'] != "") {
 			$unit->deleteUnit($_POST['rename_delete_unit']);
 		} else {
-			echo Utils::failureSymbol() . "Unit is required!<p>" . PHP_EOL;
+			echo "<br>" . Utils::failureSymbol() . "Unit is required!<p>" . PHP_EOL;
 		}
 	} else if (isset($_POST['add_category_bttn'])) {
 		if ($_POST['add_rename_category'] != "") {
 			$categoryName = preg_replace('/\s+/', ' ', trim($_POST['add_rename_category']));
 			$category->addCategory($categoryName);
 		} else {
-			echo Utils::failureSymbol() . "Category is required!<p>" . PHP_EOL;
+			echo "<br>" . Utils::failureSymbol() . "Category is required!<p>" . PHP_EOL;
 		}
 	} else if (isset($_POST['rename_category_bttn'])) {
 		if ($_POST['add_rename_category'] != "" && $_POST['rename_delete_category'] != "") {
 			$categoryName = preg_replace('/\s+/', ' ', trim($_POST['add_rename_category']));
 			$category->renameCategory($_POST['rename_delete_category'], $categoryName);
 		} else {
-			echo Utils::failureSymbol() . "Both old and new category names are required!<p>" . PHP_EOL;
+			echo "<br>" . Utils::failureSymbol() . "Both old and new category names are required!<p>" . PHP_EOL;
 		}
 	} else if (isset($_POST['delete_category_bttn'])) {
 		if ($_POST['rename_delete_category'] != "") {
 			$category->deleteCategory($_POST['rename_delete_category']);
 		} else {
-			echo Utils::failureSymbol() . "Category is required!<p>" . PHP_EOL;
+			echo "<br>" . Utils::failureSymbol() . "Category is required!<p>" . PHP_EOL;
 		}
 	} else if (isset($_POST['add_user_bttn'])) {
 		if ($_POST['add_username'] != "" && $_POST['newpw1'] != "") {
@@ -160,16 +160,16 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 				$userName = preg_replace('/\s+/', ' ', trim($_POST['add_username']));
 				$user->addUserName($userName, $_POST['newpw1']);
 			} else {
-				echo Utils::failureSymbol() . "Passwords do not match, please try again<p>" . PHP_EOL;
+				echo "<br>" . Utils::failureSymbol() . "Passwords do not match, please try again<p>" . PHP_EOL;
 			}
 		} else {
-			echo Utils::failureSymbol() . "User is required!<p>" . PHP_EOL;
+			echo "<br>" . Utils::failureSymbol() . "User is required!<p>" . PHP_EOL;
 		}
 	} else if (isset($_POST['delete_user_bttn'])) {
 		if ($_POST['delete_username'] != "") {
 			$user->deleteUserName($_POST['delete_username']);
 		} else {
-			echo Utils::failureSymbol() . "User is required!<p>" . PHP_EOL;
+			echo "<br>" . Utils::failureSymbol() . "User is required!<p>" . PHP_EOL;
 		}
 	} else if (isset($_POST['ack_manage_bttn'])) {
 		header('Location: admin.php');

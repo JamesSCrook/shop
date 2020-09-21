@@ -21,8 +21,6 @@ namespace JamesSCrook\Shop;
 </head>
 <body>
 
-	<h3>Login to Shop</h3>
-
 <?php
 /*
  * Login to shop.
@@ -33,6 +31,8 @@ require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 Menu::displayMenus(FALSE);
+
+echo "<h3>Login to Shop</h3>" . PHP_EOL;
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "<form id=login_form method='POST'>" . PHP_EOL;

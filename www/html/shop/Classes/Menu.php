@@ -17,41 +17,41 @@ class Menu {
 	 */
 	public static function displayMenus($itemPageFlag) {
 		echo "
-			<link href='menus.css' rel='stylesheet'>
+<link href='menus.css' rel='stylesheet'>
 
-			<nav class='nav-bar'>
-			<label for='toggle' class='nav-bar__label'>
-				<div class='menu__icon'></div>
-				<div class='menu__icon'></div>
-				<div class='menu__icon'></div>
-			</label>
-			<input type='checkbox' id='toggle' class='nav-bar__toggle'>
-			<ul class='nav-bar__list'>
-			  <li class='nav-bar__list-item'>
-				  <a href='index.php' class='nav-bar__link'>Items</a>
-			  </li>
-			  <li class='nav-bar__list-item'>
-				  <a href='admin.php' class='nav-bar__link'>Admin</a>
-			  </li>
-			  <li class='nav-bar__list-item'>
-				  <a href='history.php' class='nav-bar__link'>History</a>
-			  </li>
-			  <li class='nav-bar__list-item'>
-				  <a href='logout.php' class='nav-bar__link'>Logout</a>
-			  </li>
-		  ";
+<nav class='nav-bar'>
+<label for='toggle' class='nav-bar__label'>
+	<div class='menu__icon'></div>
+	<div class='menu__icon'></div>
+	<div class='menu__icon'></div>
+</label>
+<input type='checkbox' id='toggle' class='nav-bar__toggle'>
+<ul class='nav-bar__list'>
+	<li class='nav-bar__list-item'>
+		<a href='index.php' class='nav-bar__link'>Items</a>
+	</li>
+	<li class='nav-bar__list-item'>
+		<a href='admin.php' class='nav-bar__link'>Admin</a>
+	</li>
+	<li class='nav-bar__list-item'>
+		<a href='history.php' class='nav-bar__link'>History</a>
+	</li>
+	<li class='nav-bar__list-item'>
+		<a href='logout.php' class='nav-bar__link'>Logout</a>
+	</li>
+";
 		if ($itemPageFlag) {
 			echo "
-			  <li class='nav-bar__list-item'>
-				<button class='nav-bar__bttn-item' form='items_form' name='update_items_bttn'>Update</button>
-			  </li>
-		  ";
+	<li class='nav-bar__list-item'>
+		<button class='nav-bar__bttn-item' form='items_form' name='update_items_bttn'>Update</button>
+	</li>
+";
 		}
 		echo "
-			</ul>
-		</nav>
-		";
+	</ul>
+</nav>
+";
 	}
 }
 ?>
-<!-- Version 1.5.5 - Sun May  3 08:26:24 AEST 2020 -->
+<!-- Version 1.6.0 - Tue Sep 22 08:15:18 AEST 2020 -->

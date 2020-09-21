@@ -13,11 +13,11 @@ namespace JamesSCrook\Shop;
 class Utils {
 
 	public static function successSymbol() {
-		return "<br><font style='color: green;'>&#x2714;</font> "; // tick
+		return "<span style='color: green;'>&#x2714;</span> "; // tick
 	}
 
 	public static function failureSymbol() {
-		return "<br><font style='color: red;'>&#x2718;</font> "; // cross
+		return "<span style='color: red;'>&#x2718;</span> "; // cross
 	}
 }
 ?>

@@ -76,7 +76,7 @@ body {
 	background: #666;
 }
 
-@media all and (min-width : 324px) {
+@media all and (min-width : 310px) {
 	.nav-bar>.nav-bar__label {
 		display: none;
 	}

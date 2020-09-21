@@ -1,3 +1,11 @@
+Tue Sep 22 08:15:18 AEST 2020
+    v1.6.0
+	Eliminated font tags
+	Success/failureSymbol functions return only the symbol (was <br><symbol>)
+	Removed menu indentation (from the HTML)
+	When displaying items, display nothing (input field is blank) instead of 0)
+	Changed the screen width for drop-down menu from 310 to 324 px.
+
 Sun May  3 09:05:16 AEST 2020
 	The URL change in README.md wasn't updated in git. How odd... tried again...
 

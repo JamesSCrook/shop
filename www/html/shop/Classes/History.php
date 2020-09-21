@@ -36,7 +36,7 @@ class History extends DBConnection {
 			echo "<table>" . PHP_EOL;
 			echo "<tr><th>Time</th><th>Who</th><th>Item</th><th>Change</th></tr>" . PHP_EOL;
 			while ($row = $displayHistoryPrepStmt->fetch()) {
-				echo "<tr><td>" . htmlspecialchars($row['time'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($row['username'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($row['itemname'], ENT_QUOTES) . "&#x25CF;" . $row['unitname'] . "</td><td>" . htmlspecialchars($row['oldQuantity'], ENT_QUOTES) . "&rarr;" . htmlspecialchars($row['newQuantity'], ENT_QUOTES) . "</td></tr>" . PHP_EOL;
+				echo "<tr><td>" . htmlspecialchars($row['time'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($row['username'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($row['itemname'], ENT_QUOTES) . "&#x25CF;" . $row['unitname'] . "</td><td>" . htmlspecialchars($row['oldQuantity'], ENT_QUOTES) . "&rarr; " . htmlspecialchars($row['newQuantity'], ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 			}
 			echo "</table>" . PHP_EOL;
 		} catch(PDOException $exception) {

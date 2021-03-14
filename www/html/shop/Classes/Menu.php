@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2020 James S. Crook
+ * shop - Copyright (C) 2017-2021 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -54,4 +54,4 @@ class Menu {
 	}
 }
 ?>
-<!-- Version 1.6.0 - Tue Sep 22 08:15:18 AEST 2020 -->
+<!-- Version 1.6.1 - Thu Mar 11 09:15:24 AEDT 2021 -->

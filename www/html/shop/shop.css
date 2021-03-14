@@ -1,4 +1,4 @@
-/* shop - Copyright (C) 2017-2020 James S. Crook */
+/* shop - Copyright (C) 2017-2021 James S. Crook */
 
 .item_quantity {
 	height: 20px;
@@ -31,6 +31,18 @@
 	width: 240px;
 	font-size: 20px;
 	border-radius: 16px;
+}
+
+.add_color {
+	background: forestgreen;
+}
+
+.change_color {
+	background: lightblue;
+}
+
+.delete_color {
+	background: salmon;
 }
 
 .grid-container {

@@ -1,3 +1,8 @@
+Thu Mar 11 09:54:52 AEDT 2021
+    v1.6.1
+	Replaced hard coded button (etc.) colors with CSS (sub)classes
+	Replaced hard coded symbols with Util functions (change once, change 'em all)
+
 Tue Sep 22 08:15:18 AEST 2020
     v1.6.0
 	Eliminated font tags

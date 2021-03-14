@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2020 James S. Crook
+ * shop - Copyright (C) 2017-2021 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -68,8 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		$category->displayCategoryDropDownList($itemRow['categoryid']);
 		echo "</select>";
 		echo "<input type='text' class='enter_input_text' name='notes' placeholder='Notes (optional)' value='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>";
-		echo "<button class='bttn' style=background-color:lightblue; name='change_item_bttn'>&#x270E; Change Item</button>";
-		echo "<button class='bttn' style=background-color:salmon; name='delete_item_bttn'>&#x1F5D1; Delete Item</button>";
+		echo "<button class='bttn change_color' name='change_item_bttn'>" . Utils::changeSymbol() . " Change Item</button>";
+		echo "<button class='bttn delete_color' name='delete_item_bttn'>" . Utils::deleteSymbol() . " Delete Item</button>";
 
 		echo "</form>" . PHP_EOL;
 

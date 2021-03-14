@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2020 James S. Crook
+ * shop - Copyright (C) 2017-2021 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "</select>";
 	echo "<input type='text' class='enter_input_text' placeholder='Notes (optional)' name='notes'>";
 	echo "<input type='number' class='enter_input_number' name='quantity' placeholder='Quanitity (optional)' min='-9999' max='9999' step='any'>";
-	echo "<button class='bttn' style=background-color:forestgreen; name='add_item_bttn'>&#x271A; Add Item</button><br>" . PHP_EOL;
+	echo "<button class='bttn add_color' name='add_item_bttn'>" . Utils::addSymbol() . " Add Item</button><br>" . PHP_EOL;
 
 	echo "<h3><div class='section_separator'>Miscellaneous</div></h3>" . PHP_EOL;
 	$dirName = dirname($_SERVER['PHP_SELF']);
@@ -68,31 +68,31 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 	echo "<h3><div class='section_separator'>Manage Units</div></h3>" . PHP_EOL;
 	echo "<input type='text' class='enter_input_text' name='add_rename_unit' placeholder='Unit (add or rename unit as this)' pattern='.{1,12}'>";
-	echo "<button class='bttn' style=background-color:forestgreen; name='add_unit_bttn'>&#x271A; Add Unit</button>";
+	echo "<button class='bttn add_color' name='add_unit_bttn'>" . Utils::addSymbol() . " Add Unit</button>";
 	echo "<select class='enter_select' name='rename_delete_unit'><option value='' disabled selected>Unit to rename or delete</option>";
 	$unit->displayUnitDropDownList(NULL);
 	echo "</select>";
-	echo "<button class='bttn' style=background-color:lightblue; name='rename_unit_bttn'>&#x270E; Rename Unit</button>";
-	echo "<button class='bttn' style=background-color:salmon; name='delete_unit_bttn'>&#x1F5D1; Delete Unit</button>" . PHP_EOL;
+	echo "<button class='bttn change_color' name='rename_unit_bttn'>" . Utils::changeSymbol() . " Rename Unit</button>";
+	echo "<button class='bttn delete_color' name='delete_unit_bttn'>" . Utils::deleteSymbol() . " Delete Unit</button>" . PHP_EOL;
 
 	echo "<h3><div class='section_separator'>Manage Categories</div></h3>" . PHP_EOL;
 	echo "<input type='text' class='enter_input_text' name='add_rename_category' placeholder='Category (add or rename as this)' pattern='.{1,64}'>";
-	echo "<button class='bttn' style=background-color:forestgreen; name='add_category_bttn'>&#x271A; Add Category</button>";
+	echo "<button class='bttn add_color' name='add_category_bttn'>" . Utils::addSymbol() . " Add Category</button>";
 	echo "<select class='enter_select' name='rename_delete_category'><option value='' disabled selected>Category to rename or delete</option>";
 	$category->displayCategoryDropDownList(NULL);
 	echo "</select>";
-	echo "<button class='bttn' style=background-color:lightblue; name='rename_category_bttn'>&#x270E; Rename Category</button>";
-	echo "<button class='bttn' style=background-color:salmon; name='delete_category_bttn'>&#x1F5D1; Delete Category</button>" . PHP_EOL;
+	echo "<button class='bttn change_color' name='rename_category_bttn'>" . Utils::changeSymbol() . " Rename Category</button>";
+	echo "<button class='bttn delete_color' name='delete_category_bttn'>" . Utils::deleteSymbol() . " Delete Category</button>" . PHP_EOL;
 
 	echo "<h3><div class='section_separator'>Manage Users</div></h3>" . PHP_EOL;
 	echo "<input type='text' class='enter_input_text' name='add_username' placeholder='Username' pattern='.{1,}'>";
 	echo "<input type='password' class='enter_input_text' name='newpw1' size='20' pattern='.{6,}' placeholder='password'>";
 	echo "<input type='password' class='enter_input_text' name='newpw2' size='20' pattern='.{6,}' placeholder='repeat password'>";
-	echo "<button class='bttn' style=background-color:forestgreen; name='add_user_bttn'>&#x271A; Add User</button>";
+	echo "<button class='bttn add_color' name='add_user_bttn'>" . Utils::addSymbol() . " Add User</button>";
 	echo "<select class='enter_select' name='delete_username'><option value='' disabled selected>User to delete</option>";
 	$user->displayUsernameDropDownList();
 	echo "</select>";
-	echo "<button class='bttn' style=background-color:salmon; name='delete_user_bttn'>&#x1F5D1; Delete User</button>" . PHP_EOL;
+	echo "<button class='bttn delete_color' name='delete_user_bttn'>" . Utils::deleteSymbol() . " Delete User</button>" . PHP_EOL;
 
 	echo "</form>" . PHP_EOL;
 } else { /* POST - a button has been pressed */

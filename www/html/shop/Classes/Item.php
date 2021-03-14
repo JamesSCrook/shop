@@ -5,7 +5,7 @@ namespace JamesSCrook\Shop;
 use PDOException;
 
 /*
- * shop - Copyright (C) 2017-2020 James S. Crook
+ * shop - Copyright (C) 2017-2021 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -142,9 +142,9 @@ class Item extends DBConnection {
 				echo " value='" . ($itemRow['quantity'] != 0 ? htmlspecialchars($itemRow['quantity'], ENT_QUOTES) : "") . "'>";
 				echo "<a href='change_item.php?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'><abbr title='" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</abbr></a>";
 				if ($itemRow['notes'] != "") {
-					echo "<abbr title='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>&rarr;" . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</abbr>" . PHP_EOL;
+					echo "<abbr title='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>" . Utils::separatorWithTipSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</abbr>" . PHP_EOL;
 				} else {
-					echo "&#x25CF;" . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "<br>" . PHP_EOL;
+					echo Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "<br>" . PHP_EOL;
 				}
 				echo "</div>" . PHP_EOL;
 			}
@@ -188,7 +188,7 @@ class Item extends DBConnection {
 					}
 
 					if ($itemRow['quantity'] != $itemIdTable[$itemKey]) {	// If the quantity has changed, update the DB.
-						echo "<tr><td>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "&#x25CF;" . $itemRow['unitname'] . "</td><td>" . htmlspecialchars($itemRow['quantity'], ENT_QUOTES) . "&rarr;" . htmlspecialchars($itemIdTable[$itemKey], ENT_QUOTES) . "</td></tr>" . PHP_EOL;
+						echo "<tr><td>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . Utils::separatorSymbol() . $itemRow['unitname'] . "</td><td>" . htmlspecialchars($itemRow['quantity'], ENT_QUOTES) . Utils::changeValueSymbol() . htmlspecialchars($itemIdTable[$itemKey], ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 
 						if (abs($itemIdTable[$itemKey]) < abs($itemRow['quantity'])) {
 							$updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity, buycount=buycount+1, lastbuytime=NOW() WHERE itemid=:itemid");

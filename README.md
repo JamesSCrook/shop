@@ -1,8 +1,6 @@
 # shop
 
-See
-[https://yosj.com.au/staff/websites/shop](https://yosj.com.au/staff/websites/shop)
-for details.
+See https://yosj.com.au/staff/websites/shop for details.
 
 But, very briefly, shop is a LAMP website that implements a shared shopping list for N users.
 

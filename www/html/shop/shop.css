@@ -3,46 +3,75 @@
 .item_quantity {
 	height: 20px;
 	width: 60px;
-	background: lightcyan;
+	border: 1px solid #606060;
+	padding: 0px 1px 0px 0px;
 }
 
-.enter_select, .enter_input_text {
-	border: 1px solid blue;
-	border-radius: 4px;
+.enter_select {
+	border: 1px solid silver;
 	margin: 2px;
-	padding: 0px;
-	height: 30px;
+	padding: 0px 0px 0px 4px;
+	height: 32px;
 	width: 240px;
 }
 
-.enter_input_number {
-	border: 1px solid blue;
-	border-radius: 4px;
+.enter_input_text, .enter_input_number {
+	border: 1px solid silver;
 	margin: 2px;
+	padding: 0px 0px 0px 4px;
 	height: 30px;
-	width: 240px;
-	background: lightcyan;
+	width: 234px;
 }
 
 .bttn {
-	border: 1px solid blue;
+	color: #D0D0D0;
+	border: 1px solid silver;
 	margin: 2px;
-	height: 30px;
+	height: 32px;
 	width: 240px;
 	font-size: 20px;
 	border-radius: 16px;
+
+	vertical-align: bottom
+}
+
+.first_char {
+	display: inline-block;
+	font-size: 140%;
+	padding: 0px 5px 0px 5px;
+}
+
+.query_color {
+    background: #4d2600;
+}
+.query_color:hover {
+    background: saddlebrown;
 }
 
 .add_color {
-	background: forestgreen;
+    background: #004d00;
+}
+.add_color:hover {
+    background: darkgreen;
 }
 
 .change_color {
-	background: lightblue;
+    background: darkblue;
+}
+.change_color:hover {
+    background: blue;
 }
 
 .delete_color {
-	background: salmon;
+    background: #660000;
+}
+.delete_color:hover {
+    background: #990000;
+}
+
+.input_color {
+	color: #D0D0D0;
+    background: #000040;
 }
 
 .grid-container {
@@ -52,18 +81,17 @@
 
 .grid-item {
 	text-align: left;
-	border: 2px solid blue;
+	border: 2px solid #000080;
 	margin: 1px;
-	border-radius: 6px;
-	background: lightcyan;
 }
 
 table {
 	margin: 0 auto;
+	border-collapse: collapse;
 }
-
-table, tr, th, td {
-	border: 1px solid blue;
+tr, th, td {
+	border: 1px solid #4040ff;
+	padding: 0px 2px 0px 2px;
 	text-align: left;
 }
 
@@ -78,5 +106,5 @@ table, tr, th, td {
 	border-radius: 6px;
 	text-align: center;
 	margin: 2px 0px 2px 0px;
-	background-color: lightgrey;
+	background-color: #444444;
 }

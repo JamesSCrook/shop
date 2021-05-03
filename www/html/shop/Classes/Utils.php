@@ -45,11 +45,11 @@ class Utils {
 	}
 
 	public static function sortAscendingSymbol() {
-		return "&#x25B2;"; // triangle pointing up
+		return "<span style='color:green; font-size:180%;'>&#x25B2;</span>"; // triangle pointing up
 	}
 
 	public static function sortDescendingSymbol() {
-		return "&#x25BC;"; // triangle pointing down
+		return "<span style='color:red; font-size:180%;'>&#x25BC;</span>"; // triangle pointing down
 	}
 }
 ?>

@@ -32,7 +32,7 @@ require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 if (!isset($_SESSION['username'])) {
-	header("Location: login.php");
+	header("Location: login");
 	exit();
 } else {
 	$username = $_SESSION['username'];
@@ -42,7 +42,7 @@ $item = new Item();
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	Menu::displayMenus(TRUE);
-	echo "<h3>All Items Beginning with '" . htmlspecialchars($_GET['first_char'], ENT_QUOTES) . "' (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
+	echo "<h3>Items starting with '" . htmlspecialchars($_GET['first_char'], ENT_QUOTES) . "'</h3>" . PHP_EOL;
 	$item->displayLinks();
 	echo "<form id=items_form method='POST'>" . PHP_EOL;
 	echo "<div class='grid-container'>" . PHP_EOL;
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	if (isset($_POST['update_items_bttn'])) {
 		$user = new User();
 		if ($user->getDisplayUpdates($username) == "No") {
-			header("Location: first_char.php?first_char=" . htmlspecialchars($_GET['first_char'], ENT_QUOTES));
+			header("Location: first_char?first_char=" . htmlspecialchars($_GET['first_char'], ENT_QUOTES));
 			exit();
 		}
 	}

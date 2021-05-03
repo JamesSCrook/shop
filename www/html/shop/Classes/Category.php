@@ -34,14 +34,13 @@ class Category extends DBConnection {
 
 	public function addCategory($newCategoryName) {
 		if ($this->categoryExists($newCategoryName)) {
-			echo "Duplicate entry: '" . htmlspecialchars($newCategoryName, ENT_QUOTES) . "'<p>Category not added." . PHP_EOL;
+			echo "<p>" . Utils::failureSymbol() . "Duplicate entry: '" . htmlspecialchars($newCategoryName, ENT_QUOTES) . "'<p>Category not added." . PHP_EOL;
 		} else {
 			try {
 				$addCategoryPrepStmt = $this->dbConn->prepare("INSERT INTO category (categoryname) VALUES (:categoryname)");
 				$addCategoryPrepStmt->execute(array(
 					'categoryname' => $newCategoryName
 				));
-				// ConfirmChange::confirmSuccess("Category '$newCategoryName' successfully added");
 				echo "<br>" . Utils::successSymbol() . htmlspecialchars("Category '$newCategoryName' successfully added", ENT_QUOTES) . "<p>" . PHP_EOL;
 			} catch(PDOException $exception) {
 				echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
@@ -51,13 +50,16 @@ class Category extends DBConnection {
 	}
 
 	public function renameCategory($categoryName, $newCategoryName) {
+		if ($this->categoryExists($newCategoryName)) {
+			echo "<p>" . Utils::failureSymbol() . "Category '" . htmlspecialchars($categoryName, ENT_QUOTES) . "' cannot be renamed to existing category '" . htmlspecialchars($newCategoryName, ENT_QUOTES) . "'<p>Category not renamed." . PHP_EOL;
+			return;
+		}
 		try {
 			$renameCategoryPrepStmt = $this->dbConn->prepare("UPDATE category SET categoryname=:newcategoryname WHERE categoryname=:categoryname");
 			$renameCategoryPrepStmt->execute(array(
 				'categoryname' => $categoryName,
 				'newcategoryname' => $newCategoryName
 			));
-			// ConfirmChange::confirmSuccess("Category '$categoryName' successfully renamed to '$newCategoryName'");
 			echo "<br>" . Utils::successSymbol() . htmlspecialchars("Category '$categoryName' successfully renamed to '$newCategoryName'", ENT_QUOTES) . "<p>" . PHP_EOL;
 		} catch(PDOException $exception) {
 			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;

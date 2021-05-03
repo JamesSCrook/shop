@@ -28,16 +28,16 @@ class Menu {
 <input type='checkbox' id='toggle' class='nav-bar__toggle'>
 <ul class='nav-bar__list'>
 	<li class='nav-bar__list-item'>
-		<a href='index.php' class='nav-bar__link'>Items</a>
+		<a href='./' class='nav-bar__link'>Items</a>
 	</li>
 	<li class='nav-bar__list-item'>
-		<a href='admin.php' class='nav-bar__link'>Admin</a>
+		<a href='admin' class='nav-bar__link'>Admin</a>
 	</li>
 	<li class='nav-bar__list-item'>
-		<a href='history.php' class='nav-bar__link'>History</a>
+		<a href='history' class='nav-bar__link'>History</a>
 	</li>
 	<li class='nav-bar__list-item'>
-		<a href='logout.php' class='nav-bar__link'>Logout</a>
+		<a href='logout' class='nav-bar__link'>Logout</a>
 	</li>
 ";
 		if ($itemPageFlag) {
@@ -54,4 +54,4 @@ class Menu {
 	}
 }
 ?>
-<!-- Version 1.6.1 - Thu Mar 11 09:15:24 AEDT 2021 -->
+<!-- Version 1.7.0 - Mon May  3 09:02:04 AEST 2021 -->

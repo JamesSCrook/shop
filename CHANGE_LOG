@@ -1,3 +1,12 @@
+Mon May  3 09:08:51 AEST 2021
+    v1.7.0
+	- Switched to dark theme
+	- Removed ".php" suffix from URLs
+	- Add checks to prevent attempting to rename a Unit or a Category if there is an existing
+	  one of that same name.
+	- Standardized button and input field appearance
+	- Tweaked table appearance - including the ascending/descending "buttons"
+
 Thu Mar 11 09:54:52 AEDT 2021
     v1.6.1
 	Replaced hard coded button (etc.) colors with CSS (sub)classes

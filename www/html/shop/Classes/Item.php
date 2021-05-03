@@ -23,17 +23,16 @@ class Item extends DBConnection {
 			$firstCharSubstring = "SUBSTR(itemname,1,1)";
 			$getItemFirstCharsPrepStmt = $this->dbConn->prepare("SELECT DISTINCT $firstCharSubstring FROM item");
 			$getItemFirstCharsPrepStmt->execute();
-			echo "<div style='font-size:18px;'>" . PHP_EOL;
+			echo "<div>" . PHP_EOL;
 			while ($itemRow = $getItemFirstCharsPrepStmt->fetch()) {
 				$first_char = $itemRow[$firstCharSubstring];
-				echo "<a href='first_char.php?first_char=" . htmlspecialchars($first_char, ENT_QUOTES) . "'>" . htmlspecialchars($first_char, ENT_QUOTES) . "</a>&nbsp;" . PHP_EOL;
+				echo "<a class='first_char' href='first_char?first_char=" . htmlspecialchars($first_char, ENT_QUOTES) . "'>" . htmlspecialchars($first_char, ENT_QUOTES) . "</a>";
 			}
 			echo "</div>" . PHP_EOL;
 		} catch(PDOException $exception) {
 			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 			echo "Could not display any item first characters.<p>" . PHP_EOL;
 		}
-		echo "<p>";
 	}
 
 	public function getItemRow($itemId) {
@@ -138,11 +137,11 @@ class Item extends DBConnection {
 			$getItemsPrepStmt->execute();
 			while ($itemRow = $getItemsPrepStmt->fetch()) {
 				echo "<div class='grid-item'>" . PHP_EOL;
-				echo " <input type='number' class='item_quantity' name='i_" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' min='-9999' max='9999' step='any'";
+				echo " <input type='number' class='item_quantity input_color' name='i_" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' min='-9999' max='9999' step='any'";
 				echo " value='" . ($itemRow['quantity'] != 0 ? htmlspecialchars($itemRow['quantity'], ENT_QUOTES) : "") . "'>";
-				echo "<a href='change_item.php?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'><abbr title='" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</abbr></a>";
+				echo "<a href='change_item?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'><abbr title='" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</abbr></a>";
 				if ($itemRow['notes'] != "") {
-					echo "<abbr title='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>" . Utils::separatorWithTipSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</abbr>" . PHP_EOL;
+					echo Utils::separatorWithTipSymbol() . "<abbr title='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</abbr>" . PHP_EOL;
 				} else {
 					echo Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "<br>" . PHP_EOL;
 				}
@@ -166,7 +165,7 @@ class Item extends DBConnection {
 		echo "</table>" . PHP_EOL;
 	}
 
-	/* This is called with $_POST from index.php and first_char.php */
+	/* This is called with $_POST from index and first_char */
 	public function updateItemQuantities(&$itemIdTable) {
 		try {
 			$getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, item.unitid, unitname, quantity FROM item INNER JOIN unit ON item.unitid = unit.unitid ORDER BY itemname, unitname");

@@ -1,10 +1,26 @@
 /* shop - Copyright (C) 2017-2021 James S. Crook */
 
+a {
+	color: #D0D0D0;
+	text-decoration: none;
+}
+
+abbr {
+	text-decoration: none;
+	padding: 0px 0px 0px 2px;
+}
+
 body {
+	color: #D0D0D0;
+	background: #121212;
 	margin-top: 40px;
 	margin: 0px 1px 0px 1px;
 	padding-top: 20px;
 	text-align: center;
+}
+
+h3 {
+	margin: 10px 0px 2px 0px;
 }
 
 .menu__icon {

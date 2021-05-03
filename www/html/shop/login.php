@@ -37,10 +37,10 @@ echo "<h3>Login to Shop</h3>" . PHP_EOL;
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "<form id=login_form method='POST'>" . PHP_EOL;
 	echo "  Username<br>" . PHP_EOL;
-	echo "  <input type='text' class='enter_input_text' name='username' size='20'><p>" . PHP_EOL;
+	echo "  <input type='text' class='enter_input_text input_color' name='username' placeholder='Username'><p>" . PHP_EOL;
 	echo "  Password<br>" . PHP_EOL;
-	echo "  <input type='password' class='enter_input_text' name='password' size='20'><p>" . PHP_EOL;
-	echo "  <button class='bttn' name='login'>Login</button><br>" . PHP_EOL;
+	echo "  <input type='password' class='enter_input_text input_color' name='password' placeholder='Password'><p>" . PHP_EOL;
+	echo "  <button class='bttn query_color' name='login'>Login</button><br>" . PHP_EOL;
 	echo "</form>" . PHP_EOL;
 } else {
 	$user = new User();
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		$history = new History();
 		$history->trimHistory();
 		$_SESSION['username'] = $_POST['username'];
-		header("Location: index.php");
+		header("Location: index");
 		exit();
 	} else {
 		echo "Login unsuccessful - Please try again.<br>" . PHP_EOL;

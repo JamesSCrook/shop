@@ -26,7 +26,7 @@ class ItemList extends DBConnection {
 			echo "<table>" . PHP_EOL;
 			echo "<tr><th>Category</th><th>Item" . Utils::separatorSymbol() . "Unit</th><th>Notes</th></tr>";
 			while ($itemRow = $getItemsPrepStmt->fetch()) {
-				echo "<tr><td>" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "</td><td>" . "<a href='change_item.php?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</a>" . Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['notes']) . "</td></tr>" . PHP_EOL;
+				echo "<tr><td>" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "</td><td>" . "<a href='change_item?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</a>" . Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['notes']) . "</td></tr>" . PHP_EOL;
 			}
 			echo "</table>" . PHP_EOL;
 		} catch(PDOException $exception) {
@@ -68,15 +68,14 @@ class ItemList extends DBConnection {
 			$getItemsPrepStmt->execute();
 
 			echo "<table>" . PHP_EOL;
-			echo "<tr>" . PHP_EOL;
-			echo " <th><a href='display_items_sorted.php?sortby=item_unit_asc'>" . Utils::sortAscendingSymbol() . "</a>Item" . Utils::separatorSymbol() . "Unit<a href='display_items_sorted.php?sortby=item_unit_desc'>" . Utils::sortDescendingSymbol() . "</a></th>" . PHP_EOL;
-			echo " <th><a href='display_items_sorted.php?sortby=category_asc'>" . Utils::sortAscendingSymbol() . "</a>Category<a href='display_items_sorted.php?sortby=category_desc'>" . Utils::sortDescendingSymbol() . "</a></th>" . PHP_EOL;
-			echo " <th><a href='display_items_sorted.php?sortby=buy_count_asc'>" . Utils::sortAscendingSymbol() . "</a>Buy Count<a href='display_items_sorted.php?sortby=buy_count_desc'>" . Utils::sortDescendingSymbol() . "</a></th>" . PHP_EOL;
-			echo " <th><a href='display_items_sorted.php?sortby=last_buy_time_asc'>" . Utils::sortAscendingSymbol() . "</a>Last Buy Time<a href='display_items_sorted.php?sortby=last_buy_time_desc'>" . Utils::sortDescendingSymbol() . "</a></th>" . PHP_EOL;
-			echo "</tr>" . PHP_EOL;
-
+			echo " <tr>" . PHP_EOL;
+			echo "  <th><a href='display_items_sorted?sortby=item_unit_asc'>" . Utils::sortAscendingSymbol() . "</a><br>Item" . Utils::separatorSymbol() . "Unit<a href='display_items_sorted?sortby=item_unit_desc'><br>" . Utils::sortDescendingSymbol() . "</a></th>" . PHP_EOL;
+			echo "  <th><a href='display_items_sorted?sortby=category_asc'>" . Utils::sortAscendingSymbol() . "</a><br>Category<a href='display_items_sorted?sortby=category_desc'><br>" . Utils::sortDescendingSymbol() . "</a></th>" . PHP_EOL;
+			echo "  <th><a href='display_items_sorted?sortby=buy_count_asc'>" . Utils::sortAscendingSymbol() . "</a><br>Buy Count<a href='display_items_sorted?sortby=buy_count_desc'><br>" . Utils::sortDescendingSymbol() . "</a></th>" . PHP_EOL;
+			echo "  <th><a href='display_items_sorted?sortby=last_buy_time_asc'>" . Utils::sortAscendingSymbol() . "</a><br>Last Buy Time<a href='display_items_sorted?sortby=last_buy_time_desc'><br>" . Utils::sortDescendingSymbol() . "</a></th>" . PHP_EOL;
+			echo " </tr>" . PHP_EOL;
 			while ($itemRow = $getItemsPrepStmt->fetch()) {
-				echo "<tr><td>" . "<a href='change_item.php?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</a>" . Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['buycount'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['lastbuytime'], ENT_QUOTES) . "</td></tr>" . PHP_EOL;
+				echo " <tr><td>" . "<a href='change_item?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</a>" . Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['buycount'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['lastbuytime'], ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 			}
 			echo "</table>" . PHP_EOL;
 		} catch(PDOException $exception) {

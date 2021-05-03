@@ -34,14 +34,13 @@ class Unit extends DBConnection {
 
 	public function addUnit($newUnitName) {
 		if ($this->unitExists($newUnitName)) {
-			echo "Duplicate entry: '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'<p>Unit not added." . PHP_EOL;
+			echo "<p>" . Utils::failureSymbol() . "Duplicate entry: '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'<p>Unit not added." . PHP_EOL;
 		} else {
 			try {
 				$addUnitPrepStmt = $this->dbConn->prepare("INSERT INTO unit (unitname) VALUES (:unitname)");
 				$addUnitPrepStmt->execute(array(
 					'unitname' => $newUnitName
 				));
-				// ConfirmChange::confirmSuccess("Unit '$newUnitName' successfully added");
 				echo "<br>" . Utils::successSymbol() . htmlspecialchars("Unit '$newUnitName' successfully added", ENT_QUOTES) . "<p>" . PHP_EOL;
 			} catch(PDOException $exception) {
 				echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
@@ -51,13 +50,16 @@ class Unit extends DBConnection {
 	}
 
 	public function renameUnit($unitName, $newUnitName) {
+		if ($this->unitExists($newUnitName)) {
+			echo "<p>" . Utils::failureSymbol() . "Unit '" . htmlspecialchars($unitName, ENT_QUOTES) . "' cannot be renamed to existing unit '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'<p>Unit not renamed." . PHP_EOL;
+			return;
+		}
 		try {
 			$renameUnitPrepStmt = $this->dbConn->prepare("UPDATE unit SET unitname=:newunitname WHERE unitname=:unitname");
 			$renameUnitPrepStmt->execute(array(
 				'unitname' => $unitName,
 				'newunitname' => $newUnitName
 			));
-			// ConfirmChange::confirmSuccess("Unit '$unitName' successfully renamed to '$newUnitName'");
 			echo "<br>" . Utils::successSymbol() . htmlspecialchars("Unit '$unitName' successfully renamed to '$newUnitName'", ENT_QUOTES) . "<p>" . PHP_EOL;
 		} catch(PDOException $exception) {
 			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
@@ -90,7 +92,6 @@ class Unit extends DBConnection {
 				$deleteUnitPrepStmt->execute(array(
 					'unitname' => $deleteUnitName
 				));
-				// ConfirmChange::confirmSuccess("Unit '$deleteUnitName' successfully deleted");
 				echo "<br>" . Utils::successSymbol() . htmlspecialchars("Unit '$deleteUnitName' successfully deleted", ENT_QUOTES) . "<p>" . PHP_EOL;
 				return;
 			} catch(PDOException $exception) {

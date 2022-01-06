@@ -1,37 +1,37 @@
-Mon May  3 09:08:51 AEST 2021
-    v1.7.0
-	- Switched to dark theme
-	- Removed ".php" suffix from URLs
-	- Add checks to prevent attempting to rename a Unit or a Category if there is an existing
-	  one of that same name.
-	- Standardized button and input field appearance
-	- Tweaked table appearance - including the ascending/descending "buttons"
+v1.7.1 - Thu 06 Jan 2022 17:57:40 AEDT
+    Improved handling of zooming on iphones
+    Display_items_sorted: only the sorted column has a triangle pointing up/down
+    Some cosmetic changes
 
-Thu Mar 11 09:54:52 AEDT 2021
-    v1.6.1
-	Replaced hard coded button (etc.) colors with CSS (sub)classes
-	Replaced hard coded symbols with Util functions (change once, change 'em all)
+v1.7.0 - Mon May  3 09:08:51 AEST 2021
+    Switched to dark theme
+    Removed ".php" suffix from URLs
+    Add checks to prevent attempting to rename a Unit or a Category if there is an existing
+      one of that same name.
+    Standardized button and input field appearance
+    Tweaked table appearance - including the ascending/descending "buttons"
 
-Tue Sep 22 08:15:18 AEST 2020
-    v1.6.0
-	Eliminated font tags
-	Success/failureSymbol functions return only the symbol (was <br><symbol>)
-	Removed menu indentation (from the HTML)
-	When displaying items, display nothing (input field is blank) instead of 0)
-	Changed the screen width for drop-down menu from 310 to 324 px.
+v1.6.1 - Thu Mar 11 09:54:52 AEDT 2021
+    Replaced hard coded button (etc.) colors with CSS (sub)classes
+    Replaced hard coded symbols with Util functions (change once, change 'em all)
+
+v1.6.0 - Tue Sep 22 08:15:18 AEST 2020
+    Eliminated font tags
+    Success/failureSymbol functions return only the symbol (was <br><symbol>)
+    Removed menu indentation (from the HTML)
+    When displaying items, display nothing (input field is blank) instead of 0)
+    Changed the screen width for drop-down menu from 310 to 324 px.
 
 Sun May  3 09:05:16 AEST 2020
-	The URL change in README.md wasn't updated in git. How odd... tried again...
+    The URL change in README.md wasn't updated in git. How odd... tried again...
 
-Sun May  3 08:46:58 AEST 2020
-    v1.5.5
-	Coded around an issue where different PHP 'versions' handled a quantity of "" vs 0 differently
-	Cleaned up the CSS for the hamburger menu - moved it to the left
-	A few other minor cosmetic tweaks
+v1.5.5 - Sun May  3 08:46:58 AEST 2020
+    Coded around an issue where different PHP 'versions' handled a quantity of "" vs 0 differently
+    Cleaned up the CSS for the hamburger menu - moved it to the left
+    A few other minor cosmetic tweaks
 
-Wed Jul  3 09:38:10 AEST 2019
-    v1.5.4
-	Display header on quantity change confirmation page.
+v1.5.4 - Wed Jul  3 09:38:10 AEST 2019
+    Display header on quantity change confirmation page.
 
 Sun Jun 30 10:17:59 AEST 2019
     v1.5.3

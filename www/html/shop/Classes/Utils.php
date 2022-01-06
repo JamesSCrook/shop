@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2021 James S. Crook
+ * shop - Copyright (C) 2017-2022 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -45,11 +45,11 @@ class Utils {
 	}
 
 	public static function sortAscendingSymbol() {
-		return "<span style='color:green; font-size:180%;'>&#x25B2;</span>"; // triangle pointing up
+		return "&#x25B2;"; // triangle pointing up
 	}
 
 	public static function sortDescendingSymbol() {
-		return "<span style='color:red; font-size:180%;'>&#x25BC;</span>"; // triangle pointing down
+		return "&#x25BC;"; // triangle pointing down
 	}
 }
 ?>

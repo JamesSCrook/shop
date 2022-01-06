@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2021 James S. Crook
+ * shop - Copyright (C) 2017-2022 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -15,7 +15,7 @@ namespace JamesSCrook\Shop;
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <title>Shop: Display Items Sorted</title>
 <link rel='stylesheet' media='screen' href='shop.css'>
 </head>
@@ -41,13 +41,32 @@ Menu::displayMenus(FALSE);
 
 echo "<h3>Display Items Sorted (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
 
-$itemList = new ItemList();
-if (isset($_GET['sortby'])) {
-	$itemList->displayItemsSorted($_GET['sortby']);
+if (isset($_SESSION['userdata'])) {
+	$userData = unserialize($_SESSION['userdata']);
 } else {
-	$itemList->displayItemsSorted("item_unit_asc");
+	$userData = new UserData();
 }
 
+$itemList = new ItemList();
+if (isset($_GET['sortby'])) {
+	$sortByColumnName = $_GET['sortby'];
+	if ($sortByColumnName == $userData->getDisplayItemsSortByColumnName()) {
+		$sortAscendingFlag = $userData->getDisplayItemsSortByAscendingFlag();
+		$sortAscendingFlag = !$sortAscendingFlag;
+		$userData->setDisplayItemsSortByAscendingFlag($sortAscendingFlag);
+	} else {
+		$userData->setDisplayItemsSortByColumnName($sortByColumnName);
+		$sortAscendingFlag = TRUE;
+		$userData->setDisplayItemsSortByAscendingFlag($sortAscendingFlag);
+	}
+} else {
+	$sortByColumnName = 'itemname';
+	$sortAscendingFlag = TRUE;
+	$userData->setDisplayItemsSortByColumnName($sortByColumnName);
+	$userData->setDisplayItemsSortByAscendingFlag($sortAscendingFlag);
+}
+$itemList->displayItemsSorted($sortByColumnName, $sortAscendingFlag);
+$_SESSION['userdata'] = serialize($userData);
 ?>
 
 </body>

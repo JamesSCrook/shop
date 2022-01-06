@@ -1,4 +1,4 @@
-/* shop - Copyright (C) 2017-2021 James S. Crook */
+/* shop - Copyright (C) 2017-2022 James S. Crook */
 
 .item_quantity {
 	height: 20px;
@@ -97,6 +97,10 @@ tr, th, td {
 
 .table_error, .table_error tr, .table_error td {
 	border: 10px solid red;
+}
+
+.clickablecell {
+	display: block;
 }
 
 .section_separator {

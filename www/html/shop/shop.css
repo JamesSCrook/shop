@@ -1,44 +1,67 @@
 /* shop - Copyright (C) 2017-2022 James S. Crook */
 
+/* No numeric spinner arrows: Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* No numeric spinner arrows: Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+tr, th, td {
+    border: 1px solid #4040ff;
+    padding: 0px 2px 0px 2px;
+    text-align: left;
+}
+
 .item_quantity {
-	height: 20px;
-	width: 60px;
-	border: 1px solid #606060;
-	padding: 0px 1px 0px 0px;
+    height: 20px;
+    width: 35px;
+    border: 1px solid #606060;
+    padding: 0px 1px 0px 0px;
 }
 
 .enter_select {
-	border: 1px solid silver;
-	margin: 2px;
-	padding: 0px 0px 0px 4px;
-	height: 32px;
-	width: 240px;
+    border: 1px solid silver;
+    margin: 2px;
+    padding: 0px 0px 0px 4px;
+    height: 32px;
+    width: 240px;
 }
 
 .enter_input_text, .enter_input_number {
-	border: 1px solid silver;
-	margin: 2px;
-	padding: 0px 0px 0px 4px;
-	height: 30px;
-	width: 234px;
+    border: 1px solid silver;
+    margin: 2px;
+    padding: 0px 0px 0px 4px;
+    height: 30px;
+    width: 234px;
 }
 
 .bttn {
-	color: #D0D0D0;
-	border: 1px solid silver;
-	margin: 2px;
-	height: 32px;
-	width: 240px;
-	font-size: 20px;
-	border-radius: 16px;
+    color: #D0D0D0;
+    border: 1px solid silver;
+    margin: 2px;
+    height: 32px;
+    width: 240px;
+    font-size: 20px;
+    border-radius: 16px;
 
-	vertical-align: bottom
+    vertical-align: bottom
 }
 
 .first_char {
-	display: inline-block;
-	font-size: 140%;
-	padding: 0px 5px 0px 5px;
+    display: inline-block;
+    font-size: 140%;
+    padding: 0px 5px 0px 5px;
 }
 
 .query_color {
@@ -70,45 +93,35 @@
 }
 
 .input_color {
-	color: #D0D0D0;
+    color: #D0D0D0;
     background: #000040;
 }
 
 .grid-container {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .grid-item {
-	text-align: left;
-	border: 2px solid #000080;
-	margin: 1px;
-}
-
-table {
-	margin: 0 auto;
-	border-collapse: collapse;
-}
-tr, th, td {
-	border: 1px solid #4040ff;
-	padding: 0px 2px 0px 2px;
-	text-align: left;
+    text-align: left;
+    border: 2px solid #000080;
+    margin: 1px;
 }
 
 .table_error, .table_error tr, .table_error td {
-	border: 10px solid red;
+    border: 10px solid red;
 }
 
 .clickablecell {
-	display: block;
+    display: block;
 }
 
 .section_separator {
-	border: 2px;
-	border-style: solid;
-	border-color: blue;
-	border-radius: 6px;
-	text-align: center;
-	margin: 2px 0px 2px 0px;
-	background-color: #444444;
+    border: 2px;
+    border-style: solid;
+    border-color: blue;
+    border-radius: 6px;
+    text-align: center;
+    margin: 2px 0px 2px 0px;
+    background-color: #444444;
 }

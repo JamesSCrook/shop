@@ -33,10 +33,10 @@ require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 if (!isset($_SESSION['username'])) {
-	header("Location: login");
-	exit();
+    header("Location: login");
+    exit();
 } else {
-	$username = $_SESSION['username'];
+    $username = $_SESSION['username'];
 }
 
 Menu::displayMenus(FALSE);

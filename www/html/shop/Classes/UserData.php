@@ -16,19 +16,19 @@ class UserData {
     private $displayItemsSortByAscendingFlag = TRUE;
     
     public function getDisplayItemsSortByColumnName() {
-	return $this->displayItemsSortByColumnName;
+    return $this->displayItemsSortByColumnName;
     }
     
     public function getDisplayItemsSortByAscendingFlag() {
-	return $this->displayItemsSortByAscendingFlag;
+    return $this->displayItemsSortByAscendingFlag;
     }
 
     public function setDisplayItemsSortByColumnName($displayItemsSortByColumnName) {
-	$this->displayItemsSortByColumnName = $displayItemsSortByColumnName;
+    $this->displayItemsSortByColumnName = $displayItemsSortByColumnName;
     }
 
     public function setDisplayItemsSortByAscendingFlag($displayItemsSortByAscendingFlag) {
-	$this->displayItemsSortByAscendingFlag = $displayItemsSortByAscendingFlag;
+    $this->displayItemsSortByAscendingFlag = $displayItemsSortByAscendingFlag;
     }
 }
 ?>

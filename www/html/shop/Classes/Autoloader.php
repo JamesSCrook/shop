@@ -16,16 +16,16 @@ namespace JamesSCrook\Shop;
  */
 class Autoloader {
 
-	public static function loader($className) {
-		$classNameComponents = explode('\\', $className);
-		$fileName = "Classes/" . end($classNameComponents) . ".php";
+    public static function loader($className) {
+	$classNameComponents = explode('\\', $className);
+	$fileName = "Classes/" . end($classNameComponents) . ".php";
 
-		if (file_exists($fileName)) {
-			require_once $fileName;
-			if (class_exists($className)) {
-				return TRUE;
-			}
-		}
-		return FALSE;
+	if (file_exists($fileName)) {
+	    require_once $fileName;
+	    if (class_exists($className)) {
+		return TRUE;
+	    }
 	}
+	return FALSE;
+    }
 }

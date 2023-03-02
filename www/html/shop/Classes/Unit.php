@@ -14,111 +14,111 @@ use PDOException;
  */
 class Unit extends DBConnection {
 
-	public function __construct() {
-		$this->dbConnect();
-	}
+    public function __construct() {
+	$this->dbConnect();
+    }
 
-	private function unitExists($unitName) {
-		try {
-			$unitExistsPrepStmt = $this->dbConn->prepare("SELECT unitname FROM unit WHERE unitname=:unitname");
-			$unitExistsPrepStmt->execute(array(
-				'unitname' => $unitName
-			));
-			return $unitExistsPrepStmt->fetch();
-		} catch(PDOException $exception) {
-			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
-			echo "Could not check:<br>'" . htmlspecialchars($unitName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
-		}
-		return FALSE;
+    private function unitExists($unitName) {
+	try {
+	    $unitExistsPrepStmt = $this->dbConn->prepare("SELECT unitname FROM unit WHERE unitname=:unitname");
+	    $unitExistsPrepStmt->execute(array(
+		'unitname' => $unitName
+	    ));
+	    return $unitExistsPrepStmt->fetch();
+	} catch(PDOException $exception) {
+	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
+	    echo "Could not check:<br>'" . htmlspecialchars($unitName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
 	}
+	return FALSE;
+    }
 
-	public function addUnit($newUnitName) {
-		if ($this->unitExists($newUnitName)) {
-			echo "<p>" . Utils::failureSymbol() . "Duplicate entry: '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'<p>Unit not added." . PHP_EOL;
+    public function addUnit($newUnitName) {
+	if ($this->unitExists($newUnitName)) {
+	    echo "<p>" . Utils::failureSymbol() . "Duplicate entry: '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'<p>Unit not added." . PHP_EOL;
+	} else {
+	    try {
+		$addUnitPrepStmt = $this->dbConn->prepare("INSERT INTO unit (unitname) VALUES (:unitname)");
+		$addUnitPrepStmt->execute(array(
+		    'unitname' => $newUnitName
+		));
+		echo "<br>" . Utils::successSymbol() . htmlspecialchars("Unit '$newUnitName' successfully added", ENT_QUOTES) . "<p>" . PHP_EOL;
+	    } catch(PDOException $exception) {
+		echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
+		echo "Could not add unit '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
+	    }
+	}
+    }
+
+    public function renameUnit($unitName, $newUnitName) {
+	if ($this->unitExists($newUnitName)) {
+	    echo "<p>" . Utils::failureSymbol() . "Unit '" . htmlspecialchars($unitName, ENT_QUOTES) . "' cannot be renamed to existing unit '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'<p>Unit not renamed." . PHP_EOL;
+	    return;
+	}
+	try {
+	    $renameUnitPrepStmt = $this->dbConn->prepare("UPDATE unit SET unitname=:newunitname WHERE unitname=:unitname");
+	    $renameUnitPrepStmt->execute(array(
+		'unitname' => $unitName,
+		'newunitname' => $newUnitName
+	    ));
+	    echo "<br>" . Utils::successSymbol() . htmlspecialchars("Unit '$unitName' successfully renamed to '$newUnitName'", ENT_QUOTES) . "<p>" . PHP_EOL;
+	} catch(PDOException $exception) {
+	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
+	    echo "Could not change unit '" . htmlspecialchars($unitName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
+	}
+    }
+
+    private function countItemsWithThisUnit($unitName) {
+	try {
+	    $checkUnitPrepStmt = $this->dbConn->prepare("select count(*) FROM unit, item WHERE unitname=:unitname AND unit.unitid=item.unitid");
+	    $checkUnitPrepStmt->execute(array(
+		'unitname' => $unitName
+	    ));
+	    if ($unitRow = $checkUnitPrepStmt->fetch()) {
+		return $unitRow['count(*)'];
+	    } else {
+		echo "Inconsistency with unit '$unitName'! Ack!<p>";
+	    }
+	} catch(PDOException $exception) {
+	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
+	}
+	exit();
+    }
+
+    public function deleteUnit($deleteUnitName) {
+	$unitCount = $this->countItemsWithThisUnit($deleteUnitName);
+	if ($this->countItemsWithThisUnit($deleteUnitName) == 0) {
+	    try {
+		$deleteUnitPrepStmt = $this->dbConn->prepare("DELETE FROM unit WHERE unitname = :unitname");
+		$deleteUnitPrepStmt->execute(array(
+		    'unitname' => $deleteUnitName
+		));
+		echo "<br>" . Utils::successSymbol() . htmlspecialchars("Unit '$deleteUnitName' successfully deleted", ENT_QUOTES) . "<p>" . PHP_EOL;
+		return;
+	    } catch(PDOException $exception) {
+		echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
+	    }
+	} else {
+	    echo "<br>There are $unitCount item(s) that use this unit.<p>";
+	}
+	echo "Could not delete unit '" . htmlspecialchars($deleteUnitName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
+    }
+
+    public function displayUnitDropDownList($unitId) {
+	try {
+	    $getUnitsPrepStmt = $this->dbConn->prepare("SELECT unitid, unitname FROM unit ORDER BY unitname");
+	    $getUnitsPrepStmt->execute();
+	    while ($unitRow = $getUnitsPrepStmt->fetch()) {
+		if ($unitRow['unitid'] == $unitId) {
+		    echo " <option value='" . htmlspecialchars($unitRow['unitname'], ENT_QUOTES) . "' selected>" . htmlspecialchars($unitRow['unitname'], ENT_QUOTES) . "</option>" . PHP_EOL;
 		} else {
-			try {
-				$addUnitPrepStmt = $this->dbConn->prepare("INSERT INTO unit (unitname) VALUES (:unitname)");
-				$addUnitPrepStmt->execute(array(
-					'unitname' => $newUnitName
-				));
-				echo "<br>" . Utils::successSymbol() . htmlspecialchars("Unit '$newUnitName' successfully added", ENT_QUOTES) . "<p>" . PHP_EOL;
-			} catch(PDOException $exception) {
-				echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
-				echo "Could not add unit '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
-			}
+		    echo " <option value='" . htmlspecialchars($unitRow['unitname'], ENT_QUOTES) . "'>" . htmlspecialchars($unitRow['unitname'], ENT_QUOTES) . "</option>" . PHP_EOL;
 		}
+	    }
+	} catch(PDOException $exception) {
+	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
+	    echo "Could not read any units.<p>" . PHP_EOL;
+	    exit();
 	}
-
-	public function renameUnit($unitName, $newUnitName) {
-		if ($this->unitExists($newUnitName)) {
-			echo "<p>" . Utils::failureSymbol() . "Unit '" . htmlspecialchars($unitName, ENT_QUOTES) . "' cannot be renamed to existing unit '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'<p>Unit not renamed." . PHP_EOL;
-			return;
-		}
-		try {
-			$renameUnitPrepStmt = $this->dbConn->prepare("UPDATE unit SET unitname=:newunitname WHERE unitname=:unitname");
-			$renameUnitPrepStmt->execute(array(
-				'unitname' => $unitName,
-				'newunitname' => $newUnitName
-			));
-			echo "<br>" . Utils::successSymbol() . htmlspecialchars("Unit '$unitName' successfully renamed to '$newUnitName'", ENT_QUOTES) . "<p>" . PHP_EOL;
-		} catch(PDOException $exception) {
-			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
-			echo "Could not change unit '" . htmlspecialchars($unitName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
-		}
-	}
-
-	private function countItemsWithThisUnit($unitName) {
-		try {
-			$checkUnitPrepStmt = $this->dbConn->prepare("select count(*) FROM unit, item WHERE unitname=:unitname AND unit.unitid=item.unitid");
-			$checkUnitPrepStmt->execute(array(
-				'unitname' => $unitName
-			));
-			if ($unitRow = $checkUnitPrepStmt->fetch()) {
-				return $unitRow['count(*)'];
-			} else {
-				echo "Inconsistency with unit '$unitName'! Ack!<p>";
-			}
-		} catch(PDOException $exception) {
-			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
-		}
-		exit();
-	}
-
-	public function deleteUnit($deleteUnitName) {
-		$unitCount = $this->countItemsWithThisUnit($deleteUnitName);
-		if ($this->countItemsWithThisUnit($deleteUnitName) == 0) {
-			try {
-				$deleteUnitPrepStmt = $this->dbConn->prepare("DELETE FROM unit WHERE unitname = :unitname");
-				$deleteUnitPrepStmt->execute(array(
-					'unitname' => $deleteUnitName
-				));
-				echo "<br>" . Utils::successSymbol() . htmlspecialchars("Unit '$deleteUnitName' successfully deleted", ENT_QUOTES) . "<p>" . PHP_EOL;
-				return;
-			} catch(PDOException $exception) {
-				echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
-			}
-		} else {
-			echo "<br>There are $unitCount item(s) that use this unit.<p>";
-		}
-		echo "Could not delete unit '" . htmlspecialchars($deleteUnitName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
-	}
-
-	public function displayUnitDropDownList($unitId) {
-		try {
-			$getUnitsPrepStmt = $this->dbConn->prepare("SELECT unitid, unitname FROM unit ORDER BY unitname");
-			$getUnitsPrepStmt->execute();
-			while ($unitRow = $getUnitsPrepStmt->fetch()) {
-				if ($unitRow['unitid'] == $unitId) {
-					echo " <option value='" . htmlspecialchars($unitRow['unitname'], ENT_QUOTES) . "' selected>" . htmlspecialchars($unitRow['unitname'], ENT_QUOTES) . "</option>" . PHP_EOL;
-				} else {
-					echo " <option value='" . htmlspecialchars($unitRow['unitname'], ENT_QUOTES) . "'>" . htmlspecialchars($unitRow['unitname'], ENT_QUOTES) . "</option>" . PHP_EOL;
-				}
-			}
-		} catch(PDOException $exception) {
-			echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
-			echo "Could not read any units.<p>" . PHP_EOL;
-			exit();
-		}
-	}
+    }
 }
 ?>

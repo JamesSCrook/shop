@@ -34,62 +34,62 @@ require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 if (!isset($_SESSION['username'])) {
-	header("Location: login");
-	exit();
+    header("Location: login");
+    exit();
 } else {
-	$username = $_SESSION['username'];
+    $username = $_SESSION['username'];
 }
 
 $user = new User();
 $item = new Item();
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-	Menu::displayMenus(TRUE);
-	echo "<h3>Shopping List (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
-	$item->displayLinks();
-	echo "<form id=items_form method='POST'>" . PHP_EOL;
+    Menu::displayMenus(TRUE);
+    echo "<h3>Shopping List (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
+    $item->displayLinks();
+    echo "<form id=items_form method='POST'>" . PHP_EOL;
 
-	$category = new Category();
-	$activeCategories = $category->getActiveCategories();
+    $category = new Category();
+    $activeCategories = $category->getActiveCategories();
 
-	$sortOrder = $user->getSortOrder($username);
-	switch ($sortOrder) {
-		case "cq": // sort "by category, then by quantity"
-			foreach ($activeCategories as $activeCategory) { // For each active category
-				echo "<div class='section_separator'>" . htmlspecialchars($activeCategory, ENT_QUOTES) . "</div>" . PHP_EOL;
-				echo "<div class='grid-container'>" . PHP_EOL;
-				$item->displayItems("AND category.categoryid=(select categoryid from category where categoryname='$activeCategory') AND quantity > 0");
-				$item->displayItems("AND category.categoryid=(select categoryid from category where categoryname='$activeCategory') AND quantity < 0");
-				echo "</div>" . PHP_EOL;
-			}
-			echo "<div class='section_separator'>Zero Quantities</div>" . PHP_EOL;
-			echo "<div class='grid-container'>" . PHP_EOL;
-			$item->displayItems("AND quantity = 0");
-			echo "</div>" . PHP_EOL;
-			break;
-		case "a": // sort alphabetically
-			echo "<div class='grid-container'>" . PHP_EOL;
-			$item->displayItems("");
-			echo "</div>" . PHP_EOL;
-			break;
-		default: // sort "by quantity" - the default
-			echo "<div class='grid-container'>" . PHP_EOL;
-			$item->displayItems("AND quantity > 0");
-			$item->displayItems("AND quantity < 0");
-			$item->displayItems("AND quantity = 0");
-			echo "</div>" . PHP_EOL;
-			break;
-	}
+    $sortOrder = $user->getSortOrder($username);
+    switch ($sortOrder) {
+	case "cq": // sort "by category, then by quantity"
+	    foreach ($activeCategories as $activeCategory) { // For each active category
+		echo "<div class='section_separator'>" . htmlspecialchars($activeCategory, ENT_QUOTES) . "</div>" . PHP_EOL;
+		echo "<div class='grid-container'>" . PHP_EOL;
+		$item->displayItems("AND category.categoryid=(select categoryid from category where categoryname='$activeCategory') AND quantity > 0");
+		$item->displayItems("AND category.categoryid=(select categoryid from category where categoryname='$activeCategory') AND quantity < 0");
+		echo "</div>" . PHP_EOL;
+	    }
+	    echo "<div class='section_separator'>Zero Quantities</div>" . PHP_EOL;
+	    echo "<div class='grid-container'>" . PHP_EOL;
+	    $item->displayItems("AND quantity = 0");
+	    echo "</div>" . PHP_EOL;
+	    break;
+	case "a": // sort alphabetically
+	    echo "<div class='grid-container'>" . PHP_EOL;
+	    $item->displayItems("");
+	    echo "</div>" . PHP_EOL;
+	    break;
+	default: // sort "by quantity" - the default
+	    echo "<div class='grid-container'>" . PHP_EOL;
+	    $item->displayItems("AND quantity > 0");
+	    $item->displayItems("AND quantity < 0");
+	    $item->displayItems("AND quantity = 0");
+	    echo "</div>" . PHP_EOL;
+	    break;
+    }
 
-	echo "</form>" . PHP_EOL;
+    echo "</form>" . PHP_EOL;
 } else { /* POST - a button has been pressed */
-	$item->updateItemQuantities($_POST);
-	if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
-		header("Location: index");
-		exit();
-	} else {
-		Menu::displayMenus(FALSE);
-	}
+    $item->updateItemQuantities($_POST);
+    if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
+	header("Location: index");
+	exit();
+    } else {
+	Menu::displayMenus(FALSE);
+    }
 }
 ?>
 

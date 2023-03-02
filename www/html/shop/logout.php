@@ -23,7 +23,7 @@ namespace JamesSCrook\Shop;
 
 <?php
 /*
- * Logout from shop.
+ * Logout of shop.
  */
 session_start();
 require_once "Classes/Autoloader.php";
@@ -32,13 +32,13 @@ spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 Menu::displayMenus(FALSE);
 
 if (isset($_SESSION['username'])) {
-	$username = $_SESSION['username'];
-	echo "<h3>See you next time ($username)...</h3>";
-	setcookie(session_name(), '', 100);
-	session_unset();
-	session_destroy();
+    $username = $_SESSION['username'];
+    echo "<h3>See you next time ($username)...</h3>";
+    setcookie(session_name(), '', 100);
+    session_unset();
+    session_destroy();
 } else {
-	echo "<h3>You weren't logged in, bye!</h3>";
+    echo "<h3>You weren't logged in, bye!</h3>";
 }
 ?>
 

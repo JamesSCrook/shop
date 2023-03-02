@@ -1,3 +1,7 @@
+v1.7.4 - Fri Mar  3 10:54:11 AEDT 2023
+    After a brief experimentation with only tabs for indent, returned to (vi) ts=4
+    In other words, only the whitespace at the start of lines has been changed since v1.7.3.
+
 v1.7.3 - Fri Mar  3 09:18:31 AEDT 2023
     Resurrected light theme - but dark theme is still the default - controlled by browser preference
     Merged (and removed) menus.css into shop.css

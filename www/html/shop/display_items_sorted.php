@@ -31,10 +31,10 @@ require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 if (!isset($_SESSION['username'])) {
-	header("Location: login");
-	exit();
+    header("Location: login");
+    exit();
 } else {
-	$username = $_SESSION['username'];
+    $username = $_SESSION['username'];
 }
 
 Menu::displayMenus(FALSE);
@@ -42,28 +42,28 @@ Menu::displayMenus(FALSE);
 echo "<h3>Display Items Sorted (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
 
 if (isset($_SESSION['userdata'])) {
-	$userData = unserialize($_SESSION['userdata']);
+    $userData = unserialize($_SESSION['userdata']);
 } else {
-	$userData = new UserData();
+    $userData = new UserData();
 }
 
 $itemList = new ItemList();
 if (isset($_GET['sortby'])) {
-	$sortByColumnName = $_GET['sortby'];
-	if ($sortByColumnName == $userData->getDisplayItemsSortByColumnName()) {
-		$sortAscendingFlag = $userData->getDisplayItemsSortByAscendingFlag();
-		$sortAscendingFlag = !$sortAscendingFlag;
-		$userData->setDisplayItemsSortByAscendingFlag($sortAscendingFlag);
-	} else {
-		$userData->setDisplayItemsSortByColumnName($sortByColumnName);
-		$sortAscendingFlag = TRUE;
-		$userData->setDisplayItemsSortByAscendingFlag($sortAscendingFlag);
-	}
-} else {
-	$sortByColumnName = 'itemname';
-	$sortAscendingFlag = TRUE;
-	$userData->setDisplayItemsSortByColumnName($sortByColumnName);
+    $sortByColumnName = $_GET['sortby'];
+    if ($sortByColumnName == $userData->getDisplayItemsSortByColumnName()) {
+	$sortAscendingFlag = $userData->getDisplayItemsSortByAscendingFlag();
+	$sortAscendingFlag = !$sortAscendingFlag;
 	$userData->setDisplayItemsSortByAscendingFlag($sortAscendingFlag);
+    } else {
+	$userData->setDisplayItemsSortByColumnName($sortByColumnName);
+	$sortAscendingFlag = TRUE;
+	$userData->setDisplayItemsSortByAscendingFlag($sortAscendingFlag);
+    }
+} else {
+    $sortByColumnName = 'itemname';
+    $sortAscendingFlag = TRUE;
+    $userData->setDisplayItemsSortByColumnName($sortByColumnName);
+    $userData->setDisplayItemsSortByAscendingFlag($sortAscendingFlag);
 }
 $itemList->displayItemsSorted($sortByColumnName, $sortAscendingFlag);
 $_SESSION['userdata'] = serialize($userData);

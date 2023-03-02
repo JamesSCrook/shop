@@ -32,10 +32,10 @@ require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 if (!isset($_SESSION['username'])) {
-	header("Location: login");
-	exit();
+    header("Location: login");
+    exit();
 } else {
-	$username = $_SESSION['username'];
+    $username = $_SESSION['username'];
 }
 
 Menu::displayMenus(FALSE);
@@ -47,58 +47,58 @@ $unit = new Unit();
 $category = new Category();
 
 if (isset($_SESSION['previous_page'])) {
-	$previousPage = "Location: " . $_SESSION['previous_page'];
+    $previousPage = "Location: " . $_SESSION['previous_page'];
 } else {
-	$previousPage = "Location: index"; // This should never happen!
+    $previousPage = "Location: index"; // This should never happen!
 }
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
-	$itemRow = $item->getItemRow($_GET['itemid']);
-	if ($itemRow != NULL) {
-		echo "<form method='POST'>" . PHP_EOL;
+    $itemRow = $item->getItemRow($_GET['itemid']);
+    if ($itemRow != NULL) {
+	echo "<form method='POST'>" . PHP_EOL;
 
-		echo "Changing '" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'<p>" . PHP_EOL;
+	echo "Changing '" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'<p>" . PHP_EOL;
 
-		echo "<input type='text' class='enter_input_text input_color' name='itemname' placeholder='Description (required)' pattern='.{1,30}' value='" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'>";
-		echo "<select class='enter_select input_color' name='unitname'><option value='' disabled>Unit (required)</option>";
-		$unit->displayUnitDropDownList($itemRow['unitid']);
-		echo "</select>";
-		echo "<select class='enter_select input_color' name='categoryname'><option value='' disabled>Category (required)</option>";
-		$category->displayCategoryDropDownList($itemRow['categoryid']);
-		echo "</select>";
-		echo "<input type='text' class='enter_input_text input_color' name='notes' placeholder='Notes (optional)' value='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>";
-		echo "<button class='bttn change_color' name='change_item_bttn'>" . Utils::changeSymbol() . " Change Item</button>";
-		echo "<button class='bttn delete_color' name='delete_item_bttn'>" . Utils::deleteSymbol() . " Delete Item</button>";
+	echo "<input type='text' class='enter_input_text input_color' name='itemname' placeholder='Description (required)' pattern='.{1,30}' value='" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'>";
+	echo "<select class='enter_select input_color' name='unitname'><option value='' disabled>Unit (required)</option>";
+	$unit->displayUnitDropDownList($itemRow['unitid']);
+	echo "</select>";
+	echo "<select class='enter_select input_color' name='categoryname'><option value='' disabled>Category (required)</option>";
+	$category->displayCategoryDropDownList($itemRow['categoryid']);
+	echo "</select>";
+	echo "<input type='text' class='enter_input_text input_color' name='notes' placeholder='Notes (optional)' value='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>";
+	echo "<button class='bttn change_color' name='change_item_bttn'>" . Utils::changeSymbol() . " Change Item</button>";
+	echo "<button class='bttn delete_color' name='delete_item_bttn'>" . Utils::deleteSymbol() . " Delete Item</button>";
 
-		echo "</form>" . PHP_EOL;
+	echo "</form>" . PHP_EOL;
 
-		$item->displayItemMetaData($itemRow);
+	$item->displayItemMetaData($itemRow);
 
-		$_SESSION['itemid'] = $itemRow['itemid'];
-	} else {
-		header($previousPage);
-		exit();
-	}
+	$_SESSION['itemid'] = $itemRow['itemid'];
+    } else {
+	header($previousPage);
+	exit();
+    }
 } else { /* POST - a button has been pressed */
-	if (isset($_POST['change_item_bttn'])) {
-		if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
-			$itemName = preg_replace('/\s+/', ' ', trim($_POST['itemname']));
-			$notes = preg_replace('/\s+/', ' ', trim($_POST['notes']));
-			if ($item->updateItem(mb_strtoupper(mb_substr($itemName, 0, 1)) . mb_substr($itemName, 1), $_POST['unitname'], $_POST['categoryname'], $notes, $username, $_SESSION['itemid'])) {
-				header($previousPage);
-				exit();
-			}
-		} else {
-			echo "Description, unit and category are all required!<p>" . PHP_EOL;
-		}
-	} else if (isset($_POST['delete_item_bttn'])) {
-		$item->deleteItem($_SESSION['itemid']);
+    if (isset($_POST['change_item_bttn'])) {
+	if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
+	    $itemName = preg_replace('/\s+/', ' ', trim($_POST['itemname']));
+	    $notes = preg_replace('/\s+/', ' ', trim($_POST['notes']));
+	    if ($item->updateItem(mb_strtoupper(mb_substr($itemName, 0, 1)) . mb_substr($itemName, 1), $_POST['unitname'], $_POST['categoryname'], $notes, $username, $_SESSION['itemid'])) {
 		header($previousPage);
 		exit();
+	    }
 	} else {
-		echo "UNEXPECTED ERROR: in file: " . basename(__FILE__) . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . PHP_EOL;
+	    echo "Description, unit and category are all required!<p>" . PHP_EOL;
 	}
+    } else if (isset($_POST['delete_item_bttn'])) {
+	$item->deleteItem($_SESSION['itemid']);
+	header($previousPage);
+	exit();
+    } else {
+	echo "UNEXPECTED ERROR: in file: " . basename(__FILE__) . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . PHP_EOL;
+    }
 }
 ?>
 

@@ -12,44 +12,44 @@ namespace JamesSCrook\Shop;
  */
 class Utils {
 
-	public static function successSymbol() {
-		return "<span style='color: green;'>&#x2714;</span> "; // tick
-	}
+    public static function successSymbol() {
+	return "<span style='color: green;'>&#x2714;</span> "; // tick
+    }
 
-	public static function failureSymbol() {
-		return "<span style='color: red;'>&#x2718;</span> "; // cross
-	}
+    public static function failureSymbol() {
+	return "<span style='color: red;'>&#x2718;</span> "; // cross
+    }
 
-	public static function addSymbol() {
-		return "&#x271A;"; // plus sign
-	}
+    public static function addSymbol() {
+	return "&#x271A;"; // plus sign
+    }
 
-	public static function changeSymbol() {
-		return "&#x270E;"; // pencil
-	}
+    public static function changeSymbol() {
+	return "&#x270E;"; // pencil
+    }
 
-	public static function deleteSymbol() {
-		return "&#x1F5D1;"; // trash bin
-	}
+    public static function deleteSymbol() {
+	return "&#x1F5D1;"; // trash bin
+    }
 
-	public static function separatorSymbol() {
-		return "&#x25CF;"; // dot
-	}
+    public static function separatorSymbol() {
+	return "&#x25CF;"; // dot
+    }
 
-	public static function changeValueSymbol() {
-		return "&rarr;"; // right arrow
-	}
+    public static function changeValueSymbol() {
+	return "&rarr;"; // right arrow
+    }
 
-	public static function separatorWithTipSymbol() {
-		return "&rarr;"; // right arrow 
-	}
+    public static function separatorWithTipSymbol() {
+	return "&rarr;"; // right arrow 
+    }
 
-	public static function sortAscendingSymbol() {
-		return "&#x25B2;"; // triangle pointing up
-	}
+    public static function sortAscendingSymbol() {
+	return "&#x25B2;"; // triangle pointing up
+    }
 
-	public static function sortDescendingSymbol() {
-		return "&#x25BC;"; // triangle pointing down
-	}
+    public static function sortDescendingSymbol() {
+	return "&#x25BC;"; // triangle pointing down
+    }
 }
 ?>

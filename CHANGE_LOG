@@ -1,3 +1,11 @@
+v1.7.3 - Fri Mar  3 09:18:31 AEDT 2023
+    Resurrected light theme - but dark theme is still the default - controlled by browser preference
+    Merged (and removed) menus.css into shop.css
+
+v1.7.2 - Mon Jan 2 10:01:03 2023 +1100
+    Removed quantity spinners (not enough space on mobile phone)
+    Cosmetic changes
+
 v1.7.1 - Thu 06 Jan 2022 17:57:40 AEDT
     Improved handling of zooming on iphones
     Display_items_sorted: only the sorted column has a triangle pointing up/down

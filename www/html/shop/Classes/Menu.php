@@ -17,41 +17,39 @@ class Menu {
 	 */
 	public static function displayMenus($itemPageFlag) {
 		echo "
-<link href='menus.css' rel='stylesheet'>
-
 <nav class='nav-bar'>
 <label for='toggle' class='nav-bar__label'>
-	<div class='menu__icon'></div>
-	<div class='menu__icon'></div>
-	<div class='menu__icon'></div>
+    <div class='menu__icon'></div>
+    <div class='menu__icon'></div>
+    <div class='menu__icon'></div>
 </label>
 <input type='checkbox' id='toggle' class='nav-bar__toggle'>
 <ul class='nav-bar__list'>
-	<li class='nav-bar__list-item'>
-		<a href='./' class='nav-bar__link'>Items</a>
-	</li>
-	<li class='nav-bar__list-item'>
-		<a href='admin' class='nav-bar__link'>Admin</a>
-	</li>
-	<li class='nav-bar__list-item'>
-		<a href='history' class='nav-bar__link'>History</a>
-	</li>
-	<li class='nav-bar__list-item'>
-		<a href='logout' class='nav-bar__link'>Logout</a>
-	</li>
+    <li class='nav-bar__list-item'>
+	<a href='./' class='nav-bar__link'>Items</a>
+    </li>
+    <li class='nav-bar__list-item'>
+	<a href='admin' class='nav-bar__link'>Admin</a>
+    </li>
+    <li class='nav-bar__list-item'>
+	<a href='history' class='nav-bar__link'>History</a>
+    </li>
+    <li class='nav-bar__list-item'>
+	<a href='logout' class='nav-bar__link'>Logout</a>
+    </li>
 ";
 		if ($itemPageFlag) {
 			echo "
-	<li class='nav-bar__list-item'>
-		<button class='nav-bar__bttn-item' form='items_form' name='update_items_bttn'>Update</button>
-	</li>
+    <li class='nav-bar__list-item'>
+	<button class='nav-bar__bttn-item' form='items_form' name='update_items_bttn'>Update</button>
+    </li>
 ";
 		}
 		echo "
-	</ul>
+    </ul>
 </nav>
 ";
 	}
 }
 ?>
-<!-- Version 1.7.2 - Mon 02 Jan 2023 09:51:13 AEDT -->
+<!-- Version 1.7.3 Thu Mar  2 10:27:52 AEDT 2023 -->

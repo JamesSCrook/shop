@@ -1,3 +1,7 @@
+v1.7.5 - Mon Jul  3 12:34:23 AEST 2023
+    1. Made entire item rectangles hyperlinks on all item display pages (displayItems).
+    2. Cosmetic changes.
+
 v1.7.4 - Fri Mar  3 10:54:11 AEDT 2023
     After a brief experimentation with only tabs for indent, returned to (vi) ts=4
     In other words, only the whitespace at the start of lines has been changed since v1.7.3.

@@ -136,16 +136,18 @@ class Item extends DBConnection {
 	    $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, unitname, categoryname, notes, quantity FROM item INNER JOIN unit ON unit.unitid = item.unitid INNER JOIN category ON category.categoryid = item.categoryid " . $sqlPredicate . " ORDER BY itemname, unitname");
 	    $getItemsPrepStmt->execute();
 	    while ($itemRow = $getItemsPrepStmt->fetch()) {
-		echo "<div class='grid-item'>" . PHP_EOL;
-		echo " <input type='number' class='item_quantity input_color' name='i_" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' min='-9999' max='9999' step='any'";
-		echo " value='" . ($itemRow['quantity'] != 0 ? htmlspecialchars($itemRow['quantity'], ENT_QUOTES) : "") . "'>";
-		echo "<a href='change_item?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'><abbr title='" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</abbr></a>";
+		echo " <div class='grid-item'>" . PHP_EOL;
+		echo "  <div class='sub_grid_container'>" . PHP_EOL;
+		echo "   <input type='number' class='item_quantity input_color' name='i_" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' min='-9999' max='9999' step='any'";
+		echo " value='" . ($itemRow['quantity'] != 0 ? htmlspecialchars($itemRow['quantity'], ENT_QUOTES) : "") . "'>" . PHP_EOL;
+		echo "   <a href='change_item?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' class='grid-item-link'><abbr title='" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</abbr>";
 		if ($itemRow['notes'] != "") {
-		    echo Utils::separatorWithTipSymbol() . "<abbr title='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</abbr>" . PHP_EOL;
+		    echo Utils::separatorWithTipSymbol() . "<abbr title='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</abbr></a>" . PHP_EOL;
 		} else {
-		    echo Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "<br>" . PHP_EOL;
+		    echo Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</a>" . PHP_EOL;
 		}
-		echo "</div>" . PHP_EOL;
+		echo "  </div>" . PHP_EOL;
+		echo " </div>" . PHP_EOL;
 	    }
 	} catch(PDOException $exception) {
 	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;

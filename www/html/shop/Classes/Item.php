@@ -26,7 +26,7 @@ class Item extends DBConnection {
 	    echo "<div>" . PHP_EOL;
 	    while ($itemRow = $getItemFirstCharsPrepStmt->fetch()) {
 		$first_char = $itemRow[$firstCharSubstring];
-		echo "<a class='first_char' href='first_char?first_char=" . htmlspecialchars($first_char, ENT_QUOTES) . "'>" . htmlspecialchars($first_char, ENT_QUOTES) . "</a>";
+		echo "<a class='first-char' href='first_char?first_char=" . htmlspecialchars($first_char, ENT_QUOTES) . "'>" . htmlspecialchars($first_char, ENT_QUOTES) . "</a>";
 	    }
 	    echo "</div>" . PHP_EOL;
 	} catch(PDOException $exception) {
@@ -71,7 +71,7 @@ class Item extends DBConnection {
     public function addItem($newItemName, $newUnitName, $newCategoryName, $newNotes, $quantity, $newUserName) {
 	if ($this->getItemId($newItemName, $newUnitName) != NULL) {
 	    echo "<br>" . Utils::failureSymbol() . "Cannot add this item:<p>" . PHP_EOL;
-	    echo "<table class='table_error'>" . PHP_EOL;
+	    echo "<table class='table-error'>" . PHP_EOL;
 	    echo "<tr><td>Description</td><td>" . htmlspecialchars($newItemName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 	    echo "<tr><td>Unit</td><td>" . htmlspecialchars($newUnitName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 	    echo "</table><p>" . PHP_EOL;
@@ -137,8 +137,8 @@ class Item extends DBConnection {
 	    $getItemsPrepStmt->execute();
 	    while ($itemRow = $getItemsPrepStmt->fetch()) {
 		echo " <div class='grid-item'>" . PHP_EOL;
-		echo "  <div class='sub_grid_container'>" . PHP_EOL;
-		echo "   <input type='number' class='item_quantity input_color' name='i_" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' min='-9999' max='9999' step='any'";
+		echo "  <div class='sub-grid-container'>" . PHP_EOL;
+		echo "   <input type='number' class='item-quantity input-color' name='i_" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' min='-9999' max='9999' step='any'";
 		echo " value='" . ($itemRow['quantity'] != 0 ? htmlspecialchars($itemRow['quantity'], ENT_QUOTES) : "") . "'>" . PHP_EOL;
 		echo "   <a href='change_item?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' class='grid-item-link'><abbr title='" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</abbr>";
 		if ($itemRow['notes'] != "") {
@@ -237,7 +237,7 @@ class Item extends DBConnection {
     public function updateItem($itemName, $unitName, $categoryName, $notes, $userName, $itemId) {
 	if ($this->itemExistsWithAnotherItemid($itemName, $unitName, $itemId)) {
 	    echo "This item already exists:<p>" . PHP_EOL;
-	    echo "<table class='table_error'>" . PHP_EOL;
+	    echo "<table class='table-error'>" . PHP_EOL;
 	    echo "<tr><td>Description</td><td>" . htmlspecialchars($itemName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 	    echo "<tr><td>Unit</td><td>" . htmlspecialchars($unitName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 	    echo "</table><p>" . PHP_EOL;

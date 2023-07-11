@@ -46,12 +46,12 @@ $user = new User();
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
     echo "<form id=profile_form method='POST'>" . PHP_EOL;
-    echo "New password<br><input type='password' class='enter_input_text input_color' name='newPassword1' size='20' pattern='.{6,}' placeholder='min 6 chars'><br>" . PHP_EOL;
-    echo "Repeat password<br><input type='password' class='enter_input_text input_color' name='newPassword2' size='20' pattern='.{6,}'><p>" . PHP_EOL;
+    echo "New password<br><input type='password' class='enter-input-text input-color' name='newPassword1' size='20' pattern='.{6,}' placeholder='min 6 chars'><br>" . PHP_EOL;
+    echo "Repeat password<br><input type='password' class='enter-input-text input-color' name='newPassword2' size='20' pattern='.{6,}'><p>" . PHP_EOL;
 
     $sortOrder = $user->getSortOrder($username);
     echo "Sort Order<br>" . PHP_EOL;
-    echo "<select class='enter_select input_color' name='sortOrder'>" . PHP_EOL;
+    echo "<select class='enter-select input-color' name='sortOrder'>" . PHP_EOL;
     if ($sortOrder == "cq") {
 	echo " <option value='q'>Quantity</option>" . PHP_EOL;
 	echo " <option value='cq' selected>Category, quantity</option>" . PHP_EOL;
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "</select><p>" . PHP_EOL;
 
     echo "Display Update Confirmations<br>" . PHP_EOL;
-    echo "<select class='enter_select input_color' name='displayUpdates'>" . PHP_EOL;
+    echo "<select class='enter-select input-color' name='displayUpdates'>" . PHP_EOL;
     if ($user->getDisplayUpdates($username) == "No") {
 	echo " <option value='Yes'>Yes</option>" . PHP_EOL;
 	echo " <option value='No' selected>No</option>" . PHP_EOL;
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo " <option value='No'>No</option>" . PHP_EOL;
     }
     echo "</select><p>" . PHP_EOL;
-    echo " <button class='bttn change_color' name='updateprofile'>" . Utils::changeSymbol() . " Update Profile</button><p>" . PHP_EOL;
+    echo " <button class='bttn change-color' name='updateprofile'>" . Utils::changeSymbol() . " Update Profile</button><p>" . PHP_EOL;
     echo "</form>" . PHP_EOL;
 } else { /* POST - a button has been pressed */
     if (isset($_POST['updateprofile'])) {

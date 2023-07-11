@@ -28,7 +28,7 @@ class ItemList extends DBConnection {
 
 	    while ($itemRow = $getItemsPrepStmt->fetch()) {
 		echo "<tr><td>" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "</td>";
-		echo "<td><a class='clickablecell' href='change_item?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</a></td>";
+		echo "<td><a class='clickable-cell' href='change_item?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</a></td>";
 		echo "<td>" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "</td><tr>" . PHP_EOL;
 	    }
 
@@ -71,14 +71,14 @@ class ItemList extends DBConnection {
 
 	    echo "<table>" . PHP_EOL;
 	    echo " <tr>" . PHP_EOL;
-	    echo "  <th><a class='clickablecell' href='display_items_sorted?sortby=itemname'>"     . "Item" . Utils::separatorSymbol() . "Unit" . $sortDirectionSymbolTable['itemname'] . "</a></th>" . PHP_EOL;
-	    echo "  <th><a class='clickablecell' href='display_items_sorted?sortby=categoryname'>" . "Category"  . $sortDirectionSymbolTable['categoryname'] . "</a></th>" . PHP_EOL;
-	    echo "  <th><a class='clickablecell' href='display_items_sorted?sortby=buycount'>"     . "Buy count" . $sortDirectionSymbolTable['buycount'] . "</a></th>" . PHP_EOL;
-	    echo "  <th><a class='clickablecell' href='display_items_sorted?sortby=lastbuytime'>"  . "Last Buy Time" . $sortDirectionSymbolTable['lastbuytime'] . "</a></th>" . PHP_EOL;
+	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=itemname'>"     . "Item" . Utils::separatorSymbol() . "Unit" . $sortDirectionSymbolTable['itemname'] . "</a></th>" . PHP_EOL;
+	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=categoryname'>" . "Category"  . $sortDirectionSymbolTable['categoryname'] . "</a></th>" . PHP_EOL;
+	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=buycount'>"     . "Buy count" . $sortDirectionSymbolTable['buycount'] . "</a></th>" . PHP_EOL;
+	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=lastbuytime'>"  . "Last Buy Time" . $sortDirectionSymbolTable['lastbuytime'] . "</a></th>" . PHP_EOL;
 	    echo " </tr>" . PHP_EOL;
 
 	    while ($itemRow = $getItemsPrepStmt->fetch()) {
-		echo " <tr><td>" . "<a class='clickablecell' href='change_item?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</a></td><td>" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['buycount'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['lastbuytime'], ENT_QUOTES) . "</td></tr>" . PHP_EOL;
+		echo " <tr><td>" . "<a class='clickable-cell' href='change_item?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</a></td><td>" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['buycount'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['lastbuytime'], ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 	    }
 	    echo "</table>" . PHP_EOL;
 	} catch(PDOException $exception) {

@@ -56,13 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     switch ($sortOrder) {
 	case "cq": // sort "by category, then by quantity"
 	    foreach ($activeCategories as $activeCategory) { // For each active category
-		echo "<div class='section_separator'>" . htmlspecialchars($activeCategory, ENT_QUOTES) . "</div>" . PHP_EOL;
+		echo "<div class='section-separator'>" . htmlspecialchars($activeCategory, ENT_QUOTES) . "</div>" . PHP_EOL;
 		echo "<div class='grid-container'>" . PHP_EOL;
 		$item->displayItems("AND category.categoryid=(select categoryid from category where categoryname='$activeCategory') AND quantity > 0");
 		$item->displayItems("AND category.categoryid=(select categoryid from category where categoryname='$activeCategory') AND quantity < 0");
 		echo "</div>" . PHP_EOL;
 	    }
-	    echo "<div class='section_separator'>Zero Quantities</div>" . PHP_EOL;
+	    echo "<div class='section-separator'>Zero Quantities</div>" . PHP_EOL;
 	    echo "<div class='grid-container'>" . PHP_EOL;
 	    $item->displayItems("AND quantity = 0");
 	    echo "</div>" . PHP_EOL;

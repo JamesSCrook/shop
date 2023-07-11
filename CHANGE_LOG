@@ -1,3 +1,6 @@
+v1.7.6 - Wed Jul 12 09:19:58 AEST 2023
+    Changed the names of many of the CSS classes to be more systematic.
+
 v1.7.5 - Mon Jul  3 12:34:23 AEST 2023
     1. Made entire item rectangles hyperlinks on all item display pages (displayItems).
     2. Cosmetic changes.

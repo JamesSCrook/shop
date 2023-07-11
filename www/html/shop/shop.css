@@ -28,20 +28,20 @@ a {
 
 abbr {
     text-decoration: none;
-    padding: 0px 0px 0px 2px;
+    padding: 0 0 0 2px;
 }
 
 body {
     background: var(--body-background-color);
     color: var(--body-color);
     margin-top: 40px;
-    margin: 0px 1px 0px 1px;
+    margin: 0 1px 0 1px;
     padding-top: 20px;
     text-align: center;
 }
 
 h3 {
-    margin: 10px 0px 2px 0px;
+    margin: 10px 0 2px 0;
 }
 
 /* No numeric spinner arrows: Chrome, Safari, Edge, Opera */
@@ -63,29 +63,29 @@ table {
 
 tr, th, td {
     border: 1px solid #4040ff;
-    padding: 0px 2px 0px 2px;
+    padding: 0 2px 0 2px;
     text-align: left;
 }
 
-.item_quantity {
+.item-quantity {
     height: 20px;
     width: 40px;
     border: 1px solid #606060;
-    padding: 0px;
+    padding: 0;
 }
 
-.enter_select {
+.enter-select {
     border: 1px solid silver;
     margin: 2px;
-    padding: 0px 0px 0px 4px;
+    padding: 0 0 0 4px;
     height: 32px;
     width: 240px;
 }
 
-.enter_input_text, .enter_input_number {
+.enter-input-text, .enter-input-number {
     border: 1px solid silver;
     margin: 2px;
-    padding: 0px 0px 0px 4px;
+    padding: 0 0 0 4px;
     height: 30px;
     width: 234px;
 }
@@ -102,41 +102,41 @@ tr, th, td {
     vertical-align: bottom
 }
 
-.first_char {
+.first-char {
     display: inline-block;
     font-size: 140%;
-    padding: 0px 5px 0px 5px;
+    padding: 0 5px 0 5px;
 }
 
-.query_color {
+.query-color {
     background: #4d2600;
 }
-.query_color:hover {
+.query-color:hover {
     background: saddlebrown;
 }
 
-.add_color {
+.add-color {
     background: #004d00;
 }
-.add_color:hover {
+.add-color:hover {
     background: darkgreen;
 }
 
-.change_color {
+.change-color {
     background: darkblue;
 }
-.change_color:hover {
+.change-color:hover {
     background: blue;
 }
 
-.delete_color {
+.delete-color {
     background: #660000;
 }
-.delete_color:hover {
+.delete-color:hover {
     background: #990000;
 }
 
-.input_color {
+.input-color {
     background: var(--input-background-color);
     color: var(--input-color);
 }
@@ -152,7 +152,7 @@ tr, th, td {
     margin: 1px;
 }
 
-.sub_grid_container {
+.sub-grid-container {
     display:grid;
     grid-template-columns: min-content auto;
 }
@@ -162,21 +162,21 @@ tr, th, td {
     width: 100%;
 }
 
-.table_error, .table_error tr, .table_error td {
+.table-error, .table-error tr, .table-error td {
     border: 10px solid red;
 }
 
-.clickablecell {
+.clickable-cell {
     display: block;
 }
 
-.section_separator {
+.section-separator {
     border: 2px;
     border-style: solid;
     border-color: blue;
     border-radius: 6px;
     text-align: center;
-    margin: 2px 0px 2px 0px;
+    margin: 2px 0 2px 0;
     background-color: var(--section-separator-background-color);
 }
 
@@ -189,7 +189,7 @@ tr, th, td {
 
 .nav-bar {
     position: fixed;
-    top: 0px;
+    top: 0;
     background: blue;
     width: 100%;
 }
@@ -197,7 +197,7 @@ tr, th, td {
 .nav-bar__label {
     color: white;
     display: block;
-    padding: 5px 0px;
+    padding: 5px 0;
     width: inherit;
 }
 

@@ -60,16 +60,16 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 	echo "Changing '" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'<p>" . PHP_EOL;
 
-	echo "<input type='text' class='enter_input_text input_color' name='itemname' placeholder='Description (required)' pattern='.{1,30}' value='" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'>";
-	echo "<select class='enter_select input_color' name='unitname'><option value='' disabled>Unit (required)</option>";
+	echo "<input type='text' class='enter-input-text input-color' name='itemname' placeholder='Description (required)' pattern='.{1,30}' value='" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'>";
+	echo "<select class='enter-select input-color' name='unitname'><option value='' disabled>Unit (required)</option>";
 	$unit->displayUnitDropDownList($itemRow['unitid']);
 	echo "</select>";
-	echo "<select class='enter_select input_color' name='categoryname'><option value='' disabled>Category (required)</option>";
+	echo "<select class='enter-select input-color' name='categoryname'><option value='' disabled>Category (required)</option>";
 	$category->displayCategoryDropDownList($itemRow['categoryid']);
 	echo "</select>";
-	echo "<input type='text' class='enter_input_text input_color' name='notes' placeholder='Notes (optional)' value='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>";
-	echo "<button class='bttn change_color' name='change_item_bttn'>" . Utils::changeSymbol() . " Change Item</button>";
-	echo "<button class='bttn delete_color' name='delete_item_bttn'>" . Utils::deleteSymbol() . " Delete Item</button>";
+	echo "<input type='text' class='enter-input-text input-color' name='notes' placeholder='Notes (optional)' value='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>";
+	echo "<button class='bttn change-color' name='change_item_bttn'>" . Utils::changeSymbol() . " Change Item</button>";
+	echo "<button class='bttn delete-color' name='delete_item_bttn'>" . Utils::deleteSymbol() . " Delete Item</button>";
 
 	echo "</form>" . PHP_EOL;
 

@@ -37,10 +37,10 @@ echo "<h3>Login to Shop</h3>" . PHP_EOL;
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "<form id=login_form method='POST'>" . PHP_EOL;
     echo "  Username<br>" . PHP_EOL;
-    echo "  <input type='text' class='enter_input_text input_color' name='username' placeholder='Username'><p>" . PHP_EOL;
+    echo "  <input type='text' class='enter-input-text input-color' name='username' placeholder='Username'><p>" . PHP_EOL;
     echo "  Password<br>" . PHP_EOL;
-    echo "  <input type='password' class='enter_input_text input_color' name='password' placeholder='Password'><p>" . PHP_EOL;
-    echo "  <button class='bttn query_color' name='login'>Login</button><br>" . PHP_EOL;
+    echo "  <input type='password' class='enter-input-text input-color' name='password' placeholder='Password'><p>" . PHP_EOL;
+    echo "  <button class='bttn query-color' name='login'>Login</button><br>" . PHP_EOL;
     echo "</form>" . PHP_EOL;
 } else {
     $user = new User();

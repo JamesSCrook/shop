@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	header($previousPage);
 	exit();
     } else {
-	echo "UNEXPECTED ERROR: in file: " . basename(__FILE__) . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . PHP_EOL;
+	echo "<p>UNEXPECTED ERROR: in file: " . basename(__FILE__) . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . PHP_EOL;
     }
 }
 ?>

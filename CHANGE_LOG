@@ -1,3 +1,9 @@
+v1.7.7 - Mon 08 Jan 2024 16:12:36 AEDT
+    1. login.php: added a password field show/hide javascript feature
+    2. admin.php: changed from onclick so it's more evident that it uses javascript
+    3. Tidied up shop.css
+    4. Misc cosmetic changes
+
 v1.7.6 - Wed Jul 12 09:19:58 AEST 2023
     Changed the names of many of the CSS classes to be more systematic.
 

@@ -28,16 +28,20 @@ class Utils {
 	return "&#x270E;"; // pencil
     }
 
+    public static function changeValueSymbol() {
+	return "&rarr;"; // right arrow
+    }
+
     public static function deleteSymbol() {
 	return "&#x1F5D1;"; // trash bin
     }
 
-    public static function separatorSymbol() {
-	return "&#x25CF;"; // dot
+    public static function eyeSymbol() {
+	return "<span style='font-size:30px; vertical-align:middle;'>&#x1f441;</span>"; // eye for password visibility (show/hide)
     }
 
-    public static function changeValueSymbol() {
-	return "&rarr;"; // right arrow
+    public static function separatorSymbol() {
+	return "&#x25CF;"; // dot
     }
 
     public static function separatorWithTipSymbol() {
@@ -50,6 +54,26 @@ class Utils {
 
     public static function sortDescendingSymbol() {
 	return "&#x25BC;"; // triangle pointing down
+    }
+
+    public static function passwordToggleShowHide($querySelector, $id) {
+	echo "
+	<script>
+	    const $querySelector = document.querySelector('#$querySelector');
+	    const $id = document.querySelector('#$id');
+
+	    // set the intial color attribute
+	    document.getElementById('$querySelector').style.color = 'red';
+
+	    $querySelector.addEventListener('click', function () {
+		// toggle the color attribute
+		document.getElementById('$querySelector').style.color = $id.getAttribute('type') === 'password' ? 'green' : 'red';
+
+		// toggle the type attribute
+		const type = $id.getAttribute('type') === 'password' ? 'text' : 'password';
+		$id.setAttribute('type', type);
+	    });
+	</script>";
     }
 }
 ?>

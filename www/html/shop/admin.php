@@ -21,6 +21,12 @@ namespace JamesSCrook\Shop;
 </head>
 <body>
 
+<script>
+    function visitPage(page) {
+	window.location.href = page;
+    }
+</script>
+
 <?php
 /*
  * Administer items, units, categories and users. Also, links to the manage category
@@ -49,49 +55,49 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
     echo "<form method='POST'>" . PHP_EOL;
 
-    echo "<input type='text' class='enter-input-text input-color' name='itemname' placeholder='Description (required)' pattern='.{1,30}'>";
-    echo "<select class='enter-select input-color' name='unitname'><option value='' disabled selected>Unit (required)</option>";
+    echo "<input type='text' class='enter-input-text input-color' name='itemname' placeholder='Description (required)' pattern='.{1,30}'>" . PHP_EOL;
+    echo "<select class='enter-select input-color' name='unitname'><option value='' disabled selected>Unit (required)</option>" . PHP_EOL;
     $unit->displayUnitDropDownList(NULL);
-    echo "</select>";
-    echo "<select class='enter-select input-color' name='categoryname'><option value='' disabled selected>Category (required)</option>";
+    echo "</select>" . PHP_EOL;
+    echo "<select class='enter-select input-color' name='categoryname'><option value='' disabled selected>Category (required)</option>" . PHP_EOL;
     $category->displayCategoryDropDownList(NULL);
-    echo "</select>";
-    echo "<input type='text' class='enter-input-text input-color' placeholder='Notes (optional)' name='notes'>";
-    echo "<input type='number' class='enter-input-number input-color' name='quantity' placeholder='Quanitity (optional)' min='-9999' max='9999' step='any'>";
+    echo "</select>" . PHP_EOL;
+    echo "<input type='text' class='enter-input-text input-color' placeholder='Notes (optional)' name='notes'>" . PHP_EOL;
+    echo "<input type='number' class='enter-input-number input-color' name='quantity' placeholder='Quanitity (optional)' min='-9999' max='9999' step='any'>" . PHP_EOL;
     echo "<button class='bttn add-color' name='add_item_bttn'>" . Utils::addSymbol() . " Add Item</button><br>" . PHP_EOL;
 
     echo "<h3><div class='section-separator'>Miscellaneous</div></h3>" . PHP_EOL;
     $dirName = dirname($_SERVER['PHP_SELF']);
-    echo "<input type='button' value='" . Utils::changeSymbol() . " Edit User Profile' class='bttn change-color' onclick=\"document.location.href='$dirName/user_profile';\">";
-    echo "<input type='button' value='Display Item Details' class='bttn query-color' onclick=\"document.location.href='$dirName/display_item_details';\">";
-    echo "<input type='button' value='Display Items Sorted' class='bttn query-color' onclick=\"document.location.href='$dirName/display_items_sorted';\">";
+    echo "<button type='button' onclick='visitPage(\"$dirName/user_profile\");' class='bttn change-color'>" . Utils::changeSymbol() . "Edit User Profile</button>" . PHP_EOL;
+    echo "<button type='button' onclick='visitPage(\"$dirName/display_item_details\");' class='bttn query-color'>Display Item Details</button>" . PHP_EOL;
+    echo "<button type='button' onclick='visitPage(\"$dirName/display_items_sorted\");' class='bttn query-color'>Display Items Sorted</button>" . PHP_EOL;
 
     echo "<h3><div class='section-separator'>Manage Units</div></h3>" . PHP_EOL;
-    echo "<input type='text' class='enter-input-text input-color' name='add_rename_unit' placeholder='Unit (add or rename unit as this)' pattern='.{1,12}'>";
-    echo "<button class='bttn add-color' name='add_unit_bttn'>" . Utils::addSymbol() . " Add Unit</button>";
-    echo "<select class='enter-select input-color' name='rename_delete_unit'><option value='' disabled selected>Unit to rename or delete</option>";
+    echo "<input type='text' class='enter-input-text input-color' name='add_rename_unit' placeholder='Unit (add or rename unit as this)' pattern='.{1,12}'>" . PHP_EOL;
+    echo "<button class='bttn add-color' name='add_unit_bttn'>" . Utils::addSymbol() . " Add Unit</button>" . PHP_EOL;
+    echo "<select class='enter-select input-color' name='rename_delete_unit'><option value='' disabled selected>Unit to rename or delete</option>" . PHP_EOL;
     $unit->displayUnitDropDownList(NULL);
-    echo "</select>";
-    echo "<button class='bttn change-color' name='rename_unit_bttn'>" . Utils::changeSymbol() . " Rename Unit</button>";
+    echo "</select>" . PHP_EOL;
+    echo "<button class='bttn change-color' name='rename_unit_bttn'>" . Utils::changeSymbol() . " Rename Unit</button>" . PHP_EOL;
     echo "<button class='bttn delete-color' name='delete_unit_bttn'>" . Utils::deleteSymbol() . " Delete Unit</button>" . PHP_EOL;
 
     echo "<h3><div class='section-separator'>Manage Categories</div></h3>" . PHP_EOL;
-    echo "<input type='text' class='enter-input-text input-color' name='add_rename_category' placeholder='Category (add or rename as this)' pattern='.{1,64}'>";
-    echo "<button class='bttn add-color' name='add_category_bttn'>" . Utils::addSymbol() . " Add Category</button>";
-    echo "<select class='enter-select input-color' name='rename_delete_category'><option value='' disabled selected>Category to rename or delete</option>";
+    echo "<input type='text' class='enter-input-text input-color' name='add_rename_category' placeholder='Category (add or rename as this)' pattern='.{1,64}'>" . PHP_EOL;
+    echo "<button class='bttn add-color' name='add_category_bttn'>" . Utils::addSymbol() . " Add Category</button>" . PHP_EOL;
+    echo "<select class='enter-select input-color' name='rename_delete_category'><option value='' disabled selected>Category to rename or delete</option>" . PHP_EOL;
     $category->displayCategoryDropDownList(NULL);
-    echo "</select>";
-    echo "<button class='bttn change-color' name='rename_category_bttn'>" . Utils::changeSymbol() . " Rename Category</button>";
+    echo "</select>" . PHP_EOL;
+    echo "<button class='bttn change-color' name='rename_category_bttn'>" . Utils::changeSymbol() . " Rename Category</button>" . PHP_EOL;
     echo "<button class='bttn delete-color' name='delete_category_bttn'>" . Utils::deleteSymbol() . " Delete Category</button>" . PHP_EOL;
 
     echo "<h3><div class='section-separator'>Manage Users</div></h3>" . PHP_EOL;
-    echo "<input type='text' class='enter-input-text input-color' name='add_username' placeholder='Username' pattern='.{1,}'>";
-    echo "<input type='password' class='enter-input-text input-color' name='newpw1' size='20' pattern='.{6,}' placeholder='password'>";
-    echo "<input type='password' class='enter-input-text input-color' name='newpw2' size='20' pattern='.{6,}' placeholder='repeat password'>";
-    echo "<button class='bttn add-color' name='add_user_bttn'>" . Utils::addSymbol() . " Add User</button>";
-    echo "<select class='enter-select input-color' name='delete_username'><option value='' disabled selected>User to delete</option>";
+    echo "<input type='text' class='enter-input-text input-color' name='add_username' placeholder='Username' pattern='.{1,}'>" . PHP_EOL;
+    echo "<input type='password' class='enter-input-text input-color' name='newpw1' size='20' pattern='.{6,}' placeholder='password'>" . PHP_EOL;
+    echo "<input type='password' class='enter-input-text input-color' name='newpw2' size='20' pattern='.{6,}' placeholder='repeat password'>" . PHP_EOL;
+    echo "<button class='bttn add-color' name='add_user_bttn'>" . Utils::addSymbol() . " Add User</button>" . PHP_EOL;
+    echo "<select class='enter-select input-color' name='delete_username'><option value='' disabled selected>User to delete</option>" . PHP_EOL;
     $user->displayUsernameDropDownList();
-    echo "</select>";
+    echo "</select>" . PHP_EOL;
     echo "<button class='bttn delete-color' name='delete_user_bttn'>" . Utils::deleteSymbol() . " Delete User</button>" . PHP_EOL;
 
     echo "</form>" . PHP_EOL;
@@ -175,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	header('Location: admin');
 	exit();
     } else {
-	echo "UNEXPECTED ERROR: in file: " . basename(__FILE__) . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . PHP_EOL;
+	echo "<p>UNEXPECTED ERROR: in file: " . basename(__FILE__) . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . PHP_EOL;
     }
 }
 ?>

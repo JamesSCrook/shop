@@ -26,25 +26,27 @@ class Menu {
 <input type='checkbox' id='toggle' class='nav-bar__toggle'>
 <ul class='nav-bar__list'>
     <li class='nav-bar__list-item'>
-    <a href='./' class='nav-bar__link'>Items</a>
+	<a href='./' class='nav-bar__link'>Items</a>
     </li>
     <li class='nav-bar__list-item'>
-    <a href='admin' class='nav-bar__link'>Admin</a>
+	<a href='admin' class='nav-bar__link'>Admin</a>
     </li>
     <li class='nav-bar__list-item'>
-    <a href='history' class='nav-bar__link'>History</a>
+	<a href='history' class='nav-bar__link'>History</a>
     </li>
     <li class='nav-bar__list-item'>
-    <a href='logout' class='nav-bar__link'>Logout</a>
+	<a href='logout' class='nav-bar__link'>Logout</a>
     </li>
 ";
+
 	if ($itemPageFlag) {
 	    echo "
     <li class='nav-bar__list-item'>
-    <button class='nav-bar__bttn-item' form='items_form' name='update_items_bttn'>Update</button>
+	<button class='nav-bar__bttn-item' form='items_form' name='update_items_bttn'>Update</button>
     </li>
 ";
 	}
+
 	echo "
     </ul>
 </nav>
@@ -52,4 +54,4 @@ class Menu {
     }
 }
 ?>
-<!-- Version 1.7.6 Wed Jul 12 09:15:30 AEST 2023 -->
+<!-- Version 1.7.7 Mon 08 Jan 2024 16:04:53 AEDT -->

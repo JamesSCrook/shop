@@ -39,9 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "  Username<br>" . PHP_EOL;
     echo "  <input type='text' class='enter-input-text input-color' name='username' placeholder='Username'><p>" . PHP_EOL;
     echo "  Password<br>" . PHP_EOL;
-    echo "  <input type='password' class='enter-input-text input-color' name='password' placeholder='Password'><p>" . PHP_EOL;
+    echo "  <input type='password' class='enter-input-text input-color' name='password' id='password' placeholder='Password'>" . PHP_EOL;
+    echo "  <span class='password-show-hide' id='pwtoggleshowhide'>" . Utils::eyeSymbol() . "</span><p>" . PHP_EOL;
     echo "  <button class='bttn query-color' name='login'>Login</button><br>" . PHP_EOL;
     echo "</form>" . PHP_EOL;
+    Utils::passwordToggleShowHide('pwtoggleshowhide', 'password');
 } else {
     $user = new User();
     if ($user->isUserValid($_POST['username'], $_POST['password'])) {

@@ -92,8 +92,14 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
     echo "<h3><div class='section-separator'>Manage Users</div></h3>" . PHP_EOL;
     echo "<input type='text' class='enter-input-text input-color' name='add_username' placeholder='Username' pattern='.{1,}'>" . PHP_EOL;
-    echo "<input type='password' class='enter-input-text input-color' name='newpw1' size='20' pattern='.{6,}' placeholder='password'>" . PHP_EOL;
-    echo "<input type='password' class='enter-input-text input-color' name='newpw2' size='20' pattern='.{6,}' placeholder='repeat password'>" . PHP_EOL;
+    echo "<div class='pw-show-hide-input'>" . PHP_EOL;
+    echo " <input type='password' class='enter-input-text input-color' name='newpassword1' id='newpassword1' size='20' pattern='.{6,}' placeholder='password'>" . PHP_EOL;
+    echo " <img src='Images/eye-slash-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhideA'>" . PHP_EOL;
+    echo "</div>" . PHP_EOL;
+    echo "<div class='pw-show-hide-input'>" . PHP_EOL;
+    echo " <input type='password' class='enter-input-text input-color' name='newpassword2' id='newpassword2' size='20' pattern='.{6,}' placeholder='repeat password'>" . PHP_EOL;
+    echo " <img src='Images/eye-slash-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhideB'>" . PHP_EOL;
+    echo "</div>" . PHP_EOL;
     echo "<button class='bttn add-color' name='add_user_bttn'>" . Utils::addSymbol() . " Add User</button>" . PHP_EOL;
     echo "<select class='enter-select input-color' name='delete_username'><option value='' disabled selected>User to delete</option>" . PHP_EOL;
     $user->displayUsernameDropDownList();
@@ -101,6 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "<button class='bttn delete-color' name='delete_user_bttn'>" . Utils::deleteSymbol() . " Delete User</button>" . PHP_EOL;
 
     echo "</form>" . PHP_EOL;
+    Utils::passwordToggleShowHide('pwtoggleshowhideA', 'newpassword1');
+    Utils::passwordToggleShowHide('pwtoggleshowhideB', 'newpassword2');
 } else { /* POST - a button has been pressed */
 
     if (isset($_POST['add_item_bttn'])) {
@@ -161,10 +169,10 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	    echo "<br>" . Utils::failureSymbol() . "Category is required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['add_user_bttn'])) {
-	if ($_POST['add_username'] != "" && $_POST['newpw1'] != "") {
-	    if ($_POST['newpw1'] == $_POST['newpw2']) {
+	if ($_POST['add_username'] != "" && $_POST['newpassword1'] != "") {
+	    if ($_POST['newpassword1'] == $_POST['newpassword2']) {
 		$userName = preg_replace('/\s+/', ' ', trim($_POST['add_username']));
-		$user->addUserName($userName, $_POST['newpw1']);
+		$user->addUserName($userName, $_POST['newpassword1']);
 	    } else {
 		echo "<br>" . Utils::failureSymbol() . "Passwords do not match, please try again<p>" . PHP_EOL;
 	    }

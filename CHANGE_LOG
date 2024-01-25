@@ -1,3 +1,7 @@
+v1.7.8 - Thu 25 Jan 2024 13:53:13 AEDT
+    1. Changed password show/hide to eye/eye-slash images
+    2. Improved some html input names
+
 v1.7.7 - Mon 08 Jan 2024 16:12:36 AEDT
     1. login.php: added a password field show/hide javascript feature
     2. admin.php: changed from onclick so it's more evident that it uses javascript

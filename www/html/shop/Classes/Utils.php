@@ -36,10 +36,6 @@ class Utils {
 	return "&#x1F5D1;"; // trash bin
     }
 
-    public static function eyeSymbol() {
-	return "<span style='font-size:30px; vertical-align:middle;'>&#x1f441;</span>"; // eye for password visibility (show/hide)
-    }
-
     public static function separatorSymbol() {
 	return "&#x25CF;"; // dot
     }
@@ -62,14 +58,16 @@ class Utils {
 	    const $querySelector = document.querySelector('#$querySelector');
 	    const $id = document.querySelector('#$id');
 
-	    // set the intial color attribute
-	    document.getElementById('$querySelector').style.color = 'red';
+	    // When the show/hide icon is clicked, toggle from: (password visible / eye icon) <-> (pw hidden / eye-slash icon)
+	    $querySelector.addEventListener('click', function(e) {
+		// Toggle the icon: eye <-> eye-slash
+		if ($querySelector.src.match('Images/eye-slash-icon.png')) {
+		    $querySelector.src = 'Images/eye-icon.png';
+		} else {
+		    $querySelector.src = 'Images/eye-slash-icon.png';
+		}
 
-	    $querySelector.addEventListener('click', function () {
-		// toggle the color attribute
-		document.getElementById('$querySelector').style.color = $id.getAttribute('type') === 'password' ? 'green' : 'red';
-
-		// toggle the type attribute
+		// toggle the password field type attribute from text <-> password
 		const type = $id.getAttribute('type') === 'password' ? 'text' : 'password';
 		$id.setAttribute('type', type);
 	    });

@@ -37,10 +37,12 @@ echo "<h3>Login to Shop</h3>" . PHP_EOL;
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "<form id=login_form method='POST'>" . PHP_EOL;
     echo "  Username<br>" . PHP_EOL;
-    echo "  <input type='text' class='enter-input-text input-color' name='username' placeholder='Username'><p>" . PHP_EOL;
+    echo "  <input type='text' class='enter-input-text input-color' name='username' placeholder='Username'><br><br>" . PHP_EOL;
     echo "  Password<br>" . PHP_EOL;
-    echo "  <input type='password' class='enter-input-text input-color' name='password' id='password' placeholder='Password'>" . PHP_EOL;
-    echo "  <span class='password-show-hide' id='pwtoggleshowhide'>" . Utils::eyeSymbol() . "</span><p>" . PHP_EOL;
+    echo "  <div class='pw-show-hide-input'>" . PHP_EOL;
+    echo "   <input type='password' class='enter-input-text input-color' name='password' id='password' placeholder='Password'>" . PHP_EOL;
+    echo "   <img src='Images/eye-slash-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhide'>" . PHP_EOL;
+    echo "  </div><p>" . PHP_EOL;
     echo "  <button class='bttn query-color' name='login'>Login</button><br>" . PHP_EOL;
     echo "</form>" . PHP_EOL;
     Utils::passwordToggleShowHide('pwtoggleshowhide', 'password');

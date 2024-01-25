@@ -184,11 +184,16 @@ td {
     text-align: center;
 }
 
-.password-show-hide {
-    margin-left: -36px;
-    cursor: pointer;
+.pw-show-hide-input {
+    display: inline-block;
 }
 
+.pw-show-hide-icon {
+    position: absolute;
+    margin: 6px 0 0 -28px;
+    width: 24px;
+    height: 24px;
+}
 
 .menu__icon {
     background-color: white;

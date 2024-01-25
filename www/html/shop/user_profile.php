@@ -44,10 +44,19 @@ Menu::displayMenus(FALSE);
 $user = new User();
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-
     echo "<form id=profile_form method='POST'>" . PHP_EOL;
-    echo "New password<br><input type='password' class='enter-input-text input-color' name='newPassword1' size='20' pattern='.{6,}' placeholder='min 6 chars'><br>" . PHP_EOL;
-    echo "Repeat password<br><input type='password' class='enter-input-text input-color' name='newPassword2' size='20' pattern='.{6,}'><p>" . PHP_EOL;
+
+    echo "New password<br>" . PHP_EOL;
+    echo "<div class='pw-show-hide-input'>" . PHP_EOL;
+    echo "<input type='password' class='enter-input-text input-color' name='newpassword1' id='newpassword1' size='20' pattern='.{6,}' placeholder='min 6 chars'>" . PHP_EOL;
+    echo "<img src='Images/eye-slash-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhideA'>" . PHP_EOL;
+    echo "</div>" . PHP_EOL;
+
+    echo "<br><br>Repeat password<br>" . PHP_EOL;
+    echo "<div class='pw-show-hide-input'>" . PHP_EOL;
+    echo "<input type='password' class='enter-input-text input-color' name='newpassword2' id='newpassword2' size='20' pattern='.{6,}'>" . PHP_EOL;
+    echo "<img src='Images/eye-slash-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhideB'>" . PHP_EOL;
+    echo "</div><p>" . PHP_EOL;
 
     $sortOrder = $user->getSortOrder($username);
     echo "Sort Order<br>" . PHP_EOL;
@@ -79,10 +88,12 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "</select><p>" . PHP_EOL;
     echo " <button class='bttn change-color' name='updateprofile'>" . Utils::changeSymbol() . " Update Profile</button><p>" . PHP_EOL;
     echo "</form>" . PHP_EOL;
+    Utils::passwordToggleShowHide('pwtoggleshowhideA', 'newpassword1');
+    Utils::passwordToggleShowHide('pwtoggleshowhideB', 'newpassword2');
 } else { /* POST - a button has been pressed */
     if (isset($_POST['updateprofile'])) {
-	if ($_POST['newPassword1'] != "") {
-	    $user->setPassword($username, $_POST['newPassword1'], $_POST['newPassword2']);
+	if ($_POST['newpassword1'] != "") {
+	    $user->setPassword($username, $_POST['newpassword1'], $_POST['newpassword2']);
 	}
 
 	if ($_POST['sortOrder'] != "" && $_POST['sortOrder'] != $user->getSortOrder($username)) {

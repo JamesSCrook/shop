@@ -94,11 +94,11 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "<input type='text' class='enter-input-text input-color' name='add_username' placeholder='Username' pattern='.{1,}'>" . PHP_EOL;
     echo "<div class='pw-show-hide-input'>" . PHP_EOL;
     echo " <input type='password' class='enter-input-text input-color' name='newpassword1' id='newpassword1' size='20' pattern='.{6,}' placeholder='password'>" . PHP_EOL;
-    echo " <img src='Images/eye-slash-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhideA'>" . PHP_EOL;
+    echo " <img src='Images/eye-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhideA'>" . PHP_EOL;
     echo "</div>" . PHP_EOL;
     echo "<div class='pw-show-hide-input'>" . PHP_EOL;
     echo " <input type='password' class='enter-input-text input-color' name='newpassword2' id='newpassword2' size='20' pattern='.{6,}' placeholder='repeat password'>" . PHP_EOL;
-    echo " <img src='Images/eye-slash-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhideB'>" . PHP_EOL;
+    echo " <img src='Images/eye-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhideB'>" . PHP_EOL;
     echo "</div>" . PHP_EOL;
     echo "<button class='bttn add-color' name='add_user_bttn'>" . Utils::addSymbol() . " Add User</button>" . PHP_EOL;
     echo "<select class='enter-select input-color' name='delete_username'><option value='' disabled selected>User to delete</option>" . PHP_EOL;

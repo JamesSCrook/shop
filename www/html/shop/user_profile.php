@@ -49,13 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "New password<br>" . PHP_EOL;
     echo "<div class='pw-show-hide-input'>" . PHP_EOL;
     echo "<input type='password' class='enter-input-text input-color' name='newpassword1' id='newpassword1' size='20' pattern='.{6,}' placeholder='min 6 chars'>" . PHP_EOL;
-    echo "<img src='Images/eye-slash-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhideA'>" . PHP_EOL;
+    echo "<img src='Images/eye-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhideA'>" . PHP_EOL;
     echo "</div>" . PHP_EOL;
 
     echo "<br><br>Repeat password<br>" . PHP_EOL;
     echo "<div class='pw-show-hide-input'>" . PHP_EOL;
     echo "<input type='password' class='enter-input-text input-color' name='newpassword2' id='newpassword2' size='20' pattern='.{6,}'>" . PHP_EOL;
-    echo "<img src='Images/eye-slash-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhideB'>" . PHP_EOL;
+    echo "<img src='Images/eye-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhideB'>" . PHP_EOL;
     echo "</div><p>" . PHP_EOL;
 
     $sortOrder = $user->getSortOrder($username);

@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "  Password<br>" . PHP_EOL;
     echo "  <div class='pw-show-hide-input'>" . PHP_EOL;
     echo "   <input type='password' class='enter-input-text input-color' name='password' id='password' placeholder='Password'>" . PHP_EOL;
-    echo "   <img src='Images/eye-slash-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhide'>" . PHP_EOL;
+    echo "   <img src='Images/eye-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhide'>" . PHP_EOL;
     echo "  </div><p>" . PHP_EOL;
     echo "  <button class='bttn query-color' name='login'>Login</button><br>" . PHP_EOL;
     echo "</form>" . PHP_EOL;

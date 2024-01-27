@@ -58,7 +58,7 @@ class Utils {
 	    const $querySelector = document.querySelector('#$querySelector');
 	    const $id = document.querySelector('#$id');
 
-	    // When the show/hide icon is clicked, toggle from: (password visible / eye icon) <-> (pw hidden / eye-slash icon)
+	    // When the show/hide icon is clicked, toggle from: (password hidden / eye icon) <-> (pw visible / eye-slash icon)
 	    $querySelector.addEventListener('click', function(e) {
 		// Toggle the icon: eye <-> eye-slash
 		if ($querySelector.src.match('Images/eye-slash-icon.png')) {

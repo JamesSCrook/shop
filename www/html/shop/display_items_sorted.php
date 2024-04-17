@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2023 James S. Crook
+ * shop - Copyright (C) 2017-2024 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -26,7 +26,6 @@ namespace JamesSCrook\Shop;
  * Display items sorted by any of the 4 columns - both ascending and descending.
  */
 session_start();
-require_once dirname(dirname(dirname(__FILE__))) . dirname($_SERVER["PHP_SELF"]) . "_db_conn.php";
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
@@ -41,13 +40,14 @@ Menu::displayMenus(FALSE);
 
 echo "<h3>Display Items Sorted (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
 
+$dbConnection = new DBConnection();
 if (isset($_SESSION['userdata'])) {
     $userData = unserialize($_SESSION['userdata']);
 } else {
-    $userData = new UserData();
+    $userData = new UserData($dbConnection);
 }
 
-$itemList = new ItemList();
+$itemList = new ItemList($dbConnection);
 if (isset($_GET['sortby'])) {
     $sortByColumnName = $_GET['sortby'];
     if ($sortByColumnName == $userData->getDisplayItemsSortByColumnName()) {

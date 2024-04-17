@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2023 James S. Crook
+ * shop - Copyright (C) 2017-2024 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -26,7 +26,6 @@ namespace JamesSCrook\Shop;
  * Display the recent history of quantity changes
  */
 session_start();
-require_once dirname(dirname(dirname(__FILE__))) . dirname($_SERVER["PHP_SELF"]) . "_db_conn.php";
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
@@ -40,7 +39,7 @@ if (!isset($_SESSION['username'])) {
 Menu::displayMenus(FALSE);
 
 echo "<h3>History (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
-$history = new History();
+$history = new History(new DBConnection());
 $history->displayHistory();
 ?>
 

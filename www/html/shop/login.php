@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2023 James S. Crook
+ * shop - Copyright (C) 2017-2024 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -26,7 +26,6 @@ namespace JamesSCrook\Shop;
  * Login to shop.
  */
 session_start();
-require_once dirname(dirname(dirname(__FILE__))) . dirname($_SERVER["PHP_SELF"]) . "_db_conn.php";
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
@@ -47,10 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "</form>" . PHP_EOL;
     Utils::passwordToggleShowHide('pwtoggleshowhide', 'password');
 } else {
-    $user = new User();
+    $dbConnection = new DBConnection();
+    $user = new User($dbConnection);
     if ($user->isUserValid($_POST['username'], $_POST['password'])) {
 	/* Trim the history every time any user logs in successfully */
-	$history = new History();
+	$history = new History($dbConnection);
 	$history->trimHistory();
 	$_SESSION['username'] = $_POST['username'];
 	header("Location: index");

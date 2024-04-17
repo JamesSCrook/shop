@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2023 James S. Crook
+ * shop - Copyright (C) 2017-2024 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -23,7 +23,7 @@ class Menu {
     <div class='menu__icon'></div>
     <div class='menu__icon'></div>
 </label>
-<input type='checkbox' id='toggle' class='nav-bar__toggle'>
+<input type='checkbox' id='toggle'>
 <ul class='nav-bar__list'>
     <li class='nav-bar__list-item'>
 	<a href='./' class='nav-bar__link'>Items</a>
@@ -54,4 +54,4 @@ class Menu {
     }
 }
 ?>
-<!-- Version 1.7.9 Sun 28 Jan 2024 10:27:59 AEDT -->
+<!-- Version 2.0.0 Wed Apr 17 12:21:38 AEST 2024 -->

@@ -1,3 +1,8 @@
+v2.0.0 - Wed Apr 17 13:32:02 AEST 2024
+    1. Classes that access the DB no longer extend DBConnection (inheritance -> composition)
+    2. Class DBConnection moved from /var/www/<db_name>_db_conn.php to .../Classes/DBConnection.php
+    3. /var/www/<db_name>_db_conn.php has only the 4 DB details assignment statements.
+
 v1.7.9 - Sun 28 Jan 2024 10:29:06 AEDT
     1. Swapped the role of the eye and eye-slash password field icons
     2. Changed "PHP 7" to "PHP" as the technologies required in README.md

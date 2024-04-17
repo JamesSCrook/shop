@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2023 James S. Crook
+ * shop - Copyright (C) 2017-2024 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -33,7 +33,6 @@ namespace JamesSCrook\Shop;
  * assignment page and the edit user profile page
  */
 session_start();
-require_once dirname(dirname(dirname(__FILE__))) . dirname($_SERVER["PHP_SELF"]) . "_db_conn.php";
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
@@ -45,9 +44,10 @@ if (!isset($_SESSION['username'])) {
 }
 
 Menu::displayMenus(FALSE);
-$unit = new Unit();
-$category = new Category();
-$user = new User();
+$dbConnection = new DBConnection();
+$unit = new Unit($dbConnection);
+$category = new Category($dbConnection);
+$user = new User($dbConnection);
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "<h3>Administration (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
     if (isset($_POST['add_item_bttn'])) {
 	if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
-	    $item = new Item();
+	    $item = new Item($dbConnection);
 	    if ($_POST['quantity'] != "") {
 		$quantity = $_POST['quantity'];
 	    } else {

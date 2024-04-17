@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2023 James S. Crook
+ * shop - Copyright (C) 2017-2024 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -29,7 +29,6 @@ namespace JamesSCrook\Shop;
  * See below for details.
  */
 session_start();
-require_once dirname(dirname(dirname(__FILE__))) . dirname($_SERVER["PHP_SELF"]) . "_db_conn.php";
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
@@ -40,8 +39,9 @@ if (!isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
 }
 
-$user = new User();
-$item = new Item();
+$dbConnection = new DBConnection();
+$user = new User($dbConnection);
+$item = new Item($dbConnection);
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     Menu::displayMenus(TRUE);
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     $item->displayLinks();
     echo "<form id=items_form method='POST'>" . PHP_EOL;
 
-    $category = new Category();
+    $category = new Category($dbConnection);
     $activeCategories = $category->getActiveCategories();
 
     $sortOrder = $user->getSortOrder($username);

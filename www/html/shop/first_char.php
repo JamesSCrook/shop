@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2023 James S. Crook
+ * shop - Copyright (C) 2017-2024 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -27,7 +27,6 @@ namespace JamesSCrook\Shop;
  * order for this page is always alphabetical on itemname (first) and unitname (second).
  */
 session_start();
-require_once dirname(dirname(dirname(__FILE__))) . dirname($_SERVER["PHP_SELF"]) . "_db_conn.php";
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
@@ -38,7 +37,8 @@ if (!isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
 }
 
-$item = new Item();
+$dbConnection = new DBConnection();
+$item = new Item($dbConnection);
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     Menu::displayMenus(TRUE);
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 } else { /* POST - a button has been pressed */
     $item->updateItemQuantities($_POST);
     if (isset($_POST['update_items_bttn'])) {
-	$user = new User();
+	$user = new User($dbConnection);
 	if ($user->getDisplayUpdates($username) == "No") {
 	    header("Location: first_char?first_char=" . htmlspecialchars($_GET['first_char'], ENT_QUOTES));
 	    exit();

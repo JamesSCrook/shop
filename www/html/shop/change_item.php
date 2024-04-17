@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2023 James S. Crook
+ * shop - Copyright (C) 2017-2024 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -27,7 +27,6 @@ namespace JamesSCrook\Shop;
  * The user and timestamp of when this item was created and last changed are also shown.
  */
 session_start();
-require_once dirname(dirname(dirname(__FILE__))) . dirname($_SERVER["PHP_SELF"]) . "_db_conn.php";
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
@@ -42,9 +41,10 @@ Menu::displayMenus(FALSE);
 
 echo "<h3>Change an Item (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
 
-$item = new Item();
-$unit = new Unit();
-$category = new Category();
+$dbConnection = new DBConnection();
+$item = new Item($dbConnection);
+$unit = new Unit($dbConnection);
+$category = new Category($dbConnection);
 
 if (isset($_SESSION['previous_page'])) {
     $previousPage = "Location: " . $_SESSION['previous_page'];

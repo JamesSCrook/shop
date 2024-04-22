@@ -1,3 +1,6 @@
+v2.0.1 - Mon Apr 22 15:15:23 AEST 2024
+    1. Added a try/catch around accessing the DB Connections Details file 
+
 v2.0.0 - Wed Apr 17 13:32:02 AEST 2024
     1. Classes that access the DB no longer extend DBConnection (inheritance -> composition)
     2. Class DBConnection moved from /var/www/<db_name>_db_conn.php to .../Classes/DBConnection.php

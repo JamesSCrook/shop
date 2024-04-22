@@ -5,8 +5,6 @@ namespace JamesSCrook\Shop;
 use PDO;
 use PDOException;
 
-// require_once dirname(dirname(dirname(dirname(__FILE__)))) . dirname($_SERVER["PHP_SELF"]) . "_db_conn.php";
-
 /*
  * shop - Copyright (C) 2017-2024 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
@@ -23,17 +21,20 @@ class DBConnection {
     public $pdo;
 
     public function __construct() {
-	// (self::<varname> for $dbName, $dbHost, $dbUser and $dbPassword should be defined in this include file.
-	include dirname(dirname(dirname(dirname(__FILE__)))) . dirname($_SERVER["PHP_SELF"]) . "_db_conn.php";
-
 	try {
-
-	    $this->pdo = new PDO("mysql:host=" . self::$dbHost . ";dbname=" . self::$dbName . ";charset=utf8mb4", self::$dbUser, self::$dbPassword, array(
-		PDO::ATTR_EMULATE_PREPARES => false,
-		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-	    ));
-	} catch(PDOException $ex) {
-	    echo "Cannot connect to the DB - " . $ex->getMessage();
+	    // (self::<varname> for: $dbName, $dbHost, $dbUser and $dbPassword should be defined in this include file.
+	    $dbConnectionDetailsFile = dirname(dirname(dirname(dirname(__FILE__)))) . dirname($_SERVER["PHP_SELF"]) . "_db_conn.php";
+	    require_once $dbConnectionDetailsFile;
+	    try {
+		$this->pdo = new PDO("mysql:host=" . self::$dbHost . ";dbname=" . self::$dbName . ";charset=utf8mb4", self::$dbUser, self::$dbPassword, array(
+		    PDO::ATTR_EMULATE_PREPARES => false,
+		    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+		));
+	    } catch(PDOException $ex) {
+		echo "<p>Cannot connect to the database. Please notify the website administrator.<p>", $ex->getMessage(), PHP_EOL;
+	    }
+	} catch(\Throwable $ex) {
+	    echo "<p>Cannot include file '$dbConnectionDetailsFile'.<p>Please notify the website administrator.", PHP_EOL;
 	}
     }
 }

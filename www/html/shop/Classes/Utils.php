@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 namespace JamesSCrook\Shop;
 
 /*
@@ -12,47 +13,47 @@ namespace JamesSCrook\Shop;
  */
 class Utils {
 
-    public static function successSymbol() {
+    public static function successSymbol() : string {
 	return "<span style='color: green;'>&#x2714;</span> "; // tick
     }
 
-    public static function failureSymbol() {
+    public static function failureSymbol() : string {
 	return "<span style='color: red;'>&#x2718;</span> "; // cross
     }
 
-    public static function addSymbol() {
+    public static function addSymbol() : string {
 	return "&#x271A;"; // plus sign
     }
 
-    public static function changeSymbol() {
+    public static function changeSymbol() : string {
 	return "&#x270E;"; // pencil
     }
 
-    public static function changeValueSymbol() {
+    public static function changeValueSymbol() : string {
 	return "&rarr;"; // right arrow
     }
 
-    public static function deleteSymbol() {
+    public static function deleteSymbol() : string {
 	return "&#x1F5D1;"; // trash bin
     }
 
-    public static function separatorSymbol() {
+    public static function separatorSymbol() : string {
 	return "&#x25CF;"; // dot
     }
 
-    public static function separatorWithTipSymbol() {
+    public static function separatorWithTipSymbol() : string {
 	return "&rarr;"; // right arrow 
     }
 
-    public static function sortAscendingSymbol() {
+    public static function sortAscendingSymbol() : string {
 	return "&#x25B2;"; // triangle pointing up
     }
 
-    public static function sortDescendingSymbol() {
+    public static function sortDescendingSymbol() : string {
 	return "&#x25BC;"; // triangle pointing down
     }
 
-    public static function passwordToggleShowHide($querySelector, $id) {
+    public static function passwordToggleShowHide(string $querySelector, string $id) : void {
 	echo "
 	<script>
 	    const $querySelector = document.querySelector('#$querySelector');

@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 namespace JamesSCrook\Shop;
 
 use PDOException;
@@ -20,7 +21,7 @@ class Item {
 	$this->dbConn = $dbConnection->pdo;
     }
 
-    public function displayLinks() {
+    public function displayLinks() : void {
 	try {
 	    $firstCharSubstring = "SUBSTR(itemname,1,1)";
 	    $getItemFirstCharsPrepStmt = $this->dbConn->prepare("SELECT DISTINCT $firstCharSubstring FROM item");
@@ -28,7 +29,7 @@ class Item {
 	    echo "<div>" . PHP_EOL;
 	    while ($itemRow = $getItemFirstCharsPrepStmt->fetch()) {
 		$first_char = $itemRow[$firstCharSubstring];
-		echo "<a class='first-char' href='first_char?first_char=" . htmlspecialchars($first_char, ENT_QUOTES) . "'>" . htmlspecialchars($first_char, ENT_QUOTES) . "</a>";
+		echo " <a class='first-char' href='first_char?first_char=" . htmlspecialchars($first_char, ENT_QUOTES) . "'>" . htmlspecialchars($first_char, ENT_QUOTES) . "</a>" . PHP_EOL;
 	    }
 	    echo "</div>" . PHP_EOL;
 	} catch(PDOException $exception) {
@@ -37,7 +38,7 @@ class Item {
 	}
     }
 
-    public function getItemRow($itemId) {
+    public function getItemRow(int $itemId) : mixed {
 	try {
 	    $getItemPrepStmt = $this->dbConn->prepare("SELECT * FROM item WHERE itemid = :itemid");
 	    $getItemPrepStmt->execute(array(
@@ -50,10 +51,10 @@ class Item {
 	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 	    echo "Could not read item details.<p>" . PHP_EOL;
 	}
-	return NULL;
+	return -1;
     }
 
-    private function getItemId($itemName, $unitName) {
+    private function getItemId(string $itemName, string $unitName) : int {
 	try {
 	    $getItemPrepStmt = $this->dbConn->prepare("SELECT itemid FROM item WHERE itemname=:itemname AND unitid=(SELECT unitid FROM unit WHERE unitname=:unitname)");
 	    $getItemPrepStmt->execute(array(
@@ -61,17 +62,17 @@ class Item {
 		'unitname' => $unitName
 	    ));
 	    if ($itemRow = $getItemPrepStmt->fetch()) {
-		return $itemRow['itemid'];
+		return intval($itemRow['itemid']);
 	    }
 	} catch(PDOException $exception) {
 	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 	    echo "Could not check:<br>'" . htmlspecialchars($itemName, ENT_QUOTES) . "', '" . htmlspecialchars($unitName, ENT_QUOTES) . "'<p>" . PHP_EOL;
 	}
-	return NULL;
+	return -1;
     }
 
-    public function addItem($newItemName, $newUnitName, $newCategoryName, $newNotes, $quantity, $newUserName) {
-	if ($this->getItemId($newItemName, $newUnitName) != NULL) {
+    public function addItem(string $newItemName, string $newUnitName, string $newCategoryName, string $newNotes, float $quantity, string $newUserName) : void {
+	if ($this->getItemId($newItemName, $newUnitName) != -1) {
 	    echo "<br>" . Utils::failureSymbol() . "Cannot add this item:<p>" . PHP_EOL;
 	    echo "<table class='table-error'>" . PHP_EOL;
 	    echo "<tr><td>Description</td><td>" . htmlspecialchars($newItemName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
@@ -107,7 +108,7 @@ class Item {
 	}
     }
 
-    private function updateNewItem($itemName, $unitName, $categoryName, $quantity, $userName) {
+    private function updateNewItem(string $itemName, string $unitName, string $categoryName, float $quantity, string $userName) : void {
 	try {
 	    $itemId = $this->getItemId($itemName, $unitName);
 	    $updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity, buycount=buycount+1, lastbuytime=NOW() WHERE itemid=:itemid");
@@ -132,7 +133,7 @@ class Item {
 	}
     }
 
-    public function displayItems($sqlPredicate) {
+    public function displayItems(string $sqlPredicate) : void {
 	try {
 	    $_SESSION['previous_page'] = $_SERVER['REQUEST_URI'];
 	    $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, unitname, categoryname, notes, quantity FROM item INNER JOIN unit ON unit.unitid = item.unitid INNER JOIN category ON category.categoryid = item.categoryid " . $sqlPredicate . " ORDER BY itemname, unitname");
@@ -140,13 +141,13 @@ class Item {
 	    while ($itemRow = $getItemsPrepStmt->fetch()) {
 		echo " <div class='grid-item'>" . PHP_EOL;
 		echo "  <div class='sub-grid-container'>" . PHP_EOL;
-		echo "   <input type='number' class='item-quantity input-color' name='i_" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' min='-9999' max='9999' step='any'";
-		echo " value='" . ($itemRow['quantity'] != 0 ? htmlspecialchars($itemRow['quantity'], ENT_QUOTES) : "") . "'>" . PHP_EOL;
-		echo "   <a href='change_item?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "' class='grid-item-link'><abbr title='" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</abbr>";
+		echo "   <input type='number' class='item-quantity input-color' name='i_" . $itemRow['itemid'] . "' min='-9999' max='9999' step='any'";
+		echo " value='" . (floatval($itemRow['quantity']) != 0 ? $itemRow['quantity'] : "") . "'>" . PHP_EOL;
+		echo "   <a href='change_item?itemid=" . $itemRow['itemid'] . "' class='grid-item-link'><abbr title='" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</abbr>";
 		if ($itemRow['notes'] != "") {
-		    echo Utils::separatorWithTipSymbol() . "<abbr title='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</abbr></a>" . PHP_EOL;
+		    echo Utils::separatorWithTipSymbol() . "<abbr title='" . $itemRow['notes'] . "'>" . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</abbr></a>" . PHP_EOL;
 		} else {
-		    echo Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</a>" . PHP_EOL;
+		    echo Utils::separatorSymbol() . $itemRow['unitname'] . "</a>" . PHP_EOL;
 		}
 		echo "  </div>" . PHP_EOL;
 		echo " </div>" . PHP_EOL;
@@ -157,7 +158,7 @@ class Item {
 	}
     }
 
-    public function displayItemMetaData($itemRow) {
+    public function displayItemMetaData($itemRow) : void {
 	echo "<table>" . PHP_EOL;
 	echo "<tr><td>Current quantity</td><td>" . $itemRow['quantity'] . "</td></tr>" . PHP_EOL;
 	echo "<tr><td>Added by</td><td>" . $itemRow['addusername'] . "</td></tr>" . PHP_EOL;
@@ -169,8 +170,13 @@ class Item {
 	echo "</table>" . PHP_EOL;
     }
 
-    /* This is called with $_POST from index and first_char */
-    public function updateItemQuantities(&$itemIdTable) {
+    /* updateItemQuantities is called with $_POST from index and first_char. Here is an example when 2 (500 and 89) items have been entered:
+     * array(3) { ["update_items_bttn"]=> string(0) "" ["i_500"]=> string(1) "1" ["i_89"]=> string(1) "3" }
+    */
+    public function updateItemQuantities(&$itemIdTable) : void {
+	echo "<p>-----------------<br>";
+	var_dump($itemIdTable);
+	echo "<br>-----------------<br>";
 	try {
 	    $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, item.unitid, unitname, quantity FROM item INNER JOIN unit ON item.unitid = unit.unitid ORDER BY itemname, unitname");
 	    $updateHistoryPrepStmt = $this->dbConn->prepare("INSERT INTO history (time, username, itemname, unitname, oldquantity, newquantity)
@@ -190,10 +196,10 @@ class Item {
 			$itemIdTable[$itemKey] = 0;		// to behave the same as explicitly setting it to 0
 		    }
 
-		    if ($itemRow['quantity'] != $itemIdTable[$itemKey]) {	// If the quantity has changed, update the DB.
-			echo "<tr><td>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . Utils::separatorSymbol() . $itemRow['unitname'] . "</td><td>" . htmlspecialchars($itemRow['quantity'], ENT_QUOTES) . Utils::changeValueSymbol() . htmlspecialchars($itemIdTable[$itemKey], ENT_QUOTES) . "</td></tr>" . PHP_EOL;
-
-			if (abs($itemIdTable[$itemKey]) < abs($itemRow['quantity'])) {
+		    // $itemIdTable is an array of the POSTed quantity value(s) where the index is the itemKey.
+		    if ($itemIdTable[$itemKey] != $itemRow['quantity']) {	// If the POSTed quantity has changed, update the DB.
+			echo "<tr><td>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . Utils::separatorSymbol() . $itemRow['unitname'] . "</td><td>" . $itemRow['quantity'] . Utils::changeValueSymbol() . $itemIdTable[$itemKey] . "</td></tr>" . PHP_EOL;
+			if (abs(intval($itemIdTable[$itemKey])) < abs(floatval($itemRow['quantity']))) {
 			    $updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity, buycount=buycount+1, lastbuytime=NOW() WHERE itemid=:itemid");
 			} else {
 			    $updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity WHERE itemid=:itemid");
@@ -220,7 +226,7 @@ class Item {
 	}
     }
 
-    private function itemExistsWithAnotherItemid($itemName, $unitName, $itemId) {
+    private function itemExistsWithAnotherItemid(string $itemName, string $unitName, int $itemId) : mixed {
 	try {
 	    $itemExistsWithAnotherItemidPrepStmt = $this->dbConn->prepare("SELECT unitname FROM unit INNER JOIN item WHERE unit.unitid = item.unitid AND itemname=:itemname AND unitname=:unitname AND itemid!=:itemid");
 	    $itemExistsWithAnotherItemidPrepStmt->execute(array(
@@ -236,7 +242,7 @@ class Item {
 	return FALSE;
     }
 
-    public function updateItem($itemName, $unitName, $categoryName, $notes, $userName, $itemId) {
+    public function updateItem(string $itemName, string $unitName, string $categoryName, string $notes, string $userName, int $itemId) : bool {
 	if ($this->itemExistsWithAnotherItemid($itemName, $unitName, $itemId)) {
 	    echo "This item already exists:<p>" . PHP_EOL;
 	    echo "<table class='table-error'>" . PHP_EOL;
@@ -264,7 +270,7 @@ class Item {
 	return FALSE;
     }
 
-    public function deleteItem($itemId) {
+    public function deleteItem(int $itemId) : void {
 	try {
 	    $deleteItemPrepStmt = $this->dbConn->prepare("DELETE FROM item WHERE itemid=:itemid");
 	    $deleteItemPrepStmt->execute(array(

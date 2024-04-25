@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 namespace JamesSCrook\Shop;
 
 /*
@@ -16,7 +17,7 @@ namespace JamesSCrook\Shop;
  */
 class Autoloader {
 
-    public static function loader($className) {
+    public static function loader(string $className) : bool {
 	$classNameComponents = explode('\\', $className);
 	$fileName = "Classes/" . end($classNameComponents) . ".php";
 

@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 namespace JamesSCrook\Shop;
 
 /*
@@ -15,20 +16,20 @@ class UserData {
     private $displayItemsSortByColumnName = 'itemname';
     private $displayItemsSortByAscendingFlag = TRUE;
     
-    public function getDisplayItemsSortByColumnName() {
-    return $this->displayItemsSortByColumnName;
+    public function getDisplayItemsSortByColumnName() : string {
+	return $this->displayItemsSortByColumnName;
     }
     
-    public function getDisplayItemsSortByAscendingFlag() {
-    return $this->displayItemsSortByAscendingFlag;
+    public function getDisplayItemsSortByAscendingFlag() : bool {
+	return $this->displayItemsSortByAscendingFlag;
     }
 
-    public function setDisplayItemsSortByColumnName($displayItemsSortByColumnName) {
-    $this->displayItemsSortByColumnName = $displayItemsSortByColumnName;
+    public function setDisplayItemsSortByColumnName(string $displayItemsSortByColumnName) : void {
+	$this->displayItemsSortByColumnName = $displayItemsSortByColumnName;
     }
 
-    public function setDisplayItemsSortByAscendingFlag($displayItemsSortByAscendingFlag) {
-    $this->displayItemsSortByAscendingFlag = $displayItemsSortByAscendingFlag;
+    public function setDisplayItemsSortByAscendingFlag(bool $displayItemsSortByAscendingFlag) : void {
+	$this->displayItemsSortByAscendingFlag = $displayItemsSortByAscendingFlag;
     }
 }
 ?>

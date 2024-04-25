@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 namespace JamesSCrook\Shop;
 
 /*
@@ -15,7 +16,7 @@ class Menu {
     /*
      * Multiple heredocs just looked to horrible, so, multi-line echo it is...
      */
-    public static function displayMenus($itemPageFlag) {
+    public static function displayMenus(bool $itemPageFlag) : void {
 	echo "
 <nav class='nav-bar'>
 <label for='toggle' class='nav-bar__label'>
@@ -54,4 +55,4 @@ class Menu {
     }
 }
 ?>
-<!-- Version 2.0.1 Mon Apr 22 15:11:52 AEST 2024 -->
+<!-- Version 2.1.0_types Mon Apr 22 15:11:52 AEST 2024 -->

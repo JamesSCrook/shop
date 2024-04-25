@@ -1,7 +1,7 @@
 <?php
 
+declare(strict_types=1);
 namespace JamesSCrook\Shop;
-
 use PDOException;
 
 /*
@@ -20,7 +20,7 @@ class Category {
 	$this->dbConn = $dbConnection->pdo;
     }
 
-    private function categoryExists($categoryName) {
+    private function categoryExists(string $categoryName) : mixed {
 	try {
 	    $categoryExistsPrepStmt = $this->dbConn->prepare("SELECT categoryname FROM category WHERE categoryname=:categoryname");
 	    $categoryExistsPrepStmt->execute(array(
@@ -34,7 +34,7 @@ class Category {
 	return FALSE;
     }
 
-    public function addCategory($newCategoryName) {
+    public function addCategory(string $newCategoryName) : void {
 	if ($this->categoryExists($newCategoryName)) {
 	    echo "<p>" . Utils::failureSymbol() . "Duplicate entry: '" . htmlspecialchars($newCategoryName, ENT_QUOTES) . "'<p>Category not added." . PHP_EOL;
 	} else {
@@ -51,7 +51,7 @@ class Category {
 	}
     }
 
-    public function renameCategory($categoryName, $newCategoryName) {
+    public function renameCategory(string $categoryName, string $newCategoryName) : void {
 	if ($this->categoryExists($newCategoryName)) {
 	    echo "<p>" . Utils::failureSymbol() . "Category '" . htmlspecialchars($categoryName, ENT_QUOTES) . "' cannot be renamed to existing category '" . htmlspecialchars($newCategoryName, ENT_QUOTES) . "'<p>Category not renamed." . PHP_EOL;
 	    return;
@@ -69,14 +69,14 @@ class Category {
 	}
     }
 
-    private function countItemsWithThisCategory($categoryName) {
+    private function countItemsWithThisCategory(string $categoryName) : int {
 	try {
 	    $checkCategoryPrepStmt = $this->dbConn->prepare("select count(*) FROM category, item WHERE categoryname=:categoryname AND category.categoryid=item.categoryid");
 	    $checkCategoryPrepStmt->execute(array(
 		'categoryname' => $categoryName
 	    ));
 	    if ($categoryRow = $checkCategoryPrepStmt->fetch()) {
-		return $categoryRow['count(*)'];
+		return intval($categoryRow['count(*)']);
 	    } else {
 		echo "Inconsistency with category '$categoryName'! Ack!<p>";
 	    }
@@ -86,7 +86,7 @@ class Category {
 	exit();
     }
 
-    public function deleteCategory($deleteCategoryName) {
+    public function deleteCategory(string $deleteCategoryName) : void {
 	$categoryCount = $this->countItemsWithThisCategory($deleteCategoryName);
 	if ($this->countItemsWithThisCategory($deleteCategoryName) == 0) {
 	    try {
@@ -106,12 +106,12 @@ class Category {
 	echo "Could not delete category '" . htmlspecialchars($deleteCategoryName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
     }
 
-    public function displayCategoryDropDownList($categoryId) {
+    public function displayCategoryDropDownList(?int $categoryId) : void {
 	try {
 	    $getCategoriesPrepStmt = $this->dbConn->prepare("SELECT categoryid, categoryname FROM category ORDER BY categoryname");
 	    $getCategoriesPrepStmt->execute();
 	    while ($categoryRow = $getCategoriesPrepStmt->fetch()) {
-		if ($categoryRow['categoryid'] == $categoryId) {
+		if (intval($categoryRow['categoryid']) == $categoryId) {
 		    echo " <option value='" . htmlspecialchars($categoryRow['categoryname'], ENT_QUOTES) . "' selected>" . htmlspecialchars($categoryRow['categoryname'], ENT_QUOTES) . "</option>" . PHP_EOL;
 		} else {
 		    echo " <option value='" . htmlspecialchars($categoryRow['categoryname'], ENT_QUOTES) . "'>" . htmlspecialchars($categoryRow['categoryname'], ENT_QUOTES) . "</option>" . PHP_EOL;
@@ -124,11 +124,8 @@ class Category {
 	}
     }
 
-    /*
-     * The "active" CATEGORIES are the one(s) that have at least one ITEM that
-     * has a non-zero QUANITY.
-     */
-    public function getActiveCategories() {
+    /* The "active" CATEGORIES are the one(s) that have at least one ITEM that has a non-zero QUANITY. */
+    public function getActiveCategories() : array {
 	$activeCategoriesTbl = [];
 	try {
 	    $categoryPrepStmt = $this->dbConn->prepare("SELECT DISTINCT categoryname from category INNER JOIN item where category.categoryid = item.categoryid and item.quantity != 0 ORDER BY categoryname");

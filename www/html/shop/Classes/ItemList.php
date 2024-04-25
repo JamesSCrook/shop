@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 namespace JamesSCrook\Shop;
 
 use PDOException;
@@ -20,7 +21,7 @@ class ItemList {
 	$this->dbConn = $dbConnection->pdo;
     }
 
-    public function displayItemsByCategory() {
+    public function displayItemsByCategory() : void {
 	$_SESSION['previous_page'] = $_SERVER['REQUEST_URI'];
 	try {
 	    $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, unitname, categoryname, notes FROM item INNER JOIN unit ON item.unitid = unit.unitid INNER JOIN category ON item.categoryid = category.categoryid ORDER BY categoryname, itemname, unitname");
@@ -30,7 +31,7 @@ class ItemList {
 
 	    while ($itemRow = $getItemsPrepStmt->fetch()) {
 		echo "<tr><td>" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "</td>";
-		echo "<td><a class='clickable-cell' href='change_item?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</a></td>";
+		echo "<td><a class='clickable-cell' href='change_item?itemid=" . $itemRow['itemid'] . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</a></td>";
 		echo "<td>" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "</td><tr>" . PHP_EOL;
 	    }
 
@@ -41,7 +42,7 @@ class ItemList {
 	}
     }
 
-    public function displayItemsSorted($columnName, $ascendingFlag) {
+    public function displayItemsSorted(string $columnName, bool $ascendingFlag) : void {
 	$_SESSION['previous_page'] = $_SERVER['REQUEST_URI'];
 
 	$sortDirectionSymbolTable['itemname'] = "";
@@ -80,7 +81,8 @@ class ItemList {
 	    echo " </tr>" . PHP_EOL;
 
 	    while ($itemRow = $getItemsPrepStmt->fetch()) {
-		echo " <tr><td>" . "<a class='clickable-cell' href='change_item?itemid=" . htmlspecialchars($itemRow['itemid'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . Utils::separatorSymbol() . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</a></td><td>" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['buycount'], ENT_QUOTES) . "</td><td>" . htmlspecialchars($itemRow['lastbuytime'], ENT_QUOTES) . "</td></tr>" . PHP_EOL;
+		echo " <tr><td>" . "<a class='clickable-cell' href='change_item?itemid=" . $itemRow['itemid'] .  "'>" .  htmlspecialchars($itemRow['itemname'], ENT_QUOTES) .  Utils::separatorSymbol() .  htmlspecialchars($itemRow['unitname'], ENT_QUOTES) .
+		    "</a></td><td>" .  htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) .  "</td><td>" . $itemRow['buycount'] .  "</td><td>" .  $itemRow['lastbuytime'] . "</td></tr>" . PHP_EOL;
 	    }
 	    echo "</table>" . PHP_EOL;
 	} catch(PDOException $exception) {

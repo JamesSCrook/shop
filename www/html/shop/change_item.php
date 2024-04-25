@@ -55,7 +55,7 @@ if (isset($_SESSION['previous_page'])) {
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
     $itemRow = $item->getItemRow($_GET['itemid']);
-    if ($itemRow != NULL) {
+    if ($itemRow != -1) {
 	echo "<form method='POST'>" . PHP_EOL;
 
 	echo "Changing '" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'<p>" . PHP_EOL;

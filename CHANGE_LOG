@@ -1,3 +1,7 @@
+v2.1.0 - Thu Apr 25 14:55:29 AEST 2024
+    1. Added type checking (as much as PHP allows), and other changes required as a result.
+    2. Cosmetic changes
+
 v2.0.1 - Mon Apr 22 15:15:23 AEST 2024
     1. Added a try/catch around accessing the DB Connections Details file 
 

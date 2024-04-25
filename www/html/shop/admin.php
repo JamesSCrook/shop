@@ -115,9 +115,9 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
 	    $item = new Item($dbConnection);
 	    if ($_POST['quantity'] != "") {
-		$quantity = $_POST['quantity'];
+		$quantity = floatval($_POST['quantity']);
 	    } else {
-		$quantity = 0;
+		$quantity = 0.0;
 	    }
 	    $itemName = preg_replace('/\s+/', ' ', trim($_POST['itemname']));
 	    $notes = preg_replace('/\s+/', ' ', trim($_POST['notes']));

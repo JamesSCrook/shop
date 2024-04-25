@@ -51,8 +51,7 @@ $itemList = new ItemList($dbConnection);
 if (isset($_GET['sortby'])) {
     $sortByColumnName = $_GET['sortby'];
     if ($sortByColumnName == $userData->getDisplayItemsSortByColumnName()) {
-	$sortAscendingFlag = $userData->getDisplayItemsSortByAscendingFlag();
-	$sortAscendingFlag = !$sortAscendingFlag;
+	$sortAscendingFlag = !$userData->getDisplayItemsSortByAscendingFlag();
 	$userData->setDisplayItemsSortByAscendingFlag($sortAscendingFlag);
     } else {
 	$userData->setDisplayItemsSortByColumnName($sortByColumnName);

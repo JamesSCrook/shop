@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 namespace JamesSCrook\Shop;
 
 use PDOException;
@@ -20,7 +21,7 @@ class Unit {
 	$this->dbConn = $dbConnection->pdo;
     }
 
-    private function unitExists($unitName) {
+    private function unitExists(string $unitName) : mixed {
 	try {
 	    $unitExistsPrepStmt = $this->dbConn->prepare("SELECT unitname FROM unit WHERE unitname=:unitname");
 	    $unitExistsPrepStmt->execute(array(
@@ -34,7 +35,7 @@ class Unit {
 	return FALSE;
     }
 
-    public function addUnit($newUnitName) {
+    public function addUnit(string $newUnitName) : void {
 	if ($this->unitExists($newUnitName)) {
 	    echo "<p>" . Utils::failureSymbol() . "Duplicate entry: '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'<p>Unit not added." . PHP_EOL;
 	} else {
@@ -51,7 +52,7 @@ class Unit {
 	}
     }
 
-    public function renameUnit($unitName, $newUnitName) {
+    public function renameUnit(string $unitName, string $newUnitName) : void {
 	if ($this->unitExists($newUnitName)) {
 	    echo "<p>" . Utils::failureSymbol() . "Unit '" . htmlspecialchars($unitName, ENT_QUOTES) . "' cannot be renamed to existing unit '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'<p>Unit not renamed." . PHP_EOL;
 	    return;
@@ -69,14 +70,14 @@ class Unit {
 	}
     }
 
-    private function countItemsWithThisUnit($unitName) {
+    private function countItemsWithThisUnit(string $unitName) : int {
 	try {
 	    $checkUnitPrepStmt = $this->dbConn->prepare("select count(*) FROM unit, item WHERE unitname=:unitname AND unit.unitid=item.unitid");
 	    $checkUnitPrepStmt->execute(array(
 		'unitname' => $unitName
 	    ));
 	    if ($unitRow = $checkUnitPrepStmt->fetch()) {
-		return $unitRow['count(*)'];
+		return intval($unitRow['count(*)']);
 	    } else {
 		echo "Inconsistency with unit '$unitName'! Ack!<p>";
 	    }
@@ -86,7 +87,7 @@ class Unit {
 	exit();
     }
 
-    public function deleteUnit($deleteUnitName) {
+    public function deleteUnit(string $deleteUnitName) : void {
 	$unitCount = $this->countItemsWithThisUnit($deleteUnitName);
 	if ($this->countItemsWithThisUnit($deleteUnitName) == 0) {
 	    try {
@@ -105,12 +106,12 @@ class Unit {
 	echo "Could not delete unit '" . htmlspecialchars($deleteUnitName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
     }
 
-    public function displayUnitDropDownList($unitId) {
+    public function displayUnitDropDownList(?int $unitId) : void {
 	try {
 	    $getUnitsPrepStmt = $this->dbConn->prepare("SELECT unitid, unitname FROM unit ORDER BY unitname");
 	    $getUnitsPrepStmt->execute();
 	    while ($unitRow = $getUnitsPrepStmt->fetch()) {
-		if ($unitRow['unitid'] == $unitId) {
+		if (intval($unitRow['unitid']) == $unitId) {
 		    echo " <option value='" . htmlspecialchars($unitRow['unitname'], ENT_QUOTES) . "' selected>" . htmlspecialchars($unitRow['unitname'], ENT_QUOTES) . "</option>" . PHP_EOL;
 		} else {
 		    echo " <option value='" . htmlspecialchars($unitRow['unitname'], ENT_QUOTES) . "'>" . htmlspecialchars($unitRow['unitname'], ENT_QUOTES) . "</option>" . PHP_EOL;

@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 namespace JamesSCrook\Shop;
 
 use PDOException;
@@ -20,7 +21,7 @@ class User {
 	$this->dbConn = $dbConnection->pdo;
     }
 
-    public function isUserValid($userName, $password) {
+    public function isUserValid(string $userName, string $password) : bool {
 	try {
 	    $getUserPrepStmt = $this->dbConn->prepare("SELECT password FROM user WHERE username=:username");
 	    $getUserPrepStmt->execute(array(
@@ -38,7 +39,7 @@ class User {
 	return FALSE;
     }
 
-    public function getSortOrder($userName) {
+    public function getSortOrder(string $userName) : string {
 	try {
 	    $getSortOrderPrepStmt = $this->dbConn->prepare("SELECT sortorder FROM user WHERE username=:username");
 	    $getSortOrderPrepStmt->execute(array(
@@ -53,7 +54,7 @@ class User {
 	return $this->sortorder;
     }
 
-    public function getDisplayUpdates($userName) {
+    public function getDisplayUpdates(string $userName) : string {
 	try {
 	    $getDisplayUpdatesPrepStmt = $this->dbConn->prepare("SELECT displayUpdates FROM user WHERE username=:username");
 	    $getDisplayUpdatesPrepStmt->execute(array(
@@ -68,7 +69,7 @@ class User {
 	return $this->displayUpdates;
     }
 
-    public function setSortOrder($userName, $newSortOrder) {
+    public function setSortOrder(string $userName, string $newSortOrder) : void {
 	try {
 	    $sortOrderPrepStmt = $this->dbConn->prepare("UPDATE user SET sortorder=:sortorder WHERE username=:username");
 	    $sortOrderPrepStmt->execute(array(
@@ -82,7 +83,7 @@ class User {
 	}
     }
 
-    public function setDisplayUpdates($userName, $displayUpdates) {
+    public function setDisplayUpdates(string $userName, string $displayUpdates) : void {
 	try {
 	    $displayUpdatesPrepStmt = $this->dbConn->prepare("UPDATE user SET displayUpdates=:displayUpdates WHERE username=:username");
 	    $displayUpdatesPrepStmt->execute(array(
@@ -96,7 +97,7 @@ class User {
 	}
     }
 
-    public function setPassword($userName, $newPassword1, $newPassword2) {
+    public function setPassword(string $userName, string $newPassword1, string $newPassword2) : void {
 	if ($newPassword1 == $newPassword2) {
 	    try {
 		$passwordHash = password_hash($newPassword1, PASSWORD_DEFAULT);
@@ -115,7 +116,7 @@ class User {
 	}
     }
 
-    public function displayUserNameDropDownList() {
+    public function displayUsernameDropDownList() : void {
 	try {
 	    $getUsernamesPrepStmt = $this->dbConn->prepare("SELECT username FROM user ORDER BY username");
 	    $getUsernamesPrepStmt->execute();
@@ -129,7 +130,7 @@ class User {
 	}
     }
 
-    private function userNameExists($userName) {
+    private function userNameExists(string $userName) : mixed {
 	try {
 	    $userNameExistsPrepStmt = $this->dbConn->prepare("SELECT username FROM user WHERE username=:username");
 	    $userNameExistsPrepStmt->execute(array(
@@ -143,7 +144,7 @@ class User {
 	return FALSE;
     }
 
-    public function addUserName($newUserName, $newPassword) {
+    public function addUserName(string $newUserName, string $newPassword) : void {
 	if ($this->userNameExists($newUserName)) {
 	    echo "<br>" . Utils::failureSymbol() . "Duplicate entry: '" . htmlspecialchars($newUserName, ENT_QUOTES) . "' - User NOT added!" . PHP_EOL;
 	} else {
@@ -163,7 +164,7 @@ class User {
 	}
     }
 
-    public function deleteUserName($deleteUserName) {
+    public function deleteUserName(string $deleteUserName) : void {
 	try {
 	    $deleteUserNamePrepStmt = $this->dbConn->prepare("DELETE FROM user WHERE username = :username");
 	    $deleteUserNamePrepStmt->execute(array(

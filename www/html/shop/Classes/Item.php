@@ -174,9 +174,6 @@ class Item {
      * array(3) { ["update_items_bttn"]=> string(0) "" ["i_500"]=> string(1) "1" ["i_89"]=> string(1) "3" }
     */
     public function updateItemQuantities(&$itemIdTable) : void {
-	echo "<p>-----------------<br>";
-	var_dump($itemIdTable);
-	echo "<br>-----------------<br>";
 	try {
 	    $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, item.unitid, unitname, quantity FROM item INNER JOIN unit ON item.unitid = unit.unitid ORDER BY itemname, unitname");
 	    $updateHistoryPrepStmt = $this->dbConn->prepare("INSERT INTO history (time, username, itemname, unitname, oldquantity, newquantity)

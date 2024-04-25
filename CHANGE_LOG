@@ -1,3 +1,7 @@
+v2.1.1 - Thu Apr 25 15:14:14 AEST 2024
+    1. Deleted a debugging line that slipped through the cracks.
+    2. Fixed the Version message too.
+
 v2.1.0 - Thu Apr 25 14:55:29 AEST 2024
     1. Added type checking (as much as PHP allows), and other changes required as a result.
     2. Cosmetic changes

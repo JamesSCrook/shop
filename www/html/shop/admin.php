@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "<button class='bttn delete-color' name='delete_category_bttn'>" . Utils::deleteSymbol() . " Delete Category</button>" . PHP_EOL;
 
     echo "<h3><div class='section-separator'>Manage Users</div></h3>" . PHP_EOL;
-    echo "<input type='text' class='enter-input-text input-color' name='add_username' placeholder='Username' pattern='.{1,}'>" . PHP_EOL;
+    echo "<input type='text' class='enter-input-text input-color' name='username' placeholder='Username' pattern='.{1,}'>" . PHP_EOL;
     echo "<div class='pw-show-hide-input'>" . PHP_EOL;
     echo " <input type='password' class='enter-input-text input-color' name='newpassword1' id='newpassword1' size='20' pattern='.{6,}' placeholder='password'>" . PHP_EOL;
     echo " <img src='Images/eye-icon.png' class='pw-show-hide-icon' id='pwtoggleshowhideA'>" . PHP_EOL;
@@ -169,9 +169,9 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	    echo "<br>" . Utils::failureSymbol() . "Category is required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['add_user_bttn'])) {
-	if ($_POST['add_username'] != "" && $_POST['newpassword1'] != "") {
+	if ($_POST['username'] != "" && $_POST['newpassword1'] != "") {
 	    if ($_POST['newpassword1'] == $_POST['newpassword2']) {
-		$userName = preg_replace('/\s+/', ' ', trim($_POST['add_username']));
+		$userName = preg_replace('/\s+/', ' ', trim($_POST['username']));
 		$user->addUserName($userName, $_POST['newpassword1']);
 	    } else {
 		echo "<br>" . Utils::failureSymbol() . "Passwords do not match, please try again<p>" . PHP_EOL;
@@ -180,10 +180,10 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	    echo "<br>" . Utils::failureSymbol() . "User is required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['delete_user_bttn'])) {
-	if ($_POST['delete_username'] != "") {
+	if ($_POST['delete_username'] != ""  && $_POST['username'] != "" && $_POST['delete_username'] == $_POST['username']) {
 	    $user->deleteUserName($_POST['delete_username']);
 	} else {
-	    echo "<br>" . Utils::failureSymbol() . "User is required!<p>" . PHP_EOL;
+	    echo "<br>" . Utils::failureSymbol() . "Please enter the name of the user to delete and select the same user from the drop-down list.<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['ack_manage_bttn'])) {
 	header('Location: admin');

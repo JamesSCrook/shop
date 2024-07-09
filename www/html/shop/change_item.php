@@ -69,11 +69,11 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "</select>";
 	echo "<input type='text' class='enter-input-text input-color' name='notes' placeholder='Notes (optional)' value='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>";
 	echo "<button class='bttn change-color' name='change_item_bttn'>" . Utils::changeSymbol() . " Change Item</button>";
+
+	$item->displayItemMetaData($itemRow);
 	echo "<button class='bttn delete-color' name='delete_item_bttn'>" . Utils::deleteSymbol() . " Delete Item</button>";
 
 	echo "</form>" . PHP_EOL;
-
-	$item->displayItemMetaData($itemRow);
 
 	$_SESSION['itemid'] = $itemRow['itemid'];
     } else {

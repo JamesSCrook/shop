@@ -1,3 +1,7 @@
+v2.1.2 - Wed Jul 10 08:40:30 AEST 2024
+    1. Moved delete item button to the bottom of the page to minimize accidental item deletions.
+    2. To delete a user, one must now type user name AND select the same user from the drop-down list.
+
 v2.1.1 - Thu Apr 25 15:14:14 AEST 2024
     1. Deleted a debugging line that slipped through the cracks.
     2. Fixed the Version message too.

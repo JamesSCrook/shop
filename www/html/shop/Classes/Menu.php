@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2024 James S. Crook
+ * shop - Copyright (C) 2017-2025 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -12,47 +12,47 @@ namespace JamesSCrook\Shop;
  * later version (see <http://www.gnu.org/licenses/>).
  */
 class Menu {
-
     /*
      * Multiple heredocs just looked to horrible, so, multi-line echo it is...
      */
     public static function displayMenus(bool $itemPageFlag) : void {
 	echo "
 <nav class='nav-bar'>
-<label for='toggle' class='nav-bar__label'>
+  <label for='toggle' class='nav-bar__label'>
     <div class='menu__icon'></div>
     <div class='menu__icon'></div>
     <div class='menu__icon'></div>
-</label>
-<input type='checkbox' id='toggle'>
-<ul class='nav-bar__list'>
+  </label>
+  <input type='checkbox' id='toggle'>
+  <ul class='nav-bar__list'>
     <li class='nav-bar__list-item'>
-	<a href='./' class='nav-bar__link'>Items</a>
+      <a href='./' class='nav-bar__link'>Items</a>
     </li>
     <li class='nav-bar__list-item'>
-	<a href='admin' class='nav-bar__link'>Admin</a>
+      <a href='admin' class='nav-bar__link'>Admin</a>
     </li>
     <li class='nav-bar__list-item'>
-	<a href='history' class='nav-bar__link'>History</a>
+      <a href='history' class='nav-bar__link'>History</a>
     </li>
     <li class='nav-bar__list-item'>
-	<a href='logout' class='nav-bar__link'>Logout</a>
+      <a href='logout' class='nav-bar__link'>Logout</a>
     </li>
-";
+  ";
 
-	if ($itemPageFlag) {
-	    echo "
+	  if ($itemPageFlag) {
+	      echo "
     <li class='nav-bar__list-item'>
 	<button class='nav-bar__bttn-item' form='items_form' name='update_items_bttn'>Update</button>
     </li>
-";
-	}
+  ";
+	  }
 
-	echo "
-    </ul>
+	  echo "
+  </ul>
 </nav>
 ";
     }
 }
 ?>
-<!-- Version 2.1.2 Wed Jul 10 08:31:39 AEST 2024 -->
+
+<!-- Version 2.2.0 Tue 07 Jan 2025 09:07:51 AEDT -->

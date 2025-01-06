@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2024 James S. Crook
+ * shop - Copyright (C) 2017-2025 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -12,6 +12,19 @@ namespace JamesSCrook\Shop;
  * later version (see <http://www.gnu.org/licenses/>).
  */
 class Utils {
+
+    public static function topOfPageHTML(string $pageName) : void {
+    echo "
+<!doctype html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+  <title>" . Constant::WEBSITEDESCRIPTION . "$pageName</title>
+  <link rel='stylesheet' media='screen' href='shop.css'>
+</head>
+<body>";
+    }
 
     public static function successSymbol() : string {
 	return "<span style='color: green;'>&#x2714;</span> "; // tick

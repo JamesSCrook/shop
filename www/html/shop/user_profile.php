@@ -3,32 +3,21 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2024 James S. Crook
+ * shop - Copyright (C) 2017-2025 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
  * by the Free Software Foundation, either version 3 of the License, or (at your option) any
  * later version (see <http://www.gnu.org/licenses/>).
- */
-?>
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<title>Shop: Edit User Profile</title>
-<link rel='stylesheet' media='screen' href='shop.css'>
-</head>
-<body>
-
-<?php
-/*
+ *
  * Edit a user's profile: password, (Item page) sort order and the "display updates"
  * behavior (either do or don't display a page showing the item quantity change(s) just made).
  */
 session_start();
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
+$pageSubtitle = "Edit User Profile";
+Utils::topOfPageHTML(": $pageSubtitle");
 
 if (!isset($_SESSION['username'])) {
     header("Location: login");
@@ -62,15 +51,15 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "<select class='enter-select input-color' name='sortOrder'>" . PHP_EOL;
     if ($sortOrder == "cq") {
 	echo " <option value='q'>Quantity</option>" . PHP_EOL;
-	echo " <option value='cq' selected>Category, quantity</option>" . PHP_EOL;
+	echo " <option value='cq' selected>" . Constant::CATEGORYDESCRIPTION . ", quantity</option>" . PHP_EOL;
 	echo " <option value='a'>Alphabetical</option>" . PHP_EOL;
     } else if ($sortOrder == "a") {
 	echo " <option value='q'>Quantity</option>" . PHP_EOL;
-	echo " <option value='cq'>Category, quantity</option>" . PHP_EOL;
+	echo " <option value='cq'>" . Constant::CATEGORYDESCRIPTION . ", quantity</option>" . PHP_EOL;
 	echo " <option value='a' selected>Alphabetical</option>" . PHP_EOL;
     } else {
 	echo " <option value='q' selected>Quantity</option>" . PHP_EOL;
-	echo " <option value='cq'>Category, quantity</option>" . PHP_EOL;
+	echo " <option value='cq'>" . Constant::CATEGORYDESCRIPTION . ", quantity</option>" . PHP_EOL;
 	echo " <option value='a'>Alphabetical</option>" . PHP_EOL;
     }
     echo "</select><p>" . PHP_EOL;

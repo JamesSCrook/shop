@@ -3,32 +3,21 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2024 James S. Crook
+ * shop - Copyright (C) 2017-2025 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
  * by the Free Software Foundation, either version 3 of the License, or (at your option) any
  * later version (see <http://www.gnu.org/licenses/>).
- */
-?>
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<title>Shop: Change an Item</title>
-<link rel='stylesheet' media='screen' href='shop.css'>
-</head>
-<body>
-
-<?php
-/*
+ *
  * Change an item's details: itemname, unitname, categoryname and notes.
  * The user and timestamp of when this item was created and last changed are also shown.
  */
 session_start();
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
+$pageSubtitle = "Change an Item";
+Utils::topOfPageHTML(": $pageSubtitle");
 
 if (!isset($_SESSION['username'])) {
     header("Location: login");
@@ -39,7 +28,7 @@ if (!isset($_SESSION['username'])) {
 
 Menu::displayMenus(FALSE);
 
-echo "<h3>Change an Item (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
+echo "<h3>$pageSubtitle (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
 
 $dbConnection = new DBConnection();
 $item = new Item($dbConnection);
@@ -61,10 +50,10 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	echo "Changing '" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'<p>" . PHP_EOL;
 
 	echo "<input type='text' class='enter-input-text input-color' name='itemname' placeholder='Description (required)' pattern='.{1,30}' value='" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'>";
-	echo "<select class='enter-select input-color' name='unitname'><option value='' disabled>Unit (required)</option>";
+	echo "<select class='enter-select input-color' name='unitname'><option value='' disabled>" . Constant::UNITDESCRIPTION . " (required)</option>";
 	$unit->displayUnitDropDownList($itemRow['unitid']);
 	echo "</select>";
-	echo "<select class='enter-select input-color' name='categoryname'><option value='' disabled>Category (required)</option>";
+	echo "<select class='enter-select input-color' name='categoryname'><option value='' disabled>" . Constant::CATEGORYDESCRIPTION . " (required)</option>";
 	$category->displayCategoryDropDownList($itemRow['categoryid']);
 	echo "</select>";
 	echo "<input type='text' class='enter-input-text input-color' name='notes' placeholder='Notes (optional)' value='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>";

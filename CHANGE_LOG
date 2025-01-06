@@ -1,3 +1,10 @@
+v2.2.0 - Tue 07 Jan 2025 09:12:58 AEDT
+    1. Changed the "shop", "unit" & "category" to configurable strings (in class Constant.php).
+    2. Replaced "boiler plate" HTML with Utils::topOfPageHTML on every page.
+    3. Changed on instance of header("Location: index") to header("Location: index", true, 204)
+    4. Removed two unused POST values in admin.php.
+    5. Cosmetic changes.
+
 v2.1.2 - Wed Jul 10 08:40:30 AEST 2024
     1. Moved delete item button to the bottom of the page to minimize accidental item deletions.
     2. To delete a user, one must now type user name AND select the same user from the drop-down list.

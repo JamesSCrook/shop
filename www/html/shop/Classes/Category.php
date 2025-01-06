@@ -5,7 +5,7 @@ namespace JamesSCrook\Shop;
 use PDOException;
 
 /*
- * shop - Copyright (C) 2017-2024 James S. Crook
+ * shop - Copyright (C) 2017-2025 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -36,14 +36,14 @@ class Category {
 
     public function addCategory(string $newCategoryName) : void {
 	if ($this->categoryExists($newCategoryName)) {
-	    echo "<p>" . Utils::failureSymbol() . "Duplicate entry: '" . htmlspecialchars($newCategoryName, ENT_QUOTES) . "'<p>Category not added." . PHP_EOL;
+	    echo "<p>" . Utils::failureSymbol() . "Duplicate entry: '" . htmlspecialchars($newCategoryName, ENT_QUOTES) . "'<p>" . Constant::CATEGORYDESCRIPTION . " not added." . PHP_EOL;
 	} else {
 	    try {
 		$addCategoryPrepStmt = $this->dbConn->prepare("INSERT INTO category (categoryname) VALUES (:categoryname)");
 		$addCategoryPrepStmt->execute(array(
 		    'categoryname' => $newCategoryName
 		));
-		echo "<br>" . Utils::successSymbol() . htmlspecialchars("Category '$newCategoryName' successfully added", ENT_QUOTES) . "<p>" . PHP_EOL;
+		echo "<br>" . Utils::successSymbol() . htmlspecialchars(Constant::CATEGORYDESCRIPTION . " '$newCategoryName' successfully added", ENT_QUOTES) . "<p>" . PHP_EOL;
 	    } catch(PDOException $exception) {
 		echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 		echo "Could not add category '" . htmlspecialchars($newCategoryName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
@@ -53,7 +53,7 @@ class Category {
 
     public function renameCategory(string $categoryName, string $newCategoryName) : void {
 	if ($this->categoryExists($newCategoryName)) {
-	    echo "<p>" . Utils::failureSymbol() . "Category '" . htmlspecialchars($categoryName, ENT_QUOTES) . "' cannot be renamed to existing category '" . htmlspecialchars($newCategoryName, ENT_QUOTES) . "'<p>Category not renamed." . PHP_EOL;
+	    echo "<p>" . Utils::failureSymbol() . Constant::CATEGORYDESCRIPTION . " '" . htmlspecialchars($categoryName, ENT_QUOTES) . "' cannot be renamed to existing category '" . htmlspecialchars($newCategoryName, ENT_QUOTES) . "'<p>" . Constant::CATEGORYDESCRIPTION . " not renamed." . PHP_EOL;
 	    return;
 	}
 	try {
@@ -62,7 +62,7 @@ class Category {
 		'categoryname' => $categoryName,
 		'newcategoryname' => $newCategoryName
 	    ));
-	    echo "<br>" . Utils::successSymbol() . htmlspecialchars("Category '$categoryName' successfully renamed to '$newCategoryName'", ENT_QUOTES) . "<p>" . PHP_EOL;
+	    echo "<br>" . Utils::successSymbol() . htmlspecialchars(Constant::CATEGORYDESCRIPTION . " '$categoryName' successfully renamed to '$newCategoryName'", ENT_QUOTES) . "<p>" . PHP_EOL;
 	} catch(PDOException $exception) {
 	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 	    echo "Could not change category '" . htmlspecialchars($categoryName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
@@ -94,8 +94,7 @@ class Category {
 		$deleteCategoryPrepStmt->execute(array(
 		    'categoryname' => $deleteCategoryName
 		));
-		// ConfirmChange::confirmSuccess("Category '$deleteCategoryName' successfully deleted");
-		echo "<br>" . Utils::successSymbol() . htmlspecialchars("Category '$deleteCategoryName' successfully deleted", ENT_QUOTES) . "<p>" . PHP_EOL;
+		echo "<br>" . Utils::successSymbol() . htmlspecialchars(Constant::CATEGORYDESCRIPTION . " '$deleteCategoryName' successfully deleted", ENT_QUOTES) . "<p>" . PHP_EOL;
 		return;
 	    } catch(PDOException $exception) {
 		echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;

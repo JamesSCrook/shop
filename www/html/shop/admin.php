@@ -3,38 +3,21 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2024 James S. Crook
+ * shop - Copyright (C) 2017-2025 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
  * by the Free Software Foundation, either version 3 of the License, or (at your option) any
  * later version (see <http://www.gnu.org/licenses/>).
- */
-?>
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<title>Shop: Administration</title>
-<link rel='stylesheet' media='screen' href='shop.css'>
-</head>
-<body>
-
-<script>
-    function visitPage(page) {
-	window.location.href = page;
-    }
-</script>
-
-<?php
-/*
+ *
  * Administer items, units, categories and users. Also, links to the manage category
  * assignment page and the edit user profile page
  */
 session_start();
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
+$pageSubtitle = "Administration";
+Utils::topOfPageHTML(": $pageSubtitle");
 
 if (!isset($_SESSION['username'])) {
     header("Location: login");
@@ -50,16 +33,16 @@ $category = new Category($dbConnection);
 $user = new User($dbConnection);
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    echo "<h3>Administration (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
+    echo "<h3>$pageSubtitle (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
     echo "<h3><div class='section-separator'>Add a New Item</div></h3>" . PHP_EOL;
 
     echo "<form method='POST'>" . PHP_EOL;
 
     echo "<input type='text' class='enter-input-text input-color' name='itemname' placeholder='Description (required)' pattern='.{1,30}'>" . PHP_EOL;
-    echo "<select class='enter-select input-color' name='unitname'><option value='' disabled selected>Unit (required)</option>" . PHP_EOL;
+    echo "<select class='enter-select input-color' name='unitname'><option value='' disabled selected>" . Constant::UNITDESCRIPTION . " (required)</option>" . PHP_EOL;
     $unit->displayUnitDropDownList(NULL);
     echo "</select>" . PHP_EOL;
-    echo "<select class='enter-select input-color' name='categoryname'><option value='' disabled selected>Category (required)</option>" . PHP_EOL;
+    echo "<select class='enter-select input-color' name='categoryname'><option value='' disabled selected>" . Constant::CATEGORYDESCRIPTION . " (required)</option>" . PHP_EOL;
     $category->displayCategoryDropDownList(NULL);
     echo "</select>" . PHP_EOL;
     echo "<input type='text' class='enter-input-text input-color' placeholder='Notes (optional)' name='notes'>" . PHP_EOL;
@@ -72,25 +55,25 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "<button type='button' onclick='visitPage(\"$dirName/display_item_details\");' class='bttn query-color'>Display Item Details</button>" . PHP_EOL;
     echo "<button type='button' onclick='visitPage(\"$dirName/display_items_sorted\");' class='bttn query-color'>Display Items Sorted</button>" . PHP_EOL;
 
-    echo "<h3><div class='section-separator'>Manage Units</div></h3>" . PHP_EOL;
-    echo "<input type='text' class='enter-input-text input-color' name='add_rename_unit' placeholder='Unit (add or rename unit as this)' pattern='.{1,12}'>" . PHP_EOL;
-    echo "<button class='bttn add-color' name='add_unit_bttn'>" . Utils::addSymbol() . " Add Unit</button>" . PHP_EOL;
-    echo "<select class='enter-select input-color' name='rename_delete_unit'><option value='' disabled selected>Unit to rename or delete</option>" . PHP_EOL;
+    echo "<h3><div class='section-separator'>Manage a " . Constant::UNITDESCRIPTION . "</div></h3>" . PHP_EOL;
+    echo "<input type='text' class='enter-input-text input-color' name='add_rename_unit' placeholder='" . Constant::UNITDESCRIPTION . " (add or rename as this)' pattern='.{1,12}'>" . PHP_EOL;
+    echo "<button class='bttn add-color' name='add_unit_bttn'>" . Utils::addSymbol() . " Add a " . Constant::UNITDESCRIPTION . "</button>" . PHP_EOL;
+    echo "<select class='enter-select input-color' name='rename_delete_unit'><option value='' disabled selected>" . Constant::UNITDESCRIPTION . " to rename or delete</option>" . PHP_EOL;
     $unit->displayUnitDropDownList(NULL);
     echo "</select>" . PHP_EOL;
-    echo "<button class='bttn change-color' name='rename_unit_bttn'>" . Utils::changeSymbol() . " Rename Unit</button>" . PHP_EOL;
-    echo "<button class='bttn delete-color' name='delete_unit_bttn'>" . Utils::deleteSymbol() . " Delete Unit</button>" . PHP_EOL;
+    echo "<button class='bttn change-color' name='rename_unit_bttn'>" . Utils::changeSymbol() . " Rename a " . Constant::UNITDESCRIPTION . "</button>" . PHP_EOL;
+    echo "<button class='bttn delete-color' name='delete_unit_bttn'>" . Utils::deleteSymbol() . " Delete a " . Constant::UNITDESCRIPTION . "</button>" . PHP_EOL;
 
-    echo "<h3><div class='section-separator'>Manage Categories</div></h3>" . PHP_EOL;
-    echo "<input type='text' class='enter-input-text input-color' name='add_rename_category' placeholder='Category (add or rename as this)' pattern='.{1,64}'>" . PHP_EOL;
-    echo "<button class='bttn add-color' name='add_category_bttn'>" . Utils::addSymbol() . " Add Category</button>" . PHP_EOL;
-    echo "<select class='enter-select input-color' name='rename_delete_category'><option value='' disabled selected>Category to rename or delete</option>" . PHP_EOL;
+    echo "<h3><div class='section-separator'>Manage a " . Constant::CATEGORYDESCRIPTION . "</div></h3>" . PHP_EOL;
+    echo "<input type='text' class='enter-input-text input-color' name='add_rename_category' placeholder='" . Constant::CATEGORYDESCRIPTION . " (add or rename as this)' pattern='.{1,64}'>" . PHP_EOL;
+    echo "<button class='bttn add-color' name='add_category_bttn'>" . Utils::addSymbol() . " Add " . Constant::CATEGORYDESCRIPTION . "</button>" . PHP_EOL;
+    echo "<select class='enter-select input-color' name='rename_delete_category'><option value='' disabled selected>" . Constant::CATEGORYDESCRIPTION . " to rename or delete</option>" . PHP_EOL;
     $category->displayCategoryDropDownList(NULL);
     echo "</select>" . PHP_EOL;
-    echo "<button class='bttn change-color' name='rename_category_bttn'>" . Utils::changeSymbol() . " Rename Category</button>" . PHP_EOL;
-    echo "<button class='bttn delete-color' name='delete_category_bttn'>" . Utils::deleteSymbol() . " Delete Category</button>" . PHP_EOL;
+    echo "<button class='bttn change-color' name='rename_category_bttn'>" . Utils::changeSymbol() . " Rename " . Constant::CATEGORYDESCRIPTION . "</button>" . PHP_EOL;
+    echo "<button class='bttn delete-color' name='delete_category_bttn'>" . Utils::deleteSymbol() . " Delete " . Constant::CATEGORYDESCRIPTION . "</button>" . PHP_EOL;
 
-    echo "<h3><div class='section-separator'>Manage Users</div></h3>" . PHP_EOL;
+    echo "<h3><div class='section-separator'>Manage a User</div></h3>" . PHP_EOL;
     echo "<input type='text' class='enter-input-text input-color' name='username' placeholder='Username' pattern='.{1,}'>" . PHP_EOL;
     echo "<div class='pw-show-hide-input'>" . PHP_EOL;
     echo " <input type='password' class='enter-input-text input-color' name='newpassword1' id='newpassword1' size='20' pattern='.{6,}' placeholder='password'>" . PHP_EOL;
@@ -125,15 +108,12 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	} else {
 	    echo "<br>" . Utils::failureSymbol() . "Description, unit and category are required!<p>" . PHP_EOL;
 	}
-    } else if (isset($_POST['ack_new_item_bttn'])) {
-	header("Location: admin");
-	exit();
     } else if (isset($_POST['add_unit_bttn'])) {
 	if ($_POST['add_rename_unit'] != "") {
 	    $unitName = preg_replace('/\s+/', ' ', trim($_POST['add_rename_unit']));
 	    $unit->addUnit($unitName);
 	} else {
-	    echo "<br>" . Utils::failureSymbol() . "Unit is required!<p>" . PHP_EOL;
+	    echo "<br>" . Utils::failureSymbol() . Constant::UNITDESCRIPTION . " is required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['rename_unit_bttn'])) {
 	if ($_POST['add_rename_unit'] != "" && $_POST['rename_delete_unit'] != "") {
@@ -146,14 +126,14 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	if ($_POST['rename_delete_unit'] != "") {
 	    $unit->deleteUnit($_POST['rename_delete_unit']);
 	} else {
-	    echo "<br>" . Utils::failureSymbol() . "Unit is required!<p>" . PHP_EOL;
+	    echo "<br>" . Utils::failureSymbol() . Constant::UNITDESCRIPTION . " is required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['add_category_bttn'])) {
 	if ($_POST['add_rename_category'] != "") {
 	    $categoryName = preg_replace('/\s+/', ' ', trim($_POST['add_rename_category']));
 	    $category->addCategory($categoryName);
 	} else {
-	    echo "<br>" . Utils::failureSymbol() . "Category is required!<p>" . PHP_EOL;
+	    echo "<br>" . Utils::failureSymbol() . Constant::CATEGORYDESCRIPTION . " is required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['rename_category_bttn'])) {
 	if ($_POST['add_rename_category'] != "" && $_POST['rename_delete_category'] != "") {
@@ -166,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	if ($_POST['rename_delete_category'] != "") {
 	    $category->deleteCategory($_POST['rename_delete_category']);
 	} else {
-	    echo "<br>" . Utils::failureSymbol() . "Category is required!<p>" . PHP_EOL;
+	    echo "<br>" . Utils::failureSymbol() . Constant::CATEGORYDESCRIPTION . " is required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['add_user_bttn'])) {
 	if ($_POST['username'] != "" && $_POST['newpassword1'] != "") {
@@ -185,9 +165,6 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	} else {
 	    echo "<br>" . Utils::failureSymbol() . "Please enter the name of the user to delete and select the same user from the drop-down list.<p>" . PHP_EOL;
 	}
-    } else if (isset($_POST['ack_manage_bttn'])) {
-	header('Location: admin');
-	exit();
     } else {
 	echo "<p>UNEXPECTED ERROR: in file: " . basename(__FILE__) . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . PHP_EOL;
     }
@@ -196,3 +173,9 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 </body>
 </html>
+
+<script>
+    function visitPage(page) {
+	window.location.href = page;
+    }
+</script>

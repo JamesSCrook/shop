@@ -6,7 +6,7 @@ namespace JamesSCrook\Shop;
 use PDOException;
 
 /*
- * shop - Copyright (C) 2017-2024 James S. Crook
+ * shop - Copyright (C) 2017-2025 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -37,14 +37,14 @@ class Unit {
 
     public function addUnit(string $newUnitName) : void {
 	if ($this->unitExists($newUnitName)) {
-	    echo "<p>" . Utils::failureSymbol() . "Duplicate entry: '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'<p>Unit not added." . PHP_EOL;
+	    echo "<p>" . Utils::failureSymbol() . "Duplicate entry: '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'<p>" . Constant::UNITDESCRIPTION . " not added." . PHP_EOL;
 	} else {
 	    try {
 		$addUnitPrepStmt = $this->dbConn->prepare("INSERT INTO unit (unitname) VALUES (:unitname)");
 		$addUnitPrepStmt->execute(array(
 		    'unitname' => $newUnitName
 		));
-		echo "<br>" . Utils::successSymbol() . htmlspecialchars("Unit '$newUnitName' successfully added", ENT_QUOTES) . "<p>" . PHP_EOL;
+		echo "<br>" . Utils::successSymbol() . htmlspecialchars(Constant::UNITDESCRIPTION . " '$newUnitName' successfully added", ENT_QUOTES) . "<p>" . PHP_EOL;
 	    } catch(PDOException $exception) {
 		echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 		echo "Could not add unit '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
@@ -54,7 +54,7 @@ class Unit {
 
     public function renameUnit(string $unitName, string $newUnitName) : void {
 	if ($this->unitExists($newUnitName)) {
-	    echo "<p>" . Utils::failureSymbol() . "Unit '" . htmlspecialchars($unitName, ENT_QUOTES) . "' cannot be renamed to existing unit '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'<p>Unit not renamed." . PHP_EOL;
+	    echo "<p>" . Utils::failureSymbol() . Constant::UNITDESCRIPTON . " '" . htmlspecialchars($unitName, ENT_QUOTES) . "' cannot be renamed to an existing one '" . htmlspecialchars($newUnitName, ENT_QUOTES) . "'<p>" . Constant::UNITDESCRIPTON . " not renamed." . PHP_EOL;
 	    return;
 	}
 	try {
@@ -63,7 +63,7 @@ class Unit {
 		'unitname' => $unitName,
 		'newunitname' => $newUnitName
 	    ));
-	    echo "<br>" . Utils::successSymbol() . htmlspecialchars("Unit '$unitName' successfully renamed to '$newUnitName'", ENT_QUOTES) . "<p>" . PHP_EOL;
+	    echo "<br>" . Utils::successSymbol() . htmlspecialchars(Constant::UNITDESCRIPTION . " '$unitName' successfully renamed to '$newUnitName'", ENT_QUOTES) . "<p>" . PHP_EOL;
 	} catch(PDOException $exception) {
 	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 	    echo "Could not change unit '" . htmlspecialchars($unitName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
@@ -95,7 +95,7 @@ class Unit {
 		$deleteUnitPrepStmt->execute(array(
 		    'unitname' => $deleteUnitName
 		));
-		echo "<br>" . Utils::successSymbol() . htmlspecialchars("Unit '$deleteUnitName' successfully deleted", ENT_QUOTES) . "<p>" . PHP_EOL;
+		echo "<br>" . Utils::successSymbol() . htmlspecialchars(Constant::UNITDESCRIPTION . " '$deleteUnitName' successfully deleted", ENT_QUOTES) . "<p>" . PHP_EOL;
 		return;
 	    } catch(PDOException $exception) {
 		echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;

@@ -6,7 +6,7 @@ namespace JamesSCrook\Shop;
 use PDOException;
 
 /*
- * shop - Copyright (C) 2017-2024 James S. Crook
+ * shop - Copyright (C) 2017-2025 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -76,7 +76,7 @@ class Item {
 	    echo "<br>" . Utils::failureSymbol() . "Cannot add this item:<p>" . PHP_EOL;
 	    echo "<table class='table-error'>" . PHP_EOL;
 	    echo "<tr><td>Description</td><td>" . htmlspecialchars($newItemName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
-	    echo "<tr><td>Unit</td><td>" . htmlspecialchars($newUnitName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
+	    echo "<tr><td>" . Constant::UNITDESCRIPTION . "</td><td>" . htmlspecialchars($newUnitName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 	    echo "</table><p>" . PHP_EOL;
 	    echo "because it already exists." . PHP_EOL;
 	} else {
@@ -96,8 +96,8 @@ class Item {
 		echo "<br>" . Utils::successSymbol() . "New item added<p>" . PHP_EOL;
 		echo "<table>" . PHP_EOL;
 		echo "<tr><td>Description</td><td>" . htmlspecialchars($newItemName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
-		echo "<tr><td>Unit</td><td>" . htmlspecialchars($newUnitName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
-		echo "<tr><td>Category</td><td>" . htmlspecialchars($newCategoryName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
+		echo "<tr><td>" . Constant::UNITDESCRIPTION . "</td><td>" . htmlspecialchars($newUnitName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
+		echo "<tr><td>" . Constant::CATEGORYDESCRIPTION . "</td><td>" . htmlspecialchars($newCategoryName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 		echo "<tr><td>Notes</td><td>" . htmlspecialchars($newNotes, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 		echo "<tr><td>Quantity</td><td>$quantity</td></tr>" . PHP_EOL;
 		echo "</table><p>" . PHP_EOL;
@@ -165,8 +165,8 @@ class Item {
 	echo "<tr><td>Added</td><td>" . $itemRow['addtime'] . "</td></tr>" . PHP_EOL;
 	echo "<tr><td>Last changed by</td><td>" . $itemRow['changeusername'] . "</td></tr>" . PHP_EOL;
 	echo "<tr><td>Last changed</td><td>" . $itemRow['changetime'] . "</td></tr>" . PHP_EOL;
-	echo "<tr><td>Times bought</td><td>" . $itemRow['buycount'] . "</td></tr>" . PHP_EOL;
-	echo "<tr><td>Last time bought</td><td>" . $itemRow['lastbuytime'] . "</td></tr>" . PHP_EOL;
+	echo "<tr><td>Times updated</td><td>" . $itemRow['buycount'] . "</td></tr>" . PHP_EOL;
+	echo "<tr><td>Last update</td><td>" . $itemRow['lastbuytime'] . "</td></tr>" . PHP_EOL;
 	echo "</table>" . PHP_EOL;
     }
 
@@ -244,7 +244,7 @@ class Item {
 	    echo "This item already exists:<p>" . PHP_EOL;
 	    echo "<table class='table-error'>" . PHP_EOL;
 	    echo "<tr><td>Description</td><td>" . htmlspecialchars($itemName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
-	    echo "<tr><td>Unit</td><td>" . htmlspecialchars($unitName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
+	    echo "<tr><td>" . Constant::UNITDESCRIPTION . "</td><td>" . htmlspecialchars($unitName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
 	    echo "</table><p>" . PHP_EOL;
 	    echo "so it cannot be saved with these values." . PHP_EOL;
 	} else {

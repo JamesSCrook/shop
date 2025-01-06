@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 namespace JamesSCrook\Shop;
+use PDOException;
 
 /*
  * shop - Copyright (C) 2017-2025 James S. Crook
@@ -12,21 +13,9 @@ namespace JamesSCrook\Shop;
  * later version (see <http://www.gnu.org/licenses/>).
  */
 
-/*
- * Set up to auto-load classes iff they are required.
- */
-class Autoloader {
-
-    public static function loader(string $className) : bool {
-	$classNameComponents = explode('\\', $className);
-	$fileName = "Classes/" . end($classNameComponents) . ".php";
-
-	if (file_exists($fileName)) {
-	    require_once $fileName;
-	    if (class_exists($className)) {
-		return TRUE;
-	    }
-	}
-	return FALSE;
-    }
+abstract class Constant {
+    public const WEBSITEDESCRIPTION = 'Shop';
+    public const UNITDESCRIPTION = 'Unit';
+    public const CATEGORYDESCRIPTION = 'Category';
 }
+?>

@@ -6,7 +6,7 @@ namespace JamesSCrook\Shop;
 use PDOException;
 
 /*
- * shop - Copyright (C) 2017-2024 James S. Crook
+ * shop - Copyright (C) 2017-2025 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -27,7 +27,7 @@ class ItemList {
 	    $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, unitname, categoryname, notes FROM item INNER JOIN unit ON item.unitid = unit.unitid INNER JOIN category ON item.categoryid = category.categoryid ORDER BY categoryname, itemname, unitname");
 	    $getItemsPrepStmt->execute();
 	    echo "<table>" . PHP_EOL;
-	    echo " <tr><th>Category</th><th>Item" . Utils::separatorSymbol() . "Unit</th><th>Notes</th></tr>" . PHP_EOL;
+	    echo " <tr><th>" . Constant::CATEGORYDESCRIPTION . "</th><th>Item" . Utils::separatorSymbol() . Constant::UNITDESCRIPTION . "</th><th>Notes</th></tr>" . PHP_EOL;
 
 	    while ($itemRow = $getItemsPrepStmt->fetch()) {
 		echo "<tr><td>" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "</td>";
@@ -74,10 +74,10 @@ class ItemList {
 
 	    echo "<table>" . PHP_EOL;
 	    echo " <tr>" . PHP_EOL;
-	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=itemname'>"     . "Item" . Utils::separatorSymbol() . "Unit" . $sortDirectionSymbolTable['itemname'] . "</a></th>" . PHP_EOL;
-	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=categoryname'>" . "Category"  . $sortDirectionSymbolTable['categoryname'] . "</a></th>" . PHP_EOL;
-	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=buycount'>"     . "Buy count" . $sortDirectionSymbolTable['buycount'] . "</a></th>" . PHP_EOL;
-	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=lastbuytime'>"  . "Last Buy Time" . $sortDirectionSymbolTable['lastbuytime'] . "</a></th>" . PHP_EOL;
+	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=itemname'>"     . "Item" . Utils::separatorSymbol() . Constant::UNITDESCRIPTION . $sortDirectionSymbolTable['itemname'] . "</a></th>" . PHP_EOL;
+	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=categoryname'>" . Constant::CATEGORYDESCRIPTION . $sortDirectionSymbolTable['categoryname'] . "</a></th>" . PHP_EOL;
+	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=buycount'>"     . "Updated" . $sortDirectionSymbolTable['buycount'] . "</a></th>" . PHP_EOL;
+	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=lastbuytime'>"  . "Last Update" . $sortDirectionSymbolTable['lastbuytime'] . "</a></th>" . PHP_EOL;
 	    echo " </tr>" . PHP_EOL;
 
 	    while ($itemRow = $getItemsPrepStmt->fetch()) {

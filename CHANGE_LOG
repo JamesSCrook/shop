@@ -1,7 +1,11 @@
+v2.2.1 - Wed 29 Jan 2025 08:53:01 AEDT
+    1. Changed header("Location: index", true, 204) in index.php back to header("Location: index")
+    2. Cosmetic changes related to Item & Unit section headers and buttion text in admin.php
+
 v2.2.0 - Tue 07 Jan 2025 09:12:58 AEDT
     1. Changed the "shop", "unit" & "category" to configurable strings (in class Constant.php).
     2. Replaced "boiler plate" HTML with Utils::topOfPageHTML on every page.
-    3. Changed on instance of header("Location: index") to header("Location: index", true, 204)
+    3. Changed one instance of header("Location: index") to header("Location: index", true, 204)
     4. Removed two unused POST values in admin.php.
     5. Cosmetic changes.
 

@@ -74,8 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 } else { /* POST - a button has been pressed */
     $item->updateItemQuantities($_POST);
     if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
-	// header("Location: index");
-	header("Location: index", true, 204);
+	header("Location: index");
 	exit();
     } else {
 	Menu::displayMenus(FALSE);

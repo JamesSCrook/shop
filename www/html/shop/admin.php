@@ -34,7 +34,7 @@ $user = new User($dbConnection);
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "<h3>$pageSubtitle (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
-    echo "<h3><div class='section-separator'>Add a New Item</div></h3>" . PHP_EOL;
+    echo "<h3><div class='section-separator'>Add an Item</div></h3>" . PHP_EOL;
 
     echo "<form method='POST'>" . PHP_EOL;
 
@@ -57,12 +57,12 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
     echo "<h3><div class='section-separator'>Manage a " . Constant::UNITDESCRIPTION . "</div></h3>" . PHP_EOL;
     echo "<input type='text' class='enter-input-text input-color' name='add_rename_unit' placeholder='" . Constant::UNITDESCRIPTION . " (add or rename as this)' pattern='.{1,12}'>" . PHP_EOL;
-    echo "<button class='bttn add-color' name='add_unit_bttn'>" . Utils::addSymbol() . " Add a " . Constant::UNITDESCRIPTION . "</button>" . PHP_EOL;
+    echo "<button class='bttn add-color' name='add_unit_bttn'>" . Utils::addSymbol() . " Add " . Constant::UNITDESCRIPTION . "</button>" . PHP_EOL;
     echo "<select class='enter-select input-color' name='rename_delete_unit'><option value='' disabled selected>" . Constant::UNITDESCRIPTION . " to rename or delete</option>" . PHP_EOL;
     $unit->displayUnitDropDownList(NULL);
     echo "</select>" . PHP_EOL;
-    echo "<button class='bttn change-color' name='rename_unit_bttn'>" . Utils::changeSymbol() . " Rename a " . Constant::UNITDESCRIPTION . "</button>" . PHP_EOL;
-    echo "<button class='bttn delete-color' name='delete_unit_bttn'>" . Utils::deleteSymbol() . " Delete a " . Constant::UNITDESCRIPTION . "</button>" . PHP_EOL;
+    echo "<button class='bttn change-color' name='rename_unit_bttn'>" . Utils::changeSymbol() . " Rename " . Constant::UNITDESCRIPTION . "</button>" . PHP_EOL;
+    echo "<button class='bttn delete-color' name='delete_unit_bttn'>" . Utils::deleteSymbol() . " Delete " . Constant::UNITDESCRIPTION . "</button>" . PHP_EOL;
 
     echo "<h3><div class='section-separator'>Manage a " . Constant::CATEGORYDESCRIPTION . "</div></h3>" . PHP_EOL;
     echo "<input type='text' class='enter-input-text input-color' name='add_rename_category' placeholder='" . Constant::CATEGORYDESCRIPTION . " (add or rename as this)' pattern='.{1,64}'>" . PHP_EOL;

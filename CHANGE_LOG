@@ -1,3 +1,6 @@
+v2.2.1 - Wed 29 Jan 2025 09:06:11 AEDT
+    1. Forgot to update the "Version" HTML comment in Classes/Menu.php - did that
+
 v2.2.1 - Wed 29 Jan 2025 08:53:01 AEDT
     1. Changed header("Location: index", true, 204) in index.php back to header("Location: index")
     2. Cosmetic changes related to Item & Unit section headers and buttion text in admin.php

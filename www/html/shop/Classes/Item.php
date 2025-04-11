@@ -142,7 +142,7 @@ class Item {
 		echo " <div class='grid-item'>" . PHP_EOL;
 		echo "  <div class='sub-grid-container'>" . PHP_EOL;
 		echo "   <input type='number' class='item-quantity input-color' name='i_" . $itemRow['itemid'] . "' min='-9999' max='9999' step='any'";
-		echo " value='" . (floatval($itemRow['quantity']) != 0 ? $itemRow['quantity'] : "") . "'>" . PHP_EOL;
+		echo " value='" . (floatval($itemRow['quantity']) != 0.0 ? $itemRow['quantity'] : "") . "'>" . PHP_EOL;
 		echo "   <a href='change_item?itemid=" . $itemRow['itemid'] . "' class='grid-item-link'><abbr title='" . htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) . "'>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "</abbr>";
 		if ($itemRow['notes'] != "") {
 		    echo Utils::separatorWithTipSymbol() . "<abbr title='" . $itemRow['notes'] . "'>" . htmlspecialchars($itemRow['unitname'], ENT_QUOTES) . "</abbr></a>" . PHP_EOL;
@@ -239,7 +239,7 @@ class Item {
 	return FALSE;
     }
 
-    public function updateItem(string $itemName, string $unitName, string $categoryName, string $notes, string $userName, int $itemId) : bool {
+    public function updateItem(string $itemName, string $unitName, string $categoryName, string $notes, float $quantity, string $userName, int $itemId) : bool {
 	if ($this->itemExistsWithAnotherItemid($itemName, $unitName, $itemId)) {
 	    echo "This item already exists:<p>" . PHP_EOL;
 	    echo "<table class='table-error'>" . PHP_EOL;
@@ -249,12 +249,13 @@ class Item {
 	    echo "so it cannot be saved with these values." . PHP_EOL;
 	} else {
 	    try {
-		$updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET itemname=:itemname, unitid=(SELECT unitid FROM unit WHERE unitname=:unitname), categoryid=(SELECT categoryid FROM category WHERE categoryname=:categoryname), notes=:notes, changeusername=:changeusername, changetime = NOW() WHERE itemid=:itemid");
+		$updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET itemname=:itemname, unitid=(SELECT unitid FROM unit WHERE unitname=:unitname), categoryid=(SELECT categoryid FROM category WHERE categoryname=:categoryname), notes=:notes, quantity=:quantity, changeusername=:changeusername, changetime = NOW() WHERE itemid=:itemid");
 		$updateItemPrepStmt->execute(array(
 		    'itemname' => $itemName,
 		    'unitname' => $unitName,
 		    'categoryname' => $categoryName,
 		    'notes' => $notes,
+		    'quantity' => $quantity,
 		    'changeusername' => $userName,
 		    'itemid' => $itemId
 		));

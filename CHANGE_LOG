@@ -1,3 +1,7 @@
+v2.2.2 - Fri 11 Apr 2025 11:50:08 AEST
+    1. Added a quantity field to the change_item page
+    2. Change some floatval(<something>) comparisons from "== 0" to "== 0.0"
+
 v2.2.1 - Wed 29 Jan 2025 09:06:11 AEDT
     1. Forgot to update the "Version" HTML comment in Classes/Menu.php - did that
 

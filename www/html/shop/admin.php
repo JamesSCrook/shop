@@ -97,11 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     if (isset($_POST['add_item_bttn'])) {
 	if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
 	    $item = new Item($dbConnection);
-	    if ($_POST['quantity'] != "") {
-		$quantity = floatval($_POST['quantity']);
-	    } else {
-		$quantity = 0.0;
-	    }
+	    $quantity = $_POST['quantity'] != "" ? floatval($_POST['quantity']) : 0.0;
 	    $itemName = preg_replace('/\s+/', ' ', trim($_POST['itemname']));
 	    $notes = preg_replace('/\s+/', ' ', trim($_POST['notes']));
 	    $item->addItem(mb_strtoupper(mb_substr($itemName, 0, 1)) . mb_substr($itemName, 1), $_POST['unitname'], $_POST['categoryname'], $notes, $quantity, $_SESSION['username']);

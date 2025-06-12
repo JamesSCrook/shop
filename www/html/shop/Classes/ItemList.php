@@ -49,6 +49,7 @@ class ItemList {
 	$sortDirectionSymbolTable['categoryname'] = "";
 	$sortDirectionSymbolTable['buycount'] = "";
 	$sortDirectionSymbolTable['lastbuytime'] = "";
+	$sortDirectionSymbolTable['changetime'] = "";
 	$sortDirectionSymbolTable[$columnName] = $ascendingFlag ? Utils::sortAscendingSymbol() : Utils::sortDescendingSymbol();
 
 	switch ($columnName) {
@@ -64,12 +65,15 @@ class ItemList {
 	    case 'lastbuytime':
 		$orderBySQLargs = $ascendingFlag ? "lastbuytime ASC, itemname, unitname" : "lastbuytime DESC, itemname, unitname";
 		break;
+	    case 'changetime':
+		$orderBySQLargs = $ascendingFlag ? "changetime ASC, itemname, unitname" : "changetime DESC, itemname, unitname";
+		break;
 	    default:
 		$orderBySQLargs = "itemname ASC, unitname ASC";
 		break;
 	}
 	try {
-	    $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemname, itemid, unitname, categoryname, buycount, lastbuytime FROM item INNER JOIN unit ON item.unitid = unit.unitid INNER JOIN category ON item.categoryid = category.categoryid ORDER BY " . $orderBySQLargs);
+	    $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemname, itemid, unitname, categoryname, buycount, lastbuytime, changetime FROM item INNER JOIN unit ON item.unitid = unit.unitid INNER JOIN category ON item.categoryid = category.categoryid ORDER BY " . $orderBySQLargs);
 	    $getItemsPrepStmt->execute();
 
 	    echo "<table>" . PHP_EOL;
@@ -78,11 +82,12 @@ class ItemList {
 	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=categoryname'>" . Constant::CATEGORYDESCRIPTION . $sortDirectionSymbolTable['categoryname'] . "</a></th>" . PHP_EOL;
 	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=buycount'>"     . "Updated" . $sortDirectionSymbolTable['buycount'] . "</a></th>" . PHP_EOL;
 	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=lastbuytime'>"  . "Last Update" . $sortDirectionSymbolTable['lastbuytime'] . "</a></th>" . PHP_EOL;
+	    echo "  <th><a class='clickable-cell' href='display_items_sorted?sortby=changetime'>"   . "Last Change" . $sortDirectionSymbolTable['changetime'] . "</a></th>" . PHP_EOL;
 	    echo " </tr>" . PHP_EOL;
 
 	    while ($itemRow = $getItemsPrepStmt->fetch()) {
 		echo " <tr><td>" . "<a class='clickable-cell' href='change_item?itemid=" . $itemRow['itemid'] .  "'>" .  htmlspecialchars($itemRow['itemname'], ENT_QUOTES) .  Utils::separatorSymbol() .  htmlspecialchars($itemRow['unitname'], ENT_QUOTES) .
-		    "</a></td><td>" .  htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) .  "</td><td>" . $itemRow['buycount'] .  "</td><td>" .  $itemRow['lastbuytime'] . "</td></tr>" . PHP_EOL;
+		    "</a></td><td>" .  htmlspecialchars($itemRow['categoryname'], ENT_QUOTES) .  "</td><td>" . $itemRow['buycount'] .  "</td><td>" .  $itemRow['lastbuytime'] . "</td><td>" . $itemRow['changetime'] . "</td></tr>" . PHP_EOL;
 	    }
 	    echo "</table>" . PHP_EOL;
 	} catch(PDOException $exception) {

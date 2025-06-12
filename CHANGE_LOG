@@ -1,3 +1,6 @@
+v2.2.3 - Thu 12 Jun 2025 10:56:36 AEST
+    1. Added 'Last Change' column to display_items_sorted. Can sort by this column (like the others).
+
 v2.2.2 - Fri 11 Apr 2025 11:50:08 AEST
     1. Added a quantity field to the change_item page
     2. Change some floatval(<something>) comparisons from "== 0" to "== 0.0"

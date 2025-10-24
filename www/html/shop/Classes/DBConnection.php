@@ -7,7 +7,7 @@ use PDO;
 use PDOException;
 
 /*
- * shop - Copyright (C) 2017-2025 James S. Crook
+ * shop - Copyright (C) 2017-2026 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -24,7 +24,7 @@ class DBConnection {
     public function __construct() {
 	try {
 	    // (self::<varname> for: $dbName, $dbHost, $dbUser and $dbPassword should be defined in this include file.
-	    $dbConnectionDetailsFile = dirname(dirname(dirname(dirname(__FILE__)))) . dirname($_SERVER["PHP_SELF"]) . "_db_conn.php";
+	    $dbConnectionDetailsFile = dirname(dirname(dirname(dirname(__FILE__)))) . dirname(htmlspecialchars($_SERVER["PHP_SELF"], ENT_QUOTES)) . "_db_conn.php";
 	    require_once $dbConnectionDetailsFile;
 	    try {
 		$this->pdo = new PDO("mysql:host=" . self::$dbHost . ";dbname=" . self::$dbName . ";charset=utf8mb4", self::$dbUser, self::$dbPassword, array(

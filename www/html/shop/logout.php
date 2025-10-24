@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2025 James S. Crook
+ * shop - Copyright (C) 2017-2026 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -22,12 +22,12 @@ Menu::displayMenus(FALSE);
 
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
-    echo "<h3>See you next time ($username)...</h3>";
+    echo "<h3>" . Constant::WEBSITEDESCRIPTION . ": See you next time ($username)...</h3>";
     setcookie(session_name(), '', 100);
     session_unset();
     session_destroy();
 } else {
-    echo "<h3>You weren't logged in, bye!</h3>";
+    echo "<h3>" . Constant::WEBSITEDESCRIPTION . ": You weren't logged in, bye!</h3>";
 }
 ?>
 

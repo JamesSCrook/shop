@@ -1,3 +1,10 @@
+v2.2.4 - Fri 24 Oct 2025 13:32:14 AEDT
+    1. Added WEBPAGEDESCRIPTION to the header of every page.
+    2. displayItems returned a void, now it returns the int number of items displayed, so...
+    3. first_char now displays an error message when an invalid first_char URL is specified.
+    4. Changed $_SERVER["PHP_SELF"] to htmlspecialchars($_SERVER["PHP_SELF"], ENT_QUOTES) everywhere.
+    5. Set copyright end year to 2026 - just gettin' in early!!!
+
 v2.2.3 - Thu 12 Jun 2025 10:56:36 AEST
     1. Added 'Last Change' column to display_items_sorted. Can sort by this column (like the others).
 

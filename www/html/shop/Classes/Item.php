@@ -6,7 +6,7 @@ namespace JamesSCrook\Shop;
 use PDOException;
 
 /*
- * shop - Copyright (C) 2017-2025 James S. Crook
+ * shop - Copyright (C) 2017-2026 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -133,7 +133,8 @@ class Item {
 	}
     }
 
-    public function displayItems(string $sqlPredicate) : void {
+    public function displayItems(string $sqlPredicate) : int {
+	$itemCount = 0;
 	try {
 	    $_SESSION['previous_page'] = $_SERVER['REQUEST_URI'];
 	    $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, unitname, categoryname, notes, quantity FROM item INNER JOIN unit ON unit.unitid = item.unitid INNER JOIN category ON category.categoryid = item.categoryid " . $sqlPredicate . " ORDER BY itemname, unitname");
@@ -151,11 +152,13 @@ class Item {
 		}
 		echo "  </div>" . PHP_EOL;
 		echo " </div>" . PHP_EOL;
+		$itemCount++;
 	    }
 	} catch(PDOException $exception) {
 	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 	    echo "Could not display any itmes.<p>" . PHP_EOL;
 	}
+	return $itemCount;
     }
 
     public function displayItemMetaData($itemRow) : void {

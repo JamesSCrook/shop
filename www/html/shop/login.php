@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2025 James S. Crook
+ * shop - Copyright (C) 2017-2026 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -20,7 +20,7 @@ Utils::topOfPageHTML(": $pageSubtitle");
 
 Menu::displayMenus(FALSE);
 
-echo "<h3>$pageSubtitle to " . Constant::WEBSITEDESCRIPTION . "</h3>" . PHP_EOL;
+echo "<h3>" . Constant::WEBSITEDESCRIPTION . ": $pageSubtitle</h3>" . PHP_EOL;
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "<form id=login_form method='POST'>" . PHP_EOL;

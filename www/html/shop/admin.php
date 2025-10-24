@@ -3,7 +3,7 @@
 namespace JamesSCrook\Shop;
 
 /*
- * shop - Copyright (C) 2017-2025 James S. Crook
+ * shop - Copyright (C) 2017-2026 James S. Crook
  * This program comes with ABSOLUTELY NO WARRANTY.
  * This is free software, and you are welcome to redistribute it under certain conditions.
  * This program is licensed under the terms of the GNU General Public License as published
@@ -33,7 +33,7 @@ $category = new Category($dbConnection);
 $user = new User($dbConnection);
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    echo "<h3>$pageSubtitle (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
+    echo "<h3>" . Constant::WEBSITEDESCRIPTION . ": $pageSubtitle (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
     echo "<h3><div class='section-separator'>Add an Item</div></h3>" . PHP_EOL;
 
     echo "<form method='POST'>" . PHP_EOL;
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo "<button class='bttn add-color' name='add_item_bttn'>" . Utils::addSymbol() . " Add Item</button><br>" . PHP_EOL;
 
     echo "<h3><div class='section-separator'>Miscellaneous</div></h3>" . PHP_EOL;
-    $dirName = dirname($_SERVER['PHP_SELF']);
+    $dirName = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES));
     echo "<button type='button' onclick='visitPage(\"$dirName/user_profile\");' class='bttn change-color'>" . Utils::changeSymbol() . "Edit User Profile</button>" . PHP_EOL;
     echo "<button type='button' onclick='visitPage(\"$dirName/display_item_details\");' class='bttn query-color'>Display Item Details</button>" . PHP_EOL;
     echo "<button type='button' onclick='visitPage(\"$dirName/display_items_sorted\");' class='bttn query-color'>Display Items Sorted</button>" . PHP_EOL;

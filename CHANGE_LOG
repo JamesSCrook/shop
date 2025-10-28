@@ -1,3 +1,9 @@
+v2.2.5 - Wed 29 Oct 2025 08:07:06 AEDT
+    1. change_item: changing the quantity updates the item history: old_quantity -> new_quantity.
+    2. Adding a new item with non-zero quantity updates that item's history: 0 -> new_quantity.
+    3. Created updateItemHistory that's called in 3 places: 1 & 2 above, & also normal quantity changes.
+    x. updateItem: added $newQuanity argument.
+
 v2.2.4 - Fri 24 Oct 2025 13:32:14 AEDT
     1. Added WEBPAGEDESCRIPTION to the header of every page.
     2. displayItems returned a void, now it returns the int number of items displayed, so...

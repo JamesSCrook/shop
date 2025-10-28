@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	$category->displayCategoryDropDownList($itemRow['categoryid']);
 	echo "</select>";
 	echo "<input type='text' class='enter-input-text input-color' name='notes' placeholder='Notes (optional)' value='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>";
-	echo "<input type='number' class='enter-input-number input-color' name='quantity' placeholder='Quanitity (optional)' min='-9999' max='9999' step='any'";
+	echo "<input type='number' class='enter-input-number input-color' name='newquantity' placeholder='Quanitity (optional)' min='-9999' max='9999' step='any'";
 	echo " value='" . (floatval($itemRow['quantity']) != 0.0 ? $itemRow['quantity'] : "") . "'>" . PHP_EOL;
 	echo "<button class='bttn change-color' name='change_item_bttn'>" . Utils::changeSymbol() . " Change Item</button>";
 	$item->displayItemMetaData($itemRow);
@@ -72,8 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
 	    $itemName = preg_replace('/\s+/', ' ', trim($_POST['itemname']));
 	    $notes = preg_replace('/\s+/', ' ', trim($_POST['notes']));
-	    $quantity = isset($_POST['quantity']) && floatval($_POST['quantity']) != 0.0  ? floatval($_POST['quantity']) : 0.0;
-	    if ($item->updateItem(mb_strtoupper(mb_substr($itemName, 0, 1)) . mb_substr($itemName, 1), $_POST['unitname'], $_POST['categoryname'], $notes, $quantity, $username, $_SESSION['itemid'])) {
+	    $newquantity = isset($_POST['newquantity']) && floatval($_POST['newquantity']) != 0.0  ? floatval($_POST['newquantity']) : 0.0;
+	    $itemRow = $item->getItemRow($_GET['itemid']);
+	    $currentQuantity = floatval($itemRow['quantity']);
+	    if ($item->updateItem(mb_strtoupper(mb_substr($itemName, 0, 1)) . mb_substr($itemName, 1), $_POST['unitname'], $_POST['categoryname'], $notes, $currentQuantity, $newquantity, $username, $_SESSION['itemid'])) {
 		header($previousPage);
 		exit();
 	    }

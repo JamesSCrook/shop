@@ -108,6 +108,23 @@ class Item {
 	}
     }
 
+    private function updateItemHistory(string $userName, string $itemName, string $unitName, float $oldQuantity, float $newQuantity) : void {
+	try {
+	    $updateHistoryPrepStmt = $this->dbConn->prepare("INSERT INTO history (time, username, itemname, unitname, oldquantity, newquantity)
+		VALUES(NOW(), :username, :itemname, :unitname, :oldquantity, :newquantity)");
+	    $updateHistoryPrepStmt->execute(array(
+		'username' => $userName,
+		'itemname' => $itemName,
+		'unitname' => $unitName,
+		'oldquantity' => $oldQuantity,
+		'newquantity' => $newQuantity
+	    ));
+	} catch(PDOException $exception) {
+	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
+	    echo "Could not display any itmes.<p>" . PHP_EOL;
+	}
+    }
+
     private function updateNewItem(string $itemName, string $unitName, string $categoryName, float $quantity, string $userName) : void {
 	try {
 	    $itemId = $this->getItemId($itemName, $unitName);
@@ -118,14 +135,7 @@ class Item {
 	    ));
 
 	    if ($quantity != 0) { // Only update the history if the new item has been added with a non-zero quantity.
-		$updateHistoryPrepStmt = $this->dbConn->prepare("INSERT INTO history (time, username, itemname, unitname, oldquantity, newquantity)
-		    VALUES(NOW(), :username, :itemname, :unitname, 0, :quantity)");
-		$updateHistoryPrepStmt->execute(array(
-		    'username' => $userName,
-		    'itemname' => $itemName,
-		    'unitname' => $unitName,
-		    'quantity' => $quantity
-		));
+		$this->updateItemHistory($userName, $itemName, $unitName, 0.0, $quantity);
 	    }
 	} catch(PDOException $exception) {
 	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
@@ -179,8 +189,6 @@ class Item {
     public function updateItemQuantities(&$itemIdTable) : void {
 	try {
 	    $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, item.unitid, unitname, quantity FROM item INNER JOIN unit ON item.unitid = unit.unitid ORDER BY itemname, unitname");
-	    $updateHistoryPrepStmt = $this->dbConn->prepare("INSERT INTO history (time, username, itemname, unitname, oldquantity, newquantity)
-		VALUES(NOW(), :username, :itemname, (SELECT unitname FROM unit WHERE unitid=:unitid), :oldquantity, :newquantity)");
 	    $getItemsPrepStmt->execute();
 
 	    // Update details (the table below) is always sent to the browser, but the user will only see it if "display update notifications" is enabled.
@@ -208,14 +216,7 @@ class Item {
 			    'quantity' => $itemIdTable[$itemKey],
 			    'itemid' => $itemRow['itemid']
 			));
-
-			$updateHistoryPrepStmt->execute(array(
-			    'username' => $_SESSION['username'],
-			    'itemname' => $itemRow['itemname'],
-			    'unitid' => $itemRow['unitid'],
-			    'oldquantity' => $itemRow['quantity'],
-			    'newquantity' => $itemIdTable[$itemKey]
-			));
+			$this->updateItemHistory($_SESSION['username'], $itemRow['itemname'], $itemRow['unitname'], floatval($itemRow['quantity']), floatval($itemIdTable[$itemKey]));
 		    }
 		}
 	    }
@@ -242,7 +243,7 @@ class Item {
 	return FALSE;
     }
 
-    public function updateItem(string $itemName, string $unitName, string $categoryName, string $notes, float $quantity, string $userName, int $itemId) : bool {
+    public function updateItem(string $itemName, string $unitName, string $categoryName, string $notes, float $currentQuantity, float $newQuantity, string $userName, int $itemId) : bool {
 	if ($this->itemExistsWithAnotherItemid($itemName, $unitName, $itemId)) {
 	    echo "This item already exists:<p>" . PHP_EOL;
 	    echo "<table class='table-error'>" . PHP_EOL;
@@ -258,10 +259,11 @@ class Item {
 		    'unitname' => $unitName,
 		    'categoryname' => $categoryName,
 		    'notes' => $notes,
-		    'quantity' => $quantity,
+		    'quantity' => $newQuantity,
 		    'changeusername' => $userName,
 		    'itemid' => $itemId
 		));
+		$this->updateItemHistory($userName, $itemName, $unitName, $currentQuantity, $newQuantity);
 		return TRUE;
 	    } catch(PDOException $exception) {
 		echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;

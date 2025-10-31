@@ -27,11 +27,11 @@ class Utils {
     }
 
     public static function successSymbol() : string {
-	return "<span style='color: green;'>&#x2714;</span> "; // tick
+	return "<span style='color: green;'>&#x2714;</span>"; // tick
     }
 
     public static function failureSymbol() : string {
-	return "<span style='color: red;'>&#x2718;</span> "; // cross
+	return "<span style='color: red;'>&#x2718;</span>"; // cross
     }
 
     public static function addSymbol() : string {

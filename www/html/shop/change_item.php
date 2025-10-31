@@ -42,7 +42,6 @@ if (isset($_SESSION['previous_page'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-
     $itemRow = $item->getItemRow($_GET['itemid']);
     if ($itemRow != -1) {
 	echo "<form method='POST'>" . PHP_EOL;
@@ -55,10 +54,16 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	$category->displayCategoryDropDownList($itemRow['categoryid']);
 	echo "</select>";
 	echo "<input type='text' class='enter-input-text input-color' name='notes' placeholder='Notes (optional)' value='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>";
+	echo "<button class='bttn change-color' name='change_item_bttn'>" . Utils::changeSymbol() . " Change Item</button>";
+
+	echo "<hr>", PHP_EOL;
 	echo "<input type='number' class='enter-input-number input-color' name='newquantity' placeholder='Quanitity (optional)' min='-9999' max='9999' step='any'";
 	echo " value='" . (floatval($itemRow['quantity']) != 0.0 ? $itemRow['quantity'] : "") . "'>" . PHP_EOL;
-	echo "<button class='bttn change-color' name='change_item_bttn'>" . Utils::changeSymbol() . " Change Item</button>";
+	echo "<button class='bttn change-color' name='update_quantity_bttn'>" . Utils::changeSymbol() . " Update Quantity</button>";
+
+	echo "<hr>", PHP_EOL;
 	$item->displayItemMetaData($itemRow);
+	echo "<hr>", PHP_EOL;
 	echo "<button class='bttn delete-color' name='delete_item_bttn'>" . Utils::deleteSymbol() . " Delete Item</button>";
 	echo "</form>" . PHP_EOL;
 
@@ -68,19 +73,31 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	exit();
     }
 } else { /* POST - a button has been pressed */
-    if (isset($_POST['change_item_bttn'])) {
-	if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
-	    $itemName = preg_replace('/\s+/', ' ', trim($_POST['itemname']));
-	    $notes = preg_replace('/\s+/', ' ', trim($_POST['notes']));
-	    $newquantity = isset($_POST['newquantity']) && floatval($_POST['newquantity']) != 0.0  ? floatval($_POST['newquantity']) : 0.0;
-	    $itemRow = $item->getItemRow($_GET['itemid']);
-	    $currentQuantity = floatval($itemRow['quantity']);
-	    if ($item->updateItem(mb_strtoupper(mb_substr($itemName, 0, 1)) . mb_substr($itemName, 1), $_POST['unitname'], $_POST['categoryname'], $notes, $currentQuantity, $newquantity, $username, $_SESSION['itemid'])) {
+    if (isset($_POST['change_item_bttn']) || isset($_POST['update_quantity_bttn'])) {
+	$itemRow = $item->getItemRow($_GET['itemid']);
+	$itemName = preg_replace('/\s+/', ' ', trim($_POST['itemname']));
+	$notes = preg_replace('/\s+/', ' ', trim($_POST['notes']));
+	$char1UpperShiftedItemName = mb_strtoupper(mb_substr($itemName, 0, 1)) . mb_substr($itemName, 1);
+	$newQuantity = isset($_POST['newquantity']) && floatval($_POST['newquantity']) != 0.0  ? floatval($_POST['newquantity']) : 0.0;
+	$currentQuantity = floatval($itemRow['quantity']);
+
+	if (isset($_POST['change_item_bttn'])) {
+	    if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
+		if ($item->changeItem($char1UpperShiftedItemName, $_POST['unitname'], $_POST['categoryname'], $notes, $username, $_SESSION['itemid'])) {
+		    header($previousPage);
+		    exit();
+		}
+	    } else {
+		echo "<span style='color: red;'>Description, unit and category are all required!</span><p>", PHP_EOL;
+	    }
+	} else if (isset($_POST['update_quantity_bttn']) && isset($_POST['newquantity'])) {
+	    if ($currentQuantity != $newQuantity) {
+		$item->changeItemQuantity($itemRow['itemid'], $username, $itemRow['itemname'], $_POST['unitname'], $_POST['categoryname'], $currentQuantity, $newQuantity);
 		header($previousPage);
 		exit();
+	    } else {
+		echo "<span style='color: red;'>You entered the same quantity - nothing has been changed!</span><p>" . PHP_EOL;
 	    }
-	} else {
-	    echo "Description, unit and category are all required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['delete_item_bttn'])) {
 	$item->deleteItem($_SESSION['itemid']);

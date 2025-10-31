@@ -1,3 +1,9 @@
+v2.3.0 - Fri 31 Oct 2025 11:39:51 AEDT
+    1. change_item: Add an "Update Quantity" button that only does that. The "Change Item" button is
+       only used to update any/all of the other columns/fields: name, unit, category and notes.
+    2. Change function updateItem to changeItemQuantity and update what it does.
+    3. Remove function updateItemHistory - it was never needed!
+
 v2.2.5 - Wed 29 Oct 2025 08:07:06 AEDT
     1. change_item: changing the quantity updates the item history: old_quantity -> new_quantity.
     2. Adding a new item with non-zero quantity updates that item's history: 0 -> new_quantity.

@@ -41,6 +41,11 @@ if (isset($_SESSION['previous_page'])) {
     $previousPage = "Location: index"; // This should never happen!
 }
 
+if (!isset($_GET['itemid'])) {
+    echo Utils::failureSymbol(), " This page must be called with an itemid!";
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     $itemRow = $item->getItemRow($_GET['itemid']);
     if ($itemRow != -1) {

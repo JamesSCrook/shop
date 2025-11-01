@@ -81,8 +81,11 @@ class Item {
 	    echo "because it already exists." . PHP_EOL;
 	} else {
 	    try {
-		// Note: buycount is set to 0 because this item is just being created/added. If abs(qantity) > 0, it means this item should be purchased, but has not yet been bought.
-		$addItemPrepStmt = $this->dbConn->prepare("INSERT INTO item (itemname, unitid, categoryid, notes, quantity, addusername, addtime, buycount) VALUES (:itemname, (SELECT unitid FROM unit WHERE unitname=:unitname), (SELECT categoryid FROM category WHERE categoryname=:categoryname), :notes, :quantity, :addusername, NOW(), 0)");
+		if ($quantity == 0.0) {
+		    $addItemPrepStmt = $this->dbConn->prepare("INSERT INTO item (itemname, unitid, categoryid, notes, quantity, addusername, addtime, updatecount) VALUES (:itemname, (SELECT unitid FROM unit WHERE unitname=:unitname), (SELECT categoryid FROM category WHERE categoryname=:categoryname), :notes, :quantity, :addusername, NOW(), 0)");
+		} else {
+		    $addItemPrepStmt = $this->dbConn->prepare("INSERT INTO item (itemname, unitid, categoryid, notes, quantity, addusername, addtime, updatecount, lastupdatetime) VALUES (:itemname, (SELECT unitid FROM unit WHERE unitname=:unitname), (SELECT categoryid FROM category WHERE categoryname=:categoryname), :notes, :quantity, :addusername, NOW(), 1, NOW())");
+		}
 		$addItemPrepStmt->execute(array(
 		    'itemname' => $newItemName,
 		    'unitname' => $newUnitName,
@@ -159,8 +162,8 @@ class Item {
 	echo "<tr><td>Added</td><td>" . $itemRow['addtime'] . "</td></tr>" . PHP_EOL;
 	echo "<tr><td>Last changed by</td><td>" . $itemRow['changeusername'] . "</td></tr>" . PHP_EOL;
 	echo "<tr><td>Last changed</td><td>" . $itemRow['changetime'] . "</td></tr>" . PHP_EOL;
-	echo "<tr><td>Times updated</td><td>" . $itemRow['buycount'] . "</td></tr>" . PHP_EOL;
-	echo "<tr><td>Last update</td><td>" . $itemRow['lastbuytime'] . "</td></tr>" . PHP_EOL;
+	echo "<tr><td>Times updated</td><td>" . $itemRow['updatecount'] . "</td></tr>" . PHP_EOL;
+	echo "<tr><td>Last update</td><td>" . $itemRow['lastupdatetime'] . "</td></tr>" . PHP_EOL;
 	echo "</table>" . PHP_EOL;
     }
 
@@ -188,12 +191,9 @@ class Item {
 		    // $itemIdTable is an array of the POSTed quantity value(s) where the index is the itemKey.
 		    if ($itemIdTable[$itemKey] != $itemRow['quantity']) {	// If the POSTed quantity has changed, update the DB.
 			echo "<tr><td>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . Utils::separatorSymbol() . $itemRow['unitname'] . "</td><td>" . $itemRow['quantity'] . Utils::changeValueSymbol() . $itemIdTable[$itemKey] . "</td></tr>" . PHP_EOL;
-			// If the abs(newQuantity) is less than abs(oldQuantity), presumably we bought some, so increment buycount.
-			if (abs(intval($itemIdTable[$itemKey])) < abs(floatval($itemRow['quantity']))) {
-			    $updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity, buycount=buycount+1, lastbuytime=NOW() WHERE itemid=:itemid");
-			} else {
-			    $updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity WHERE itemid=:itemid");
-			}
+			$updateCountClause = floatval($itemIdTable[$itemKey]) != floatval($itemRow['quantity']) ? "updatecount=updatecount+1," : "";
+			$updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity, $updateCountClause lastupdatetime=NOW() WHERE itemid=:itemid");
+
 			$updateItemPrepStmt->execute(array(
 			    'quantity' => $itemIdTable[$itemKey],
 			    'itemid' => $itemRow['itemid']
@@ -227,11 +227,8 @@ class Item {
 
     public function changeItemQuantity(int $itemId, string $userName, string $itemName, string $unitName, string $categoryName, float $currentQuantity, float $newQuantity) : void {
 	try {
-	    if (abs($newQuantity) < abs($currentQuantity)) {
-		$updateItemQuantityPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity, buycount=buycount+1 WHERE itemid=:itemid");
-	    } else {
-		$updateItemQuantityPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity WHERE itemid=:itemid");
-	    }
+	    $updateCountClause = $newQuantity != $currentQuantity ? ", updatecount=updatecount+1" : "";
+	    $updateItemQuantityPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity, lastupdatetime=NOW() $updateCountClause WHERE itemid=:itemid");
 	    $updateItemQuantityPrepStmt->execute(array(
 		'quantity' => $newQuantity,
 		'itemid' => $itemId

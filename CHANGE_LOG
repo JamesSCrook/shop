@@ -1,3 +1,8 @@
+v3.0.0 - Sat 01 Nov 2025 11:01:01 AEDT
+    1. Changed DB fields buycount to updatecount and lastbuytime to lastupdatetime
+    2. updatecount is now incremented every time it changes - not just when abs(quantity) was reduced, as before.
+    3. Display an error if change_item is called without $_GET "?itemid=nnn".
+
 v2.3.0 - Fri 31 Oct 2025 11:39:51 AEDT
     1. change_item: Add an "Update Quantity" button that only does that. The "Change Item" button is
        only used to update any/all of the other columns/fields: name, unit, category and notes.

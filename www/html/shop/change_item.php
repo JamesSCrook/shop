@@ -16,19 +16,14 @@ namespace JamesSCrook\Shop;
 session_start();
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
-$pageSubtitle = "Change an Item";
-Utils::topOfPageHTML(": $pageSubtitle");
 
 if (!isset($_SESSION['username'])) {
     header("Location: login");
     exit();
-} else {
-    $username = $_SESSION['username'];
 }
 
-Menu::displayMenus(FALSE);
-
-echo "<h3>" . Constant::WEBSITEDESCRIPTION . ": $pageSubtitle (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
+$pageSubtitle = "Change an Item";
+$username = $_SESSION['username'];
 
 $dbConnection = new DBConnection();
 $item = new Item($dbConnection);
@@ -49,9 +44,13 @@ if (!isset($_GET['itemid'])) {
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     $itemRow = $item->getItemRow($_GET['itemid']);
     if ($itemRow != -1) {
+	Utils::topOfPageHTML(": $pageSubtitle");
+	Menu::displayMenus(FALSE);
+	echo "<h3>" . Constant::WEBSITEDESCRIPTION . ": $pageSubtitle (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
+
 	echo "<form method='POST'>" . PHP_EOL;
 	echo "Changing '" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'<p>" . PHP_EOL;
-	echo "<input type='text' class='enter-input-text input-color' name='itemname' placeholder='Description (required)' pattern='.{1,30}' value='" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'>";
+	echo "<input type='text' class='enter-input-text input-color' name='itemname' placeholder='Description (required)' pattern='.{1,30}' value='" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . "'>" . PHP_EOL;
 	echo "<select class='enter-select input-color' name='unitname'><option value='' disabled>" . Constant::UNITDESCRIPTION . " (required)</option>";
 	$unit->displayUnitDropDownList($itemRow['unitid']);
 	echo "</select>";
@@ -89,20 +88,26 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	if (isset($_POST['change_item_bttn'])) {
 	    if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
 		if ($item->changeItem($char1UpperShiftedItemName, $_POST['unitname'], $_POST['categoryname'], $notes, $username, $_SESSION['itemid'])) {
-		    header($previousPage);
+		    header("Location: " . $_SERVER['REQUEST_URI']);
 		    exit();
 		}
 	    } else {
-		echo "<span style='color: red;'>Description, unit and category are all required!</span><p>", PHP_EOL;
+		Utils::topOfPageHTML(": $pageSubtitle");
+		Menu::displayMenus(FALSE);
+		echo "<p><span style='color: red;'>Description, unit and category are all required!</span><p>", PHP_EOL;
 	    }
+	    exit();
 	} else if (isset($_POST['update_quantity_bttn']) && isset($_POST['newquantity'])) {
 	    if ($currentQuantity != $newQuantity) {
 		$item->changeItemQuantity($itemRow['itemid'], $username, $itemRow['itemname'], $_POST['unitname'], $_POST['categoryname'], $currentQuantity, $newQuantity);
-		header($previousPage);
+		header("Location: " . $_SERVER['REQUEST_URI']);
 		exit();
 	    } else {
-		echo "<span style='color: red;'>You entered the same quantity - nothing has been changed!</span><p>" . PHP_EOL;
+		Utils::topOfPageHTML(": $pageSubtitle");
+		Menu::displayMenus(FALSE);
+		echo "<p><span style='color: red;'>You entered the same quantity - nothing has been changed!</span><p>" . PHP_EOL;
 	    }
+	    exit();
 	}
     } else if (isset($_POST['delete_item_bttn'])) {
 	$item->deleteItem($_SESSION['itemid']);

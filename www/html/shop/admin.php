@@ -16,17 +16,17 @@ namespace JamesSCrook\Shop;
 session_start();
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
-$pageSubtitle = "Administration";
-Utils::topOfPageHTML(": $pageSubtitle");
 
 if (!isset($_SESSION['username'])) {
     header("Location: login");
     exit();
-} else {
-    $username = $_SESSION['username'];
 }
 
+$pageSubtitle = "Administration";
+Utils::topOfPageHTML(": $pageSubtitle");
 Menu::displayMenus(FALSE);
+
+$username = $_SESSION['username'];
 $dbConnection = new DBConnection();
 $unit = new Unit($dbConnection);
 $category = new Category($dbConnection);
@@ -102,47 +102,47 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	    $notes = preg_replace('/\s+/', ' ', trim($_POST['notes']));
 	    $item->addItem(mb_strtoupper(mb_substr($itemName, 0, 1)) . mb_substr($itemName, 1), $_POST['unitname'], $_POST['categoryname'], $notes, $quantity, $_SESSION['username']);
 	} else {
-	    echo "<br>" . Utils::failureSymbol() . "Description, unit and category are required!<p>" . PHP_EOL;
+	    echo "<p>" . Utils::failureSymbol() . "Description, unit and category are required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['add_unit_bttn'])) {
 	if ($_POST['add_rename_unit'] != "") {
 	    $unitName = preg_replace('/\s+/', ' ', trim($_POST['add_rename_unit']));
 	    $unit->addUnit($unitName);
 	} else {
-	    echo "<br>" . Utils::failureSymbol() . Constant::UNITDESCRIPTION . " is required!<p>" . PHP_EOL;
+	    echo "<p>" . Utils::failureSymbol() . Constant::UNITDESCRIPTION . " is required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['rename_unit_bttn'])) {
 	if ($_POST['add_rename_unit'] != "" && $_POST['rename_delete_unit'] != "") {
 	    $newUnitName = preg_replace('/\s+/', ' ', trim($_POST['add_rename_unit']));
 	    $unit->renameUnit($_POST['rename_delete_unit'], $newUnitName);
 	} else {
-	    echo "<br>" . Utils::failureSymbol() . "Both old and new unit names are required!<p>" . PHP_EOL;
+	    echo "<p>" . Utils::failureSymbol() . "Both old and new unit names are required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['delete_unit_bttn'])) {
 	if ($_POST['rename_delete_unit'] != "") {
 	    $unit->deleteUnit($_POST['rename_delete_unit']);
 	} else {
-	    echo "<br>" . Utils::failureSymbol() . Constant::UNITDESCRIPTION . " is required!<p>" . PHP_EOL;
+	    echo "<p>" . Utils::failureSymbol() . Constant::UNITDESCRIPTION . " is required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['add_category_bttn'])) {
 	if ($_POST['add_rename_category'] != "") {
 	    $categoryName = preg_replace('/\s+/', ' ', trim($_POST['add_rename_category']));
 	    $category->addCategory($categoryName);
 	} else {
-	    echo "<br>" . Utils::failureSymbol() . Constant::CATEGORYDESCRIPTION . " is required!<p>" . PHP_EOL;
+	    echo "<p>" . Utils::failureSymbol() . Constant::CATEGORYDESCRIPTION . " is required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['rename_category_bttn'])) {
 	if ($_POST['add_rename_category'] != "" && $_POST['rename_delete_category'] != "") {
 	    $newCategoryName = preg_replace('/\s+/', ' ', trim($_POST['add_rename_category']));
 	    $category->renameCategory($_POST['rename_delete_category'], $newCategoryName);
 	} else {
-	    echo "<br>" . Utils::failureSymbol() . "Both old and new category names are required!<p>" . PHP_EOL;
+	    echo "<p>" . Utils::failureSymbol() . "Both old and new category names are required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['delete_category_bttn'])) {
 	if ($_POST['rename_delete_category'] != "") {
 	    $category->deleteCategory($_POST['rename_delete_category']);
 	} else {
-	    echo "<br>" . Utils::failureSymbol() . Constant::CATEGORYDESCRIPTION . " is required!<p>" . PHP_EOL;
+	    echo "<p>" . Utils::failureSymbol() . Constant::CATEGORYDESCRIPTION . " is required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['add_user_bttn'])) {
 	if ($_POST['username'] != "" && $_POST['newpassword1'] != "") {
@@ -150,16 +150,16 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		$userName = preg_replace('/\s+/', ' ', trim($_POST['username']));
 		$user->addUserName($userName, $_POST['newpassword1']);
 	    } else {
-		echo "<br>" . Utils::failureSymbol() . "Passwords do not match, please try again<p>" . PHP_EOL;
+		echo "<p>" . Utils::failureSymbol() . "Passwords do not match, please try again<p>" . PHP_EOL;
 	    }
 	} else {
-	    echo "<br>" . Utils::failureSymbol() . "User is required!<p>" . PHP_EOL;
+	    echo "<p>" . Utils::failureSymbol() . "User is required!<p>" . PHP_EOL;
 	}
     } else if (isset($_POST['delete_user_bttn'])) {
 	if ($_POST['delete_username'] != ""  && $_POST['username'] != "" && $_POST['delete_username'] == $_POST['username']) {
 	    $user->deleteUserName($_POST['delete_username']);
 	} else {
-	    echo "<br>" . Utils::failureSymbol() . "Please enter the name of the user to delete and select the same user from the drop-down list.<p>" . PHP_EOL;
+	    echo "<p>" . Utils::failureSymbol() . "Please enter the name of the user to delete and select the same user from the drop-down list.<p>" . PHP_EOL;
 	}
     } else {
 	echo "<p>UNEXPECTED ERROR: in file: " . basename(__FILE__) . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . PHP_EOL;

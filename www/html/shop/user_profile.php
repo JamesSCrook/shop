@@ -16,15 +16,15 @@ namespace JamesSCrook\Shop;
 session_start();
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
-$pageSubtitle = "Edit User Profile";
-Utils::topOfPageHTML(": $pageSubtitle");
 
 if (!isset($_SESSION['username'])) {
     header("Location: login");
     exit();
-} else {
-    $username = $_SESSION['username'];
 }
+
+$pageSubtitle = "Edit User Profile";
+Utils::topOfPageHTML(": $pageSubtitle");
+$username = $_SESSION['username'];
 
 echo "<h3>" . Constant::WEBSITEDESCRIPTION . ": Edit User Profile (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
 

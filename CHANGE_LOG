@@ -1,3 +1,8 @@
+v3.1.0 Sun Apr 26 14:08:18 AEST 2026
+    1. Removed all output before all header calls - a fair bit of rejigging!
+    2. Removed confirmation output from updateItemQuantities, added displayChangedItemSummary to display this output.
+    3. Cosmetic changes.
+
 v3.0.0 - Sat 01 Nov 2025 11:01:01 AEDT
     1. Changed DB fields buycount to updatecount and lastbuytime to lastupdatetime
     2. updatecount is now incremented every time it changes - not just when abs(quantity) was reduced, as before.

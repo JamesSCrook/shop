@@ -15,15 +15,14 @@ namespace JamesSCrook\Shop;
 session_start();
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
-$pageSubtitle = "History";
-Utils::topOfPageHTML(": $pageSubtitle");
 
 if (!isset($_SESSION['username'])) {
     header("Location: login");
     exit();
-} else {
-    $username = $_SESSION['username'];
 }
+$pageSubtitle = "History";
+Utils::topOfPageHTML(": $pageSubtitle");
+$username = $_SESSION['username'];
 
 Menu::displayMenus(FALSE);
 

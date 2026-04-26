@@ -157,56 +157,64 @@ class Item {
 
     public function displayItemMetaData($itemRow) : void {
 	echo "<table>" . PHP_EOL;
-	echo "<tr><td>Current quantity</td><td>" . $itemRow['quantity'] . "</td></tr>" . PHP_EOL;
-	echo "<tr><td>Added by</td><td>" . $itemRow['addusername'] . "</td></tr>" . PHP_EOL;
-	echo "<tr><td>Added</td><td>" . $itemRow['addtime'] . "</td></tr>" . PHP_EOL;
-	echo "<tr><td>Last changed by</td><td>" . $itemRow['changeusername'] . "</td></tr>" . PHP_EOL;
-	echo "<tr><td>Last changed</td><td>" . $itemRow['changetime'] . "</td></tr>" . PHP_EOL;
-	echo "<tr><td>Times updated</td><td>" . $itemRow['updatecount'] . "</td></tr>" . PHP_EOL;
-	echo "<tr><td>Last update</td><td>" . $itemRow['lastupdatetime'] . "</td></tr>" . PHP_EOL;
+	echo " <tr><td>Current quantity</td><td>" . $itemRow['quantity'] . "</td></tr>" . PHP_EOL;
+	echo " <tr><td>Added by</td><td>" . $itemRow['addusername'] . "</td></tr>" . PHP_EOL;
+	echo " <tr><td>Added</td><td>" . $itemRow['addtime'] . "</td></tr>" . PHP_EOL;
+	echo " <tr><td>Last changed by</td><td>" . $itemRow['changeusername'] . "</td></tr>" . PHP_EOL;
+	echo " <tr><td>Last changed</td><td>" . $itemRow['changetime'] . "</td></tr>" . PHP_EOL;
+	echo " <tr><td>Times updated</td><td>" . $itemRow['updatecount'] . "</td></tr>" . PHP_EOL;
+	echo " <tr><td>Last update</td><td>" . $itemRow['lastupdatetime'] . "</td></tr>" . PHP_EOL;
 	echo "</table>" . PHP_EOL;
     }
 
     /* updateItemQuantities is called with $_POST from index and first_char. Here is an example when 2 (500 and 89) items have been entered:
      * array(3) { ["update_items_bttn"]=> string(0) "" ["i_500"]=> string(1) "1" ["i_89"]=> string(1) "3" }
     */
-    public function updateItemQuantities(&$itemIdTable) : void {
+    public function updateItemQuantities(&$postedItemsTable, &$changedItemSummaryTable) : void {
 	try {
 	    $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, item.unitid, unitname, quantity FROM item INNER JOIN unit ON item.unitid = unit.unitid ORDER BY itemname, unitname");
 	    $getItemsPrepStmt->execute();
 
-	    // Update details (the table below) is always sent to the browser, but the user will only see it if "display update notifications" is enabled.
-	    Menu::displayMenus(FALSE);
-	    echo "<h3>Quantities Just Updated</h3>" . PHP_EOL;
-	    echo "<table>" . PHP_EOL;
-	    echo "<tr><th>Item</th><th>Change</th></tr>" . PHP_EOL;
 	    while ($itemRow = $getItemsPrepStmt->fetch()) {
 		$itemKey = "i_" . $itemRow['itemid'];
-		if (isset($itemIdTable[$itemKey])) {	// If this item has been updated
+		if (isset($postedItemsTable[$itemKey])) {	// If this item has been updated
 
-		    if ($itemIdTable[$itemKey] == "") {	// Force blanking the field
-			$itemIdTable[$itemKey] = 0;	// to behave the same as explicitly setting it to 0
+		    if ($postedItemsTable[$itemKey] == "") {	// Force blanking the field
+			$postedItemsTable[$itemKey] = 0;	// to behave the same as explicitly setting it to 0
 		    }
 
-		    // $itemIdTable is an array of the POSTed quantity value(s) where the index is the itemKey.
-		    if ($itemIdTable[$itemKey] != $itemRow['quantity']) {	// If the POSTed quantity has changed, update the DB.
-			echo "<tr><td>" . htmlspecialchars($itemRow['itemname'], ENT_QUOTES) . Utils::separatorSymbol() . $itemRow['unitname'] . "</td><td>" . $itemRow['quantity'] . Utils::changeValueSymbol() . $itemIdTable[$itemKey] . "</td></tr>" . PHP_EOL;
-			$updateCountClause = floatval($itemIdTable[$itemKey]) != floatval($itemRow['quantity']) ? "updatecount=updatecount+1," : "";
+		    // $postedItemsTable is an array of the POSTed quantity value(s) where the index is the itemKey.
+		    if ($postedItemsTable[$itemKey] != $itemRow['quantity']) {	// If the POSTed quantity has changed, update the DB.
+			$updateCountClause = floatval($postedItemsTable[$itemKey]) != floatval($itemRow['quantity']) ? "updatecount=updatecount+1," : "";
 			$updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET quantity=:quantity, $updateCountClause lastupdatetime=NOW() WHERE itemid=:itemid");
 
 			$updateItemPrepStmt->execute(array(
-			    'quantity' => $itemIdTable[$itemKey],
+			    'quantity' => $postedItemsTable[$itemKey],
 			    'itemid' => $itemRow['itemid']
 			));
-			$this->updateItemHistory($_SESSION['username'], $itemRow['itemname'], $itemRow['unitname'], floatval($itemRow['quantity']), floatval($itemIdTable[$itemKey]));
+			$this->updateItemHistory($_SESSION['username'], $itemRow['itemname'], $itemRow['unitname'], floatval($itemRow['quantity']), floatval($postedItemsTable[$itemKey]));
+
+			$changedItemSummaryTable[$itemKey]['itemname'] = $itemRow['itemname'];
+			$changedItemSummaryTable[$itemKey]['unitname'] = $itemRow['unitname'];
+			$changedItemSummaryTable[$itemKey]['oldquantity'] = $itemRow['quantity'];
+			$changedItemSummaryTable[$itemKey]['newquantity'] = $postedItemsTable[$itemKey];
 		    }
 		}
 	    }
-	    echo "</table><p>" . PHP_EOL;
 	} catch(PDOException $exception) {
 	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 	    echo "Could not update any itmes.<p>" . PHP_EOL;
 	}
+    }
+
+    public function displayChangedItemSummary(&$changedItemSummaryTable) : void {
+	echo "<h3>Quantities Just Updated</h3>" . PHP_EOL;
+	echo "<table>" . PHP_EOL;
+	echo "<tr><th>Item</th><th>Change</th></tr>" . PHP_EOL;
+	foreach ($changedItemSummaryTable as $key => $value) {
+	    echo "<tr><td>" . htmlspecialchars($value['itemname'], ENT_QUOTES) . Utils::separatorSymbol() . $value['unitname'] . "</td><td>" . $value['oldquantity'] . Utils::changeValueSymbol() . $value['newquantity'] . "</td></tr>" . PHP_EOL;
+	}
+	echo "</table><p>" . PHP_EOL;
     }
 
     private function itemExistsWithAnotherItemid(string $itemName, string $unitName, int $itemId) : mixed {

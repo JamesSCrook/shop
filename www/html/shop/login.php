@@ -15,14 +15,13 @@ namespace JamesSCrook\Shop;
 session_start();
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
-$pageSubtitle = "Login";
-Utils::topOfPageHTML(": $pageSubtitle");
-
-Menu::displayMenus(FALSE);
-
-echo "<h3>" . Constant::WEBSITEDESCRIPTION . ": $pageSubtitle</h3>" . PHP_EOL;
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+    $pageSubtitle = "Login";
+    Utils::topOfPageHTML(": $pageSubtitle");
+    Menu::displayMenus(FALSE);
+    echo "<h3>" . Constant::WEBSITEDESCRIPTION . ": $pageSubtitle</h3>" . PHP_EOL;
+
     echo "<form id=login_form method='POST'>" . PHP_EOL;
     echo "  Username<br>" . PHP_EOL;
     echo "  <input type='text' class='enter-input-text input-color' name='username' placeholder='Username'><br><br>" . PHP_EOL;
@@ -45,7 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	header("Location: index");
 	exit();
     } else {
-	echo "Login unsuccessful - Please try again.<br>" . PHP_EOL;
+	Utils::topOfPageHTML(": $pageSubtitle");
+	Menu::displayMenus(FALSE);
+	echo "<p>Login unsuccessful - Please try again.<br>" . PHP_EOL;
 	unset($_SESSION['username']);
     }
 }

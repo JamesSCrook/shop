@@ -18,21 +18,21 @@ namespace JamesSCrook\Shop;
 session_start();
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
-$pageSubtitle = "Items";
-Utils::topOfPageHTML(": $pageSubtitle");
 
 if (!isset($_SESSION['username'])) {
     header("Location: login");
     exit();
-} else {
-    $username = $_SESSION['username'];
 }
 
 $dbConnection = new DBConnection();
 $user = new User($dbConnection);
 $item = new Item($dbConnection);
 
+$pageSubtitle = "Items";
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+    Utils::topOfPageHTML(": $pageSubtitle");
+    $username = $_SESSION['username'];
+
     Menu::displayMenus(TRUE);
     echo "<h3>" . Constant::WEBSITEDESCRIPTION . ": $pageSubtitle (" . htmlspecialchars($username, ENT_QUOTES) . ")</h3>" . PHP_EOL;
     $item->displayLinks();
@@ -69,15 +69,19 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	    echo "</div>" . PHP_EOL;
 	    break;
     }
-
     echo "</form>" . PHP_EOL;
 } else { /* POST - a button has been pressed */
-    $item->updateItemQuantities($_POST);
+    $changedItemSummaryTable = [];
+    $item->updateItemQuantities($_POST, $changedItemSummaryTable);
     if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
 	header("Location: index");
 	exit();
     } else {
+	Utils::topOfPageHTML(": $pageSubtitle");
 	Menu::displayMenus(FALSE);
+	if (!empty($changedItemSummaryTable)) {
+	    $item->displayChangedItemSummary($changedItemSummaryTable);
+	}
     }
 }
 ?>

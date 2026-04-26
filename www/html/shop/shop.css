@@ -258,6 +258,11 @@ td {
     background: darkblue;
 }
 
+.back-bttn {
+    background: white;
+    color: black;
+}
+
 @media all and (min-width: 310px) {
     .nav-bar > .nav-bar__label {
 	display: none;

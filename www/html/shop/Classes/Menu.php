@@ -25,25 +25,16 @@ class Menu {
   </label>
   <input type='checkbox' id='toggle'>
   <ul class='nav-bar__list'>
-    <li class='nav-bar__list-item'>
-      <a href='./' class='nav-bar__link'>Items</a>
-    </li>
-    <li class='nav-bar__list-item'>
-      <a href='admin' class='nav-bar__link'>Admin</a>
-    </li>
-    <li class='nav-bar__list-item'>
-      <a href='history' class='nav-bar__link'>History</a>
-    </li>
-    <li class='nav-bar__list-item'>
-      <a href='logout' class='nav-bar__link'>Logout</a>
-    </li>
+    <li class='nav-bar__list-item'><button class='back-bttn' onclick='history.back();'>Back</button></li>
+    <li class='nav-bar__list-item'><a href='./' class='nav-bar__link'>Items</a></li>
+    <li class='nav-bar__list-item'><a href='admin' class='nav-bar__link'>Admin</a></li>
+    <li class='nav-bar__list-item'><a href='history' class='nav-bar__link'>History</a></li>
+    <li class='nav-bar__list-item'><a href='logout' class='nav-bar__link'>Logout</a></li>
   ";
 
 	  if ($itemPageFlag) {
 	      echo "
-    <li class='nav-bar__list-item'>
-	<button class='nav-bar__bttn-item' form='items_form' name='update_items_bttn'>Update</button>
-    </li>
+    <li class='nav-bar__list-item'><button class='nav-bar__bttn-item' form='items_form' name='update_items_bttn'>Update</button></li>
   ";
 	  }
 
@@ -55,4 +46,4 @@ class Menu {
 }
 ?>
 
-<!-- Version 3.0.0 Sat 01 Nov 2025 10:59:53 AEDT -->
+<!-- Version 3.1.0_WIP Sun 05 Apr 2026 15:28:41 AEST -->

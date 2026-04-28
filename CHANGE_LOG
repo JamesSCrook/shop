@@ -1,3 +1,9 @@
+v3.1.1 Wed Apr 29 09:31:36 AEST 2026
+    1. Added reloadSamePage to handle the different ways browsers handle browser history (only) when loading the same page.
+    2. Made previousPage be just the URL, not "Location: $URL" when not calling the same page & added htmlspecialchars
+    3. Removed some output before a header call in change_item.phh & logout.php
+    4. Cosmetic changes
+
 v3.1.0 Sun Apr 26 14:08:18 AEST 2026
     1. Removed all output before all header calls - a fair bit of rejigging!
     2. Removed confirmation output from updateItemQuantities, added displayChangedItemSummary to display this output.

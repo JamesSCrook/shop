@@ -18,7 +18,7 @@ require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 if (!isset($_SESSION['username'])) {
-    header("Location: login");
+    header('Location: login');
     exit();
 }
 
@@ -31,13 +31,15 @@ $unit = new Unit($dbConnection);
 $category = new Category($dbConnection);
 
 if (isset($_SESSION['previous_page'])) {
-    $previousPage = "Location: " . $_SESSION['previous_page'];
+    $previousPage = htmlspecialchars($_SESSION['previous_page'], ENT_QUOTES);
 } else {
-    $previousPage = "Location: index"; // This should never happen!
+    $previousPage = 'index'; // This should never happen!
 }
 
 if (!isset($_GET['itemid'])) {
-    echo Utils::failureSymbol(), " This page must be called with an itemid!";
+    Utils::topOfPageHTML(": $pageSubtitle");
+    Menu::displayMenus(FALSE);
+    echo "<p>" . Utils::failureSymbol() . " This page must be called with an itemid!";
     exit();
 }
 
@@ -73,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 	$_SESSION['itemid'] = $itemRow['itemid'];
     } else {
-	header($previousPage);
+	header("Location: $previousPage");
 	exit();
     }
 } else { /* POST - a button has been pressed */
@@ -88,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	if (isset($_POST['change_item_bttn'])) {
 	    if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
 		if ($item->changeItem($char1UpperShiftedItemName, $_POST['unitname'], $_POST['categoryname'], $notes, $username, $_SESSION['itemid'])) {
-		    header("Location: " . $_SERVER['REQUEST_URI']);
+		    Utils::reloadSamePage(htmlspecialchars(basename($_SERVER['REQUEST_URI'], '.php'), ENT_QUOTES));
 		    exit();
 		}
 	    } else {
@@ -100,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	} else if (isset($_POST['update_quantity_bttn']) && isset($_POST['newquantity'])) {
 	    if ($currentQuantity != $newQuantity) {
 		$item->changeItemQuantity($itemRow['itemid'], $username, $itemRow['itemname'], $_POST['unitname'], $_POST['categoryname'], $currentQuantity, $newQuantity);
-		header("Location: " . $_SERVER['REQUEST_URI']);
+		Utils::reloadSamePage(htmlspecialchars(basename($_SERVER['REQUEST_URI'], '.php'), ENT_QUOTES));
 		exit();
 	    } else {
 		Utils::topOfPageHTML(": $pageSubtitle");
@@ -111,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	}
     } else if (isset($_POST['delete_item_bttn'])) {
 	$item->deleteItem($_SESSION['itemid']);
-	header($previousPage);
+	header("Location: $previousPage");
 	exit();
     } else {
 	echo "<p>UNEXPECTED ERROR: in file: " . basename(__FILE__) . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . PHP_EOL;

@@ -22,7 +22,7 @@ class ItemList {
     }
 
     public function displayItemsByCategory() : void {
-	$_SESSION['previous_page'] = $_SERVER['REQUEST_URI'];
+	$_SESSION['previous_page'] = htmlspecialchars(basename($_SERVER['PHP_SELF'], '.php'), ENT_QUOTES);
 	try {
 	    $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, unitname, categoryname, notes FROM item INNER JOIN unit ON item.unitid = unit.unitid INNER JOIN category ON item.categoryid = category.categoryid ORDER BY categoryname, itemname, unitname");
 	    $getItemsPrepStmt->execute();
@@ -43,8 +43,7 @@ class ItemList {
     }
 
     public function displayItemsSorted(string $columnName, bool $ascendingFlag) : void {
-	$_SESSION['previous_page'] = $_SERVER['REQUEST_URI'];
-
+	$_SESSION['previous_page'] = htmlspecialchars(basename($_SERVER['PHP_SELF'], '.php'), ENT_QUOTES);
 	$sortDirectionSymbolTable['itemname'] = "";
 	$sortDirectionSymbolTable['categoryname'] = "";
 	$sortDirectionSymbolTable['updatecount'] = "";

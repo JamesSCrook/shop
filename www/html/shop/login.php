@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	$history = new History($dbConnection);
 	$history->trimHistory();
 	$_SESSION['username'] = $_POST['username'];
-	header("Location: index");
+	header('Location: index');
 	exit();
     } else {
 	Utils::topOfPageHTML(": $pageSubtitle");

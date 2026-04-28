@@ -87,5 +87,18 @@ class Utils {
 	    });
 	</script>";
     }
+
+    /* Firefox is the only (known/common) browser that does not add an entry to the browser history when calling header to the same page.
+     * Because of this, the other browsers must not call header, they must call javascript history.back().
+     * The javascript call also works with Firefox, but it creates an annoying flash when redrawing the page - at least when using dark mode.
+     */
+    public static function reloadSamePage(string $URL) : void {
+	$userAgent = $_SERVER['HTTP_USER_AGENT'];
+	if (stripos($userAgent, 'Firefox') === FALSE) {
+	    echo '<script>window.history.back();</script>' . PHP_EOL;
+	} else {
+	    header("Location: $URL");
+	}
+    }
 }
 ?>

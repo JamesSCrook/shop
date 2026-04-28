@@ -20,7 +20,7 @@ require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 if (!isset($_SESSION['username'])) {
-    header("Location: login");
+    header('Location: login');
     exit();
 }
 
@@ -70,11 +70,13 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	    break;
     }
     echo "</form>" . PHP_EOL;
+
+    $_SESSION['previous_page'] = htmlspecialchars(basename($_SERVER['PHP_SELF'], '.php'), ENT_QUOTES);
 } else { /* POST - a button has been pressed */
     $changedItemSummaryTable = [];
     $item->updateItemQuantities($_POST, $changedItemSummaryTable);
     if ($user->getDisplayUpdates($_SESSION['username']) == "No") {
-	header("Location: index");
+	Utils::reloadSamePage(htmlspecialchars(basename($_SERVER['PHP_SELF'], '.php'), ENT_QUOTES));
 	exit();
     } else {
 	Utils::topOfPageHTML(": $pageSubtitle");

@@ -19,7 +19,7 @@ require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 if (!isset($_SESSION['username'])) {
-    header("Location: login");
+    header('Location: login');
     exit();
 }
 

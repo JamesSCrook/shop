@@ -18,7 +18,7 @@ require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 
 if (!isset($_SESSION['username'])) {
-    header("Location: login");
+    header('Location: login');
     exit();
 }
 
@@ -37,17 +37,19 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     $itemCount = $item->displayItems("AND SUBSTR(itemname,1,1)='" . htmlspecialchars($_GET['first_char'], ENT_QUOTES) . "'");
     echo "</div>" . PHP_EOL;
     echo "</form>" . PHP_EOL;
+
+    $_SESSION['previous_page'] = htmlspecialchars(basename($_SERVER['PHP_SELF'], '.php'), ENT_QUOTES);
+
     if ($itemCount == 0) {
 	echo "Invalid first character '" . htmlspecialchars($_GET['first_char'], ENT_QUOTES) . "' specified in the URL." . PHP_EOL;
     }
-
 } else { /* POST - a button has been pressed */
     if (isset($_POST['update_items_bttn'])) {
 	$user = new User($dbConnection);
 	$changedItemSummaryTable = [];
 	$item->updateItemQuantities($_POST, $changedItemSummaryTable);
 	if ($user->getDisplayUpdates($username) == "No") {
-	    header('Location: ' . basename(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES)) . '?first_char=' . htmlspecialchars($_GET['first_char'], ENT_QUOTES));
+	    Utils::reloadSamePage(htmlspecialchars(basename($_SERVER['PHP_SELF'], '.php') . '?first_char=' . $_GET['first_char'], ENT_QUOTES));
 	    exit();
 	} else {
 	    Utils::topOfPageHTML(": $pageSubtitle");

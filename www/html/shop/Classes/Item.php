@@ -130,7 +130,6 @@ class Item {
     public function displayItems(string $sqlPredicate) : int {
 	$itemCount = 0;
 	try {
-	    $_SESSION['previous_page'] = $_SERVER['REQUEST_URI'];
 	    $getItemsPrepStmt = $this->dbConn->prepare("SELECT itemid, itemname, unitname, categoryname, notes, quantity FROM item INNER JOIN unit ON unit.unitid = item.unitid INNER JOIN category ON category.categoryid = item.categoryid " . $sqlPredicate . " ORDER BY itemname, unitname");
 	    $getItemsPrepStmt->execute();
 	    while ($itemRow = $getItemsPrepStmt->fetch()) {

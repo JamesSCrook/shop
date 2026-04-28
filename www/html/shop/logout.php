@@ -16,17 +16,18 @@ session_start();
 require_once "Classes/Autoloader.php";
 spl_autoload_register(__NAMESPACE__ . "\Autoloader::loader");
 $pageSubtitle = "Logout";
-Utils::topOfPageHTML(": $pageSubtitle");
-
-Menu::displayMenus(FALSE);
 
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
-    echo "<h3>" . Constant::WEBSITEDESCRIPTION . ": See you next time ($username)...</h3>";
     setcookie(session_name(), '', 100);
     session_unset();
     session_destroy();
+    Utils::topOfPageHTML(": $pageSubtitle");
+    Menu::displayMenus(FALSE);
+    echo "<h3>" . Constant::WEBSITEDESCRIPTION . ": See you next time ($username)...</h3>";
 } else {
+    Utils::topOfPageHTML(": $pageSubtitle");
+    Menu::displayMenus(FALSE);
     echo "<h3>" . Constant::WEBSITEDESCRIPTION . ": You weren't logged in, bye!</h3>";
 }
 ?>

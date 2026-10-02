@@ -19,8 +19,7 @@ $pageSubtitle = "Logout";
 
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
-    setcookie(session_name(), '', 100);
-    session_unset();
+    $_SESSION = [];				### Recommended over session_unset();
     session_destroy();
     Utils::topOfPageHTML(": $pageSubtitle");
     Menu::displayMenus(FALSE);

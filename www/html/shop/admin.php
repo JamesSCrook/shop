@@ -93,7 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     Utils::passwordToggleShowHide('pwtoggleshowhideA', 'newpassword1');
     Utils::passwordToggleShowHide('pwtoggleshowhideB', 'newpassword2');
 } else { /* POST - a button has been pressed */
-
     if (isset($_POST['add_item_bttn'])) {
 	if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
 	    $item = new Item($dbConnection);
@@ -158,6 +157,13 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     } else if (isset($_POST['delete_user_bttn'])) {
 	if ($_POST['delete_username'] != ""  && $_POST['username'] != "" && $_POST['delete_username'] == $_POST['username']) {
 	    $user->deleteUserName($_POST['delete_username']);
+	    echo "<p>" . Utils::successSymbol() . "User '" . htmlspecialchars($_POST['username'], ENT_QUOTES) . "' successfully deleted" . PHP_EOL;
+	    if ($_POST['delete_username'] == $username) {
+		echo '<p>You just deleted the user you were logged in as, so ... goodbye!' . PHP_EOL;
+		$_SESSION = [];				### Recommended over session_unset();
+		session_destroy();
+		exit();
+	    }
 	} else {
 	    echo "<p>" . Utils::failureSymbol() . "Please enter the name of the user to delete and select the same user from the drop-down list.<p>" . PHP_EOL;
 	}

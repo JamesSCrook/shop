@@ -46,7 +46,7 @@ class User {
 		'username' => $userName
 	    ));
 	    $userProfileRow = $getSortOrderPrepStmt->fetch();
-	    $this->sortorder = $userProfileRow['sortorder'];
+	    $this->sortorder = $userProfileRow['sortorder'] != NULL ? $userProfileRow['sortorder'] : 'a';
 	} catch(PDOException $exception) {
 	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 	    echo "Could not read user profile data for user '" . htmlspecialchars($userName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
@@ -61,7 +61,7 @@ class User {
 		'username' => $userName
 	    ));
 	    $userProfileRow = $getDisplayUpdatesPrepStmt->fetch();
-	    $this->displayUpdates = $userProfileRow['displayUpdates'];
+	    $this->displayUpdates = $userProfileRow['displayUpdates'] != NULL ?  $userProfileRow['displayUpdates'] : 'Yes';
 	} catch(PDOException $exception) {
 	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 	    echo "Could not read user profile data for user '" . htmlspecialchars($userName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
@@ -170,8 +170,6 @@ class User {
 	    $deleteUserNamePrepStmt->execute(array(
 		'username' => $deleteUserName
 	    ));
-	    // ConfirmChange::confirmSuccess("User '$deleteUserName' successfully deleted");
-	    echo "<br>" . Utils::successSymbol() . htmlspecialchars("User '$deleteUserName' successfully deleted", ENT_QUOTES) . "<p>" . PHP_EOL;
 	} catch(PDOException $exception) {
 	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
 	    echo "Could not delete username '" . htmlspecialchars($deleteUserName, ENT_QUOTES) . "'.<p>" . PHP_EOL;

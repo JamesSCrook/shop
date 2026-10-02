@@ -41,9 +41,9 @@ class Menu {
 	  echo "
   </ul>
 </nav>
-";
+" . PHP_EOL;
     }
 }
 ?>
 
-<!-- Version 3.1.1 Wed Apr 29 09:17:14 AEST 2026 -->
+<!-- Version 3.1.2 Fri Oct  2 09:48:41 AEST 2026 -->

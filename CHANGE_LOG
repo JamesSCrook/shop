@@ -1,3 +1,8 @@
+v3.1.3 Sat Oct  3 08:52:32 AEST 2026
+    1. change_item now has only one update button that updates both the item details and/or the quantity.
+    2. For this, functions lookupCategoryName and lookupUnitName were added.
+    3. Moved the test for duplicate [description, unit] from chageItem (Item.php) to change_item.php.
+
 v3.1.2 Fri Oct  2 09:49:22 AEST 2026
     1. When no (user) values are set, getSortSorder now returns 'a' and DisplayUpdates returns 'Yes'
     2. Replaced session_unset(); with $_SESSION = [];

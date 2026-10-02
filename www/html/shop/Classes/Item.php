@@ -216,7 +216,7 @@ class Item {
 	echo "</table><p>" . PHP_EOL;
     }
 
-    private function itemExistsWithAnotherItemid(string $itemName, string $unitName, int $itemId) : mixed {
+    public function itemExistsWithAnotherItemid(string $itemName, string $unitName, int $itemId) : mixed {
 	try {
 	    $itemExistsWithAnotherItemidPrepStmt = $this->dbConn->prepare("SELECT unitname FROM unit INNER JOIN item WHERE unit.unitid = item.unitid AND itemname=:itemname AND unitname=:unitname AND itemid!=:itemid");
 	    $itemExistsWithAnotherItemidPrepStmt->execute(array(
@@ -247,32 +247,21 @@ class Item {
 	}
     }
 
-    public function changeItem(string $itemName, string $unitName, string $categoryName, string $notes, string $userName, int $itemId) : bool {
-	if ($this->itemExistsWithAnotherItemid($itemName, $unitName, $itemId)) {
-	    echo "This item already exists:<p>" . PHP_EOL;
-	    echo "<table class='table-error'>" . PHP_EOL;
-	    echo "<tr><td>Description</td><td>" . htmlspecialchars($itemName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
-	    echo "<tr><td>" . Constant::UNITDESCRIPTION . "</td><td>" . htmlspecialchars($unitName, ENT_QUOTES) . "</td></tr>" . PHP_EOL;
-	    echo "</table><p>" . PHP_EOL;
-	    echo "so it cannot be saved with these values." . PHP_EOL;
-	} else {
-	    try {
-		$updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET itemname=:itemname, unitid=(SELECT unitid FROM unit WHERE unitname=:unitname), categoryid=(SELECT categoryid FROM category WHERE categoryname=:categoryname), notes=:notes, changeusername=:changeusername, changetime = NOW() WHERE itemid=:itemid");
-		$updateItemPrepStmt->execute(array(
-		    'itemname' => $itemName,
-		    'unitname' => $unitName,
-		    'categoryname' => $categoryName,
-		    'notes' => $notes,
-		    'changeusername' => $userName,
-		    'itemid' => $itemId
-		));
-		return TRUE;
-	    } catch(PDOException $exception) {
-		echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
-		echo "Could not change the item details.<p>" . PHP_EOL;
-	    }
+    public function changeItem(string $itemName, string $unitName, string $categoryName, string $notes, string $userName, int $itemId) : void {
+	try {
+	    $updateItemPrepStmt = $this->dbConn->prepare("UPDATE item SET itemname=:itemname, unitid=(SELECT unitid FROM unit WHERE unitname=:unitname), categoryid=(SELECT categoryid FROM category WHERE categoryname=:categoryname), notes=:notes, changeusername=:changeusername, changetime = NOW() WHERE itemid=:itemid");
+	    $updateItemPrepStmt->execute(array(
+		'itemname' => $itemName,
+		'unitname' => $unitName,
+		'categoryname' => $categoryName,
+		'notes' => $notes,
+		'changeusername' => $userName,
+		'itemid' => $itemId
+	    ));
+	} catch(PDOException $exception) {
+	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
+	    echo "Could not change the item details.<p>" . PHP_EOL;
 	}
-	return FALSE;
     }
 
     public function deleteItem(int $itemId) : void {

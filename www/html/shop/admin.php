@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
     echo "<h3><div class='section-separator'>Miscellaneous</div></h3>" . PHP_EOL;
     $dirName = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES));
-    echo "<button type='button' onclick='visitPage(\"$dirName/user_profile\");' class='bttn change-color'>" . Utils::changeSymbol() . "Edit User Profile</button>" . PHP_EOL;
+    echo "<button type='button' onclick='visitPage(\"$dirName/user_profile\");' class='bttn change-color'>" . Utils::changeSymbol() . " Edit User Profile</button>" . PHP_EOL;
     echo "<button type='button' onclick='visitPage(\"$dirName/display_item_details\");' class='bttn query-color'>Display Item Details</button>" . PHP_EOL;
     echo "<button type='button' onclick='visitPage(\"$dirName/display_items_sorted\");' class='bttn query-color'>Display Items Sorted</button>" . PHP_EOL;
 

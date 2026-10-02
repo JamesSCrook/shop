@@ -60,12 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	$category->displayCategoryDropDownList($itemRow['categoryid']);
 	echo "</select>";
 	echo "<input type='text' class='enter-input-text input-color' name='notes' placeholder='Notes (optional)' value='" . htmlspecialchars($itemRow['notes'], ENT_QUOTES) . "'>";
-	echo "<button class='bttn change-color' name='change_item_bttn'>" . Utils::changeSymbol() . " Change Item</button>";
 
-	echo "<hr>", PHP_EOL;
 	echo "<input type='number' class='enter-input-number input-color' name='newquantity' placeholder='Quanitity (optional)' min='-9999' max='9999' step='any'";
 	echo " value='" . (floatval($itemRow['quantity']) != 0.0 ? $itemRow['quantity'] : "") . "'>" . PHP_EOL;
-	echo "<button class='bttn change-color' name='update_quantity_bttn'>" . Utils::changeSymbol() . " Update Quantity</button>";
+	echo "<button class='bttn change-color' name='change_update_bttn'>" . Utils::changeSymbol() . " Update</button>";
+	echo "<br>Change this item and/or update the quantity" . PHP_EOL;
 
 	echo "<hr>", PHP_EOL;
 	$item->displayItemMetaData($itemRow);
@@ -79,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	exit();
     }
 } else { /* POST - a button has been pressed */
-    if (isset($_POST['change_item_bttn']) || isset($_POST['update_quantity_bttn'])) {
+    if (isset($_POST['change_update_bttn'])) {
 	$itemRow = $item->getItemRow($_GET['itemid']);
 	$itemName = preg_replace('/\s+/', ' ', trim($_POST['itemname']));
 	$notes = preg_replace('/\s+/', ' ', trim($_POST['notes']));
@@ -87,30 +86,30 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	$newQuantity = isset($_POST['newquantity']) && floatval($_POST['newquantity']) != 0.0  ? floatval($_POST['newquantity']) : 0.0;
 	$currentQuantity = floatval($itemRow['quantity']);
 
-	if (isset($_POST['change_item_bttn'])) {
-	    if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
-		if ($item->changeItem($char1UpperShiftedItemName, $_POST['unitname'], $_POST['categoryname'], $notes, $username, $_SESSION['itemid'])) {
-		    Utils::reloadSamePage(htmlspecialchars(basename($_SERVER['REQUEST_URI'], '.php'), ENT_QUOTES));
-		    exit();
+	if ($_POST['itemname'] != "" && $_POST['unitname'] != "" && $_POST['categoryname'] != "") {
+	    if (!$item->itemExistsWithAnotherItemid($_POST['itemname'], $_POST['unitname'], $_GET['itemid'])) {
+		if ($itemRow['itemname'] != $_POST['itemname'] || $unit->lookupUnitName($itemRow['unitid']) != $_POST['unitname'] ||
+		    $category->lookupCategoryName($itemRow['categoryid']) != $_POST['categoryname'] || htmlspecialchars($itemRow['notes']) != $_POST['notes']) {
+			$item->changeItem($char1UpperShiftedItemName, $_POST['unitname'], $_POST['categoryname'], $notes, $username, $_SESSION['itemid']);
+		    }
+		if ($currentQuantity != $newQuantity) {
+		    $item->changeItemQuantity($itemRow['itemid'], $username, $itemRow['itemname'], $_POST['unitname'], $_POST['categoryname'], $currentQuantity, $newQuantity);
 		}
-	    } else {
-		Utils::topOfPageHTML(": $pageSubtitle");
-		Menu::displayMenus(FALSE);
-		echo "<p><span style='color: red;'>Description, unit and category are all required!</span><p>", PHP_EOL;
-	    }
-	    exit();
-	} else if (isset($_POST['update_quantity_bttn']) && isset($_POST['newquantity'])) {
-	    if ($currentQuantity != $newQuantity) {
-		$item->changeItemQuantity($itemRow['itemid'], $username, $itemRow['itemname'], $_POST['unitname'], $_POST['categoryname'], $currentQuantity, $newQuantity);
 		Utils::reloadSamePage(htmlspecialchars(basename($_SERVER['REQUEST_URI'], '.php'), ENT_QUOTES));
 		exit();
 	    } else {
 		Utils::topOfPageHTML(": $pageSubtitle");
 		Menu::displayMenus(FALSE);
-		echo "<p><span style='color: red;'>You entered the same quantity - nothing has been changed!</span><p>" . PHP_EOL;
+		echo "<p><span style='color: red;'>[" . $_POST['itemname'] . "/" . $_POST['unitname'] . "] already exists! Not saved!</span><p>", PHP_EOL;
 	    }
-	    exit();
+	} else {
+	    Utils::topOfPageHTML(": $pageSubtitle");
+	    Menu::displayMenus(FALSE);
+	    echo "<p><span style='color: red;'>Description, " . Constant::UNITDESCRIPTION . ", and " . Constant::CATEGORYDESCRIPTION . " are all required! Not saved!</span><p>", PHP_EOL;
 	}
+	exit();
+
+
     } else if (isset($_POST['delete_item_bttn'])) {
 	$item->deleteItem($_SESSION['itemid']);
 	header("Location: $previousPage");

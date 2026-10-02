@@ -21,6 +21,21 @@ class Unit {
 	$this->dbConn = $dbConnection->pdo;
     }
 
+    public function lookupUnitName(int $unitId) : string {
+	try {
+	    $lookupUnitNamePrepStmt = $this->dbConn->prepare("SELECT unitname FROM unit WHERE unitid=:unitid");
+	    $lookupUnitNamePrepStmt->execute(array(
+		'unitid' => $unitId
+	    ));
+	    $unitRow = $lookupUnitNamePrepStmt->fetch();
+	    return $unitRow['unitname'];
+	} catch(PDOException $exception) {
+	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
+	    echo "Could not check:<br>'" . htmlspecialchars($unitName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
+	}
+	return "";
+    }
+
     private function unitExists(string $unitName) : mixed {
 	try {
 	    $unitExistsPrepStmt = $this->dbConn->prepare("SELECT unitname FROM unit WHERE unitname=:unitname");

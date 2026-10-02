@@ -20,6 +20,21 @@ class Category {
 	$this->dbConn = $dbConnection->pdo;
     }
 
+    public function lookupCategoryName(int $categoryId) : string {
+	try {
+	    $lookupCategoryNamePrepStmt = $this->dbConn->prepare("SELECT categoryname FROM category WHERE categoryid=:categoryid");
+	    $lookupCategoryNamePrepStmt->execute(array(
+		'categoryid' => $categoryId
+	    ));
+	    $categoryRow = $lookupCategoryNamePrepStmt->fetch();
+	    return $categoryRow['categoryname'];
+	} catch(PDOException $exception) {
+	    echo "ERROR in file: " . __FILE__ . ", function: " . __FUNCTION__ . ", line: " . __LINE__ . "<p>" . $exception->getMessage() . "<p>" . PHP_EOL;
+	    echo "Could not check:<br>'" . htmlspecialchars($categoryName, ENT_QUOTES) . "'.<p>" . PHP_EOL;
+	}
+	return "";
+    }
+
     private function categoryExists(string $categoryName) : mixed {
 	try {
 	    $categoryExistsPrepStmt = $this->dbConn->prepare("SELECT categoryname FROM category WHERE categoryname=:categoryname");

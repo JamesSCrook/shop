@@ -156,7 +156,6 @@ class Item {
 
     public function displayItemMetaData($itemRow) : void {
 	echo "<table>" . PHP_EOL;
-	echo " <tr><td>Current quantity</td><td>" . $itemRow['quantity'] . "</td></tr>" . PHP_EOL;
 	echo " <tr><td>Added by</td><td>" . $itemRow['addusername'] . "</td></tr>" . PHP_EOL;
 	echo " <tr><td>Added</td><td>" . $itemRow['addtime'] . "</td></tr>" . PHP_EOL;
 	echo " <tr><td>Last changed by</td><td>" . $itemRow['changeusername'] . "</td></tr>" . PHP_EOL;

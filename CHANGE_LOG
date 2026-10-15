@@ -1,3 +1,6 @@
+v3.1.4 Fri Oct 16 09:40:07 AEDT 2026
+    1. Removed duplicate display of quantity in change_item (function displayItemMetaData in Item.php).
+
 v3.1.3 Sat Oct  3 08:52:32 AEST 2026
     1. change_item now has only one update button that updates both the item details and/or the quantity.
     2. For this, functions lookupCategoryName and lookupUnitName were added.
